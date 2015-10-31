@@ -1,0 +1,17 @@
+Description: update autostart file for new GNOME Flashback
+Author: Dmitry Shachnev <mitya57@debian.org>
+Contributor: Michael Healy <horsemanoffaith@gmail.com>
+Forwarded: no
+Last-Update: 2015-10-31
+
+--- a/src/gnome-screensaver.desktop.in.in
++++ b/src/gnome-screensaver.desktop.in.in
+@@ -4,7 +4,7 @@
+ _Comment=Launch screensaver and locker program
+ Icon=preferences-desktop-screensaver
+ Exec=gnome-screensaver
+-OnlyShowIn=GNOME;
++OnlyShowIn=GNOME-Flashback;
+ NoDisplay=true
+ X-GNOME-Autostart-Phase=Application
+ X-GNOME-Autostart-Notify=true
