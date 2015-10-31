@@ -2,7 +2,7 @@ Description: update autostart file for new GNOME Flashback
 Author: Dmitry Shachnev <mitya57@debian.org>
 Contributor: Michael Healy <horsemanoffaith@gmail.com>
 Forwarded: no
-Last-Update: 2015-10-31
+Last-Update: 10-31-2015
 
 --- a/src/gnome-screensaver.desktop.in.in
 +++ b/src/gnome-screensaver.desktop.in.in
