@@ -1,13 +1,14 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # Based on Arch's gnome-control-center package
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=vivid
+# vercheck-ubuntu: name=${pkgname}, repo=wily
 
 pkgname=unity-control-center
 _actual_ver=15.04.0
-_extra_ver=+15.04.20150410
+_extra_ver=+15.10.20150923
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="The Control Center for Unity"
@@ -39,9 +40,9 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/unity-control-cent
         unity-bluetooth-panel.desktop
         unity-online-accounts-panel.desktop
         unity-region-panel.desktop)
-sha512sums=('f1a6675ba605daf721a665ab89e438711e130cdcf99806059c47860699b41aa489e727dcbddf43928c3244909bbb7eb973064b9dba24fb0d099a377276c0be14'
+sha512sums=('bbaf018479a8a4ac6dee6668fc1f8f5f372e27eacd2555b76150256571f57af7bc26c3f8c5d8c029d20de76709070c98e0275e20f84c46d5991550b22fd2236d'
             '1b39906307c6776647cb1325c4029806614f5301e0c7fd1fd6c14509daad587ddbf71f5ac60c81e7f4c89ed9598569523a31ec3f07ddc69e8cd5b73e205ec700'
-            'ba07ad32de0ebb52e578e53506e7bff3826c6c15dbd415429f60ffa3c2de0884a7fc5866d9e53a064fdd5631d12dbcd925336ae994259cd31f77d5f3f827fc6b'
+            '1ed2b9e3104d1cda759cdff40b31bdc1d557d6d1ce2107ec0a9b2d68438de12a89bf82aae4fec754cec337772ee63a1c2d94ec923c79d45464b63ff6a41c8f80'
             '17a8ec0ea635dcc991c6c101a0865c09d6aff344455020272a189af00579451c7fa9348063c30b80cd74b8e624d466a04862915dd0b343d9395e6c2f4e80085e'
             '0eb193899552ae5bfd2d16817993ba1f0db78e9e3cdf141f72766c3a17fc9f73cea1893fe969687c4197cd23fcb93805226d0193cdcb092d02137d93df14b031'
             '57d517491855ffb8db9e872bc99d7eedffdbc77eb864bb7e6dd8ba6ece58565823a93b0ae498b3b5e03f6bda019c96e68866452e6fc5957951a08b032999e4a4'
