@@ -1,9 +1,10 @@
 # Maintainer: Xiao-long Chen <chenxiaolong@cxl.epac.to>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=vivid
+# vercheck-ubuntu: name=${pkgname}, repo=wily
 # vercheck-launchpad: name=${pkgname}
 
 pkgbase=libindicator
@@ -22,13 +23,25 @@ groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgbase}_${_actual_ver}${_extra_ver}.orig.tar.gz")
 sha512sums=('b624b229755ae73f74b2197d4fb6d49f5d0b8b3fdc6686d6140a0b087e0b6a53dcd663fa2195c61d3bc61a11249867a45c1b8b7476e0d00b89a92f849f66eda2')
 
-build() {
-  cd "${pkgbase}-${_actual_ver}${_extra_ver}"
+prepare() {
+  sed '/-Werror/s/$/ -Wno-deprecated-declarations/' -i ../src/libindicator-${_actual_ver}${_extra_ver}/Makefile.am
+  sed 's/LIBINDICATOR_LIBS+="$LIBM"/LIBINDICATOR_LIBS+=" $LIBM"/g' -i ../src/libindicator-${_actual_ver}${_extra_ver}/configure.ac
+  sed 's/LIBM="-lmw"/LIBM=" -lmw"/g' -i ../src/libindicator-${_actual_ver}${_extra_ver}/configure.ac
+  sed 's/LIBM="-lm"/LIBM=" -lm"/g' -i ../src/libindicator-${_actual_ver}${_extra_ver}/configure.ac
+  sed 's/LIBS="-lm  $LIBS"/LIBS=" -lm  $LIBS"/g' -i ../src/libindicator-${_actual_ver}${_extra_ver}/configure.ac
+  sed 's/LIBS="-lmw  $LIBS"/LIBS=" -lmw  $LIBS"/g' -i ../src/libindicator-${_actual_ver}${_extra_ver}/configure.ac
+
+  
+}
+
+build() {  
 
   export CFLAGS+=" -Wno-error=deprecated-declarations"
 
-  autoreconf -vfi
+  cd "${pkgbase}-${_actual_ver}${_extra_ver}"
 
+  autoreconf -vfi
+ 
   [[ -d build-gtk2 ]] || mkdir build-gtk2
   pushd build-gtk2
   ../configure --prefix=/usr --libexecdir=/usr/lib/${pkgbase} --with-gtk=2 --disable-static
