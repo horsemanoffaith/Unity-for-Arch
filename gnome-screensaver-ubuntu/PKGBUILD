@@ -1,29 +1,33 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Original Maintainer: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Jan de Groot <jgc@archlinux.org>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname%-*}, repo=vivid
+# vercheck-ubuntu: name=${pkgname%-*}, repo=wily
 # vercheck-archlinux: name=${pkgname%-*}, repo=community, arch=x86_64
 # vercheck-gnome: name=${pkgname%-*}, majorver=3.6
 
 pkgname=gnome-screensaver-ubuntu
 pkgver=3.6.1
-_ubuntu_rel=0ubuntu14
-pkgrel=16
+_ubuntu_rel=7ubuntu1
+pkgrel=17
 pkgdesc="Screensaver designed to integrate well with the GNOME desktop."
 arch=(i686 x86_64)
 license=(GPL)
 url="http://live.gnome.org/GnomeScreensaver"
 backup=(etc/pam.d/gnome-screensaver)
 depends=(dbus-glib libgnomekbd gnome-desktop)
-makedepends=(intltool gnome-common)
+makedepends=(gnome-common)
 optdepends=('gnome-backgrounds: default background')
 provides=("gnome-screensaver=${pkgver}")
 conflicts=(gnome-screensaver)
 groups=(unity)
 source=("http://ftp.gnome.org/pub/GNOME/sources/gnome-screensaver/${pkgver%.*}/gnome-screensaver-${pkgver}.tar.xz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/gnome-screensaver_${pkgver}-${_ubuntu_rel}.debian.tar.xz"
+        01_no_autostart.patch
+        libsystemd.patch
+        gs-manager.c
         move-desktop-file.patch
         fix-autoconf.patch
         fix-systemd-support.patch
@@ -32,16 +36,36 @@ source=("http://ftp.gnome.org/pub/GNOME/sources/gnome-screensaver/${pkgver%.*}/g
         use-screensaver-background.patch
         gnome-screensaver.pam)
 sha512sums=('daa140c9608859c9291966931deedad50c94dd861916601022cd508f367cdac5db68ea1abb750bbef575d19b8690617900fee9859b880b1466267fd1cbee150f'
-            '77558aed0a14b4b8151779c98063bca2457be375e30835131ef564da9b5ea9d0b06c9cc6a6c093abb7d500fc40f97e90cd43acbb7e64e90a27b7e8b9896c732e'
-            '2a1cae465e87dfb731602f8dcf8cfdbdc19374c128c3828950920c01fc81f3bd00a192a6883ac1eb7ca06564f29a1c572ea074e8622fcd56e74ded43c974d4c8'
-            'c13d8806ca28b91457cc69d953eb516a642802dbf13dea643778e5e1b6f79d1f9c681138768f46848ed09cf8dc9e61b9aed25d4aa2be22b5730334a5fbeca68f'
-            'f2c4903c7793ed7233eff8d7bfa6c2d7515d5ca6d42f8e447593a3687cdd3a99d74c591b401f6ce4b750ac2392ebb013963d8957daddfa75bfbef76f53b28457'
-            'f2588a7024bc6b7f8cdb67875107e28a132b06602965870a3d45d5a36dc8ba214ce1d4bb5c71911554e39cc480f3145f70fb022280d04cd1f9b9b284c53bdd57'
-            '63b3a87e6f748e0caba65a99f77823b7141c1dc54c834228b6a68986bf42fe25254a9ce07db4df8683dc374c97e58c39678d3305d423e2ca0eb4f2df4e0e84f0'
-            '6002bb75d4519f3724ac34a8e4e8ea4e1f3cb063225d8feb9be7b1f38a0e706a0e2818495efd2ecea00302fbecf6d8cecd62689a5414bad06153d27a4e03a879'
-            '6e6956e24c545b630a8024e9e27a8a54d6cd102ca7c76c46ce90342e90f44dc9bdc6e71384802b18f133529c66f3a2f0fa5ef580058ed22919931301e781a6be')
+'95ab0c94249bb787de8b9b00f7bd983ca015a35680bcb6a56078147fc1a748867501bf20300a397d27a7f122a9ac4ea593d21062b54794d94c2ea54341b6aaf1'
+'e16f4f2c7839b1daa4f32b0e459258682f1d6db3a9147485103357410c497a8f76e038c93c5129eaf42407c2aec5530f99397509422bab121f176e607a7f10bd'
+'18d6ad1a26a45e8c93ad1a13888b7368470559e573916b6ce8d7645fcc83ab4b86e2c369a57a2044edacb9a53bd28619c6d68a14edbc073ccc8219d169138abb'
+'425b3e93f91efa6cf5c88f54ab373d81d7466c5238430a7d0be14f1a70841c2c34cbdc6d93c2222bcc606fd63cbfa65dd13cfc2ec87472f3d3e454f3a3f2c227'
+'2a1cae465e87dfb731602f8dcf8cfdbdc19374c128c3828950920c01fc81f3bd00a192a6883ac1eb7ca06564f29a1c572ea074e8622fcd56e74ded43c974d4c8'
+'c13d8806ca28b91457cc69d953eb516a642802dbf13dea643778e5e1b6f79d1f9c681138768f46848ed09cf8dc9e61b9aed25d4aa2be22b5730334a5fbeca68f'
+'f2c4903c7793ed7233eff8d7bfa6c2d7515d5ca6d42f8e447593a3687cdd3a99d74c591b401f6ce4b750ac2392ebb013963d8957daddfa75bfbef76f53b28457'
+'f2588a7024bc6b7f8cdb67875107e28a132b06602965870a3d45d5a36dc8ba214ce1d4bb5c71911554e39cc480f3145f70fb022280d04cd1f9b9b284c53bdd57'
+'63b3a87e6f748e0caba65a99f77823b7141c1dc54c834228b6a68986bf42fe25254a9ce07db4df8683dc374c97e58c39678d3305d423e2ca0eb4f2df4e0e84f0'
+'6002bb75d4519f3724ac34a8e4e8ea4e1f3cb063225d8feb9be7b1f38a0e706a0e2818495efd2ecea00302fbecf6d8cecd62689a5414bad06153d27a4e03a879'
+'6e6956e24c545b630a8024e9e27a8a54d6cd102ca7c76c46ce90342e90f44dc9bdc6e71384802b18f133529c66f3a2f0fa5ef580058ed22919931301e781a6be')
 
-prepare() {
+prepare() 
+
+  { # Remove incorrect patch file
+  rm ../src/debian/patches/01_no_autostart.patch
+
+  # Replace incorrect patch file with correct file
+  cp ../01_no_autostart.patch ../src/debian/patches/01_no_autostart.patch
+
+  # Remove incorrect patch file
+  rm ../src/debian/patches/libsystemd.patch
+
+  # Replace incorrect patch file with correct file
+  cp ../libsystemd.patch ../src/debian/patches/libsystemd.patch
+
+  # Replace file that fails to build
+  rm ../src/gnome-screensaver-3.6.1/src/gs-manager.c
+  cp ../gs-manager.c ../src/gnome-screensaver-3.6.1/src/gs-manager.c
+
   cd "gnome-screensaver-${pkgver}"
 
   # Upstream patch that moves gnome-screensaver desktop file out of autostart
@@ -65,7 +89,6 @@ prepare() {
   # Apply Ubuntu's patches
   sed -i -e '/32_input_sources_switcher.patch/d' \
          -e '/00git_logind_check.patch/d' \
-         -e '/19_not_autostart_in_unity.patch/d' \
          -e '/24_use_user_settings.patch/d' \
          -e '/27_lightdm_switch_user.patch/d' \
          ../debian/patches/series
