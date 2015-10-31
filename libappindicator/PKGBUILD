@@ -1,9 +1,10 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase}, repo=vivid
+# vercheck-ubuntu: name=${pkgbase}, repo=wily
 # vercheck-launchpad: name=${pkgbase}
 
 pkgbase=libappindicator
@@ -11,7 +12,7 @@ pkgname=(libappindicator libappindicator3)
 _actual_ver=12.10.1
 _extra_ver=+15.04.20141110
 pkgver=${_actual_ver}${_extra_ver/\+/.}
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="A library to allow applications to export a menu into the Unity Menu bar"
 arch=(i686 x86_64)
@@ -43,18 +44,22 @@ build() {
 
   export CFLAGS+=" -Wno-error=deprecated-declarations"
 
+  export MCS=/usr/bin/mcs
+  export CSC=/usr/bin/mcs
+  export GMCS=/usr/bin/mcs
+
   gtkdocize
   autoreconf -vfi
 
   [[ -d build-gtk2 ]] || mkdir build-gtk2
   pushd build-gtk2
-  ../configure --prefix=/usr --with-gtk=2 --disable-static PYTHON=python2
+  ../configure --prefix=/usr --with-gtk=2 --disable-static --disable-mono-test PYTHON=python2
   make -j1
   popd
 
   [[ -d build-gtk3 ]] || mkdir build-gtk3
   pushd build-gtk3
-  ../configure --prefix=/usr --with-gtk=3 --disable-static PYTHON=python2
+  ../configure --prefix=/usr --with-gtk=3 --disable-static --disable-mono-test PYTHON=python2
   make -j1
   popd
 }
