@@ -1,25 +1,25 @@
 From e1aaa5f6ee480c68cd266281c3adbbf13aad1538 Mon Sep 17 00:00:00 2001
 From: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+Contributor: Michael Healy <horsemanoffaith@gmail.com>
 Date: Sun, 8 Jun 2014 16:31:50 -0400
 Subject: [PATCH 2/8] Skip bluetooth panel
 
 ---
- configure.ac | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ configure.ac | 4 +++
+ 1 file changed, 3 insertions(+), 0 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
 index 47fcbff..ccfd938 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -171,9 +171,7 @@ fi
+@@ -188,6 +188,9 @@ if test "x$have_networkmanager" = xno ; then
+         AC_MSG_WARN(*** Network panel will not be built (NetworkManager ~0.9 or newer not found) ***)
+ fi
  AM_CONDITIONAL(BUILD_NETWORK, [test x$have_networkmanager = xyes])
  
- # Check for gnome-bluetooth
--PKG_CHECK_MODULES(BLUETOOTH, $COMMON_MODULES gnome-bluetooth-1.0 >= 3.5.5,
--		  [have_bluetooth=yes], have_bluetooth=no)
--AM_CONDITIONAL(BUILD_BLUETOOTH, [test x$have_bluetooth = xyes])
++# Check for gnome-bluetooth
 +AM_CONDITIONAL(BUILD_BLUETOOTH, [false])
- 
++ 
  # Check for CUPS 1.4 or newer
  AC_ARG_ENABLE([cups],
 -- 
