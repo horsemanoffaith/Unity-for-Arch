@@ -1,19 +1,20 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Original Maintainer: Jan de Groot <jgc@archlinux.org>
 # Contributor: thn81 <root@scrat>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname%-*}, repo=vivid
+# vercheck-ubuntu: name=${pkgname%-*}, repo=wily
 # vercheck-archlinux: name=${pkgname%-*}, repo=extra, arch=x86_64
-# vercheck-gnome: name=${pkgname%-*}, majorver=3.16
+# vercheck-gnome: name=${pkgname%-*}, majorver=3.18
 # vercheck-ppa: name=${pkgname%-*}, url=ppa:gnome3-team/gnome3-staging
 
 pkgname=gnome-session-ubuntu
 _use_ppa=true
-_ppa_rel=0ubuntu1~vivid1
-#_ubuntu_rel=2ubuntu4
-#_ubuntu_ver=3.14.0
-pkgver=3.16.0
+_ppa_rel=0ubuntu1~wily1
+#_ubuntu_rel=1ubuntu2
+#_ubuntu_ver=3.18.1.2
+pkgver=3.18.1.2
 pkgrel=1
 pkgdesc="The GNOME Session Handler"
 arch=(i686 x86_64)
@@ -27,7 +28,7 @@ conflicts=(gnome-session)
 options=(!emptydirs)
 install=gnome-session.install
 url="http://www.gnome.org"
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname%-*}/${pkgver%.*}/${pkgname%-*}-${pkgver}.tar.xz"
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname%-*}/${pkgver:0:4}/${pkgname%-*}-${pkgver}.tar.xz"
         timeout.patch
         polkit-gnome-authentication-agent-1-unity.desktop)
 
@@ -37,10 +38,10 @@ else
     source+=("https://launchpad.net/ubuntu/+archive/primary/+files/gnome-session_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.gz")
 fi
 
-sha512sums=('4f02e73ab632ce0c2b961f1d88d93ef62fb6ebfa39d98bf12e672ca7cd9680d07aeffcd3c8792eddcbd9b5e13b0ef87d064352d8f209b3befd8445c1ba17e485'
+sha512sums=('741da4ebdc6eccef35ee3e1be124785ad7e2e6de49c2fbb88568cff91c8cd5133e71064d8c74181052a9ce4df446fad7358bb61fc1d1a5746ab76a655d35f72a'
             '81d28b8f345c3a16dbb443ee8f195f802b572941aeac2dafaf6ea6b231ccb89a280aa855d09744dfc7ef2ad794a5e7b0002b54b14465865441367055514bcb70'
             '34e32d1c3fd7c417b5dc70737b9dff9c9b0b660a6c99cb8c29e944818df0cb643fcac01c6c5252849bb8595a348aaf4d2a24985560c6b8a9653544e146e5b4af'
-            '6283e96c913c70029a95aee22db91ecc4378cda47560edec2d286dd0e1c7d6cb934888ebce912f527c31c3a104f564be1912f2ffb1d8922b72bb4255faebc741')
+            'd237511084501f862fa5a79fd438b577b46fa5899f5c8824d4fc6e9e4e782907f297de79611675260f1ff503061c391ada7aa580d4f8901dfefe7ce723d3ea7e')
 
 prepare() {
   cd "${pkgname%-*}-${pkgver}"
