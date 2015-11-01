@@ -32,18 +32,6 @@ index 044f694..98a946a 100644
  			</_description>
  		</key>
  		<key name="show-locations" type="b">
-diff --git a/include/datetime/timezone-file.h b/include/datetime/timezone-file.h
-index eca9c29..53c7618 100644
---- a/include/datetime/timezone-file.h
-+++ b/include/datetime/timezone-file.h
-@@ -36,6 +36,7 @@ class FileTimezone: public Timezone
- public:
-     FileTimezone(const std::string& filename);
-     ~FileTimezone();
-+    static bool have_file(const std::string& filename);
- 
- private:
-     class Impl;
 diff --git a/include/datetime/timezone-systemd.h b/include/datetime/timezone-systemd.h
 new file mode 100644
 index 0000000..08eb25d
@@ -110,36 +98,16 @@ index 0000000..08eb25d
 +} // namespace unity
 +
 +#endif // INDICATOR_DATETIME_SYSTEMD_TIMEZONE_H
-diff --git a/include/datetime/timezones-live.h b/include/datetime/timezones-live.h
-index ca4ef31..0d026f6 100644
---- a/include/datetime/timezones-live.h
-+++ b/include/datetime/timezones-live.h
-@@ -24,6 +24,7 @@
- #include <datetime/timezones.h>
- #include <datetime/timezone-file.h>
- #include <datetime/timezone-geoclue.h>
-+#include <datetime/timezone-systemd.h>
- 
- #include <memory> // shared_ptr<>
- 
-@@ -44,7 +45,9 @@ private:
-     void update_geolocation();
-     void update_timezones();
- 
-+    bool m_etc_timezone = false;
-     FileTimezone m_file;
-+    SystemdTimezone m_systemd;
-     std::shared_ptr<const Settings> m_settings;
-     std::shared_ptr<GeoclueTimezone> m_geo;
- };
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
 index 5fc822c..a14b8e6 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -4,6 +4,21 @@ set (SERVICE_EXEC "indicator-datetime-service")
- add_definitions (-DTIMEZONE_FILE="/etc/timezone"
-                  -DG_LOG_DOMAIN="Indicator-Datetime")
- 
+@@ -2,7 +2,22 @@ set (SERVICE_LIB "indicatordatetimeservice")
+ set (SERVICE_EXEC "indicator-datetime-service")
+
++add_definitions (-DTIMEZONE_FILE="/etc/timezone")
+ add_definitions (-DG_LOG_DOMAIN="Indicator-Datetime")
+
 +# This interface xml can only be generated when the timedated daemon and DBus
 +# are available
 +#gdbus introspect                                       \
@@ -152,18 +120,17 @@ index 5fc822c..a14b8e6 100644
 +add_custom_command (
 +    OUTPUT timedate1.h timedate1.c
 +    COMMAND gdbus-codegen --interface-prefix org.freedesktop. --generate-c-code timedate1 ${CMAKE_CURRENT_SOURCE_DIR}/timedate1-interface.xml
-+    COMMENT "Generating code for systemd's timedate1 interface"
-+)
++    COMMENT "Generating code for systemd's timedate1 interface")
 +
  # handwritten sources
  set (SERVICE_C_SOURCES
       utils.c)
-@@ -36,8 +51,11 @@ set (SERVICE_CXX_SOURCES
+@@ -34,8 +50,11 @@ set (SERVICE_CXX_SOURCES
       sound.cpp
-      timezone-file.cpp
       timezone-geoclue.cpp
 +     timezone-systemd.cpp
       timezones-live.cpp
+      timezone-timedated.cpp
       utils.c
 +     timedate1.h
 +     timedate1.c
@@ -174,30 +141,13 @@ diff --git a/src/main.cpp b/src/main.cpp
 index 907d49f..8a64440 100644
 --- a/src/main.cpp
 +++ b/src/main.cpp
-@@ -32,6 +32,7 @@
+@@ -32,5 +32,6 @@
  #include <datetime/snap.h>
  #include <datetime/state.h>
- #include <datetime/timezone-file.h>
 +#include <datetime/timezone-systemd.h>
  #include <datetime/timezones-live.h>
+ #include <datetime/timezone-timedated.h>
  #include <datetime/wakeup-timer-powerd.h>
- #include <notifications/notifications.h>
-@@ -128,7 +129,14 @@ main(int /*argc*/, char** /*argv*/)
-     textdomain(GETTEXT_PACKAGE);
- 
-     auto engine = create_engine();
--    auto timezone_ = std::make_shared<FileTimezone>(TIMEZONE_FILE);
-+
-+    std::shared_ptr<Timezone> timezone_(nullptr);
-+
-+    if (FileTimezone::have_file(TIMEZONE_FILE))
-+        timezone_ = std::shared_ptr<Timezone>(new FileTimezone(TIMEZONE_FILE));
-+    else
-+        timezone_ = std::shared_ptr<Timezone>(new SystemdTimezone());
-+
-     auto state = create_state(engine, timezone_);
-     auto actions = std::make_shared<LiveActions>(state);
-     MenuFactory factory(actions, state);
 diff --git a/src/timedate1-interface.xml b/src/timedate1-interface.xml
 new file mode 100644
 index 0000000..27a58af
@@ -278,33 +228,6 @@ index 0000000..27a58af
 +  </method>
 + </interface>
 +</node>
-diff --git a/src/timezone-file.cpp b/src/timezone-file.cpp
-index 3c73913..c75d11e 100644
---- a/src/timezone-file.cpp
-+++ b/src/timezone-file.cpp
-@@ -39,7 +39,8 @@ public:
-     Impl(FileTimezone& owner, const std::string& filename):
-         m_owner(owner)
-     {
--        set_filename(filename);
-+        if (FileTimezone::have_file(filename))
-+            set_filename(filename);
-     }
- 
-     ~Impl()
-@@ -183,6 +184,12 @@ FileTimezone::~FileTimezone()
- {
- }
- 
-+bool
-+FileTimezone::have_file(const std::string& filename)
-+{
-+    return g_file_test(filename.c_str(), G_FILE_TEST_EXISTS);
-+}
-+
- /***
- ****
- ***/
 diff --git a/src/timezone-systemd.cpp b/src/timezone-systemd.cpp
 new file mode 100644
 index 0000000..d288d01
@@ -387,43 +310,6 @@ index 0000000..d288d01
 +} // namespace datetime
 +} // namespace indicator
 +} // namespace unity
-diff --git a/src/timezones-live.cpp b/src/timezones-live.cpp
-index 4902b76..8e4db27 100644
---- a/src/timezones-live.cpp
-+++ b/src/timezones-live.cpp
-@@ -28,9 +28,21 @@ namespace datetime {
- LiveTimezones::LiveTimezones(const std::shared_ptr<const Settings>& settings,
-                              const std::string& filename):
-     m_file(filename),
-+    m_systemd(),
-     m_settings(settings)
- {
--    m_file.timezone.changed().connect([this](const std::string&){update_timezones();});
-+    m_etc_timezone = FileTimezone::have_file(filename);
-+
-+    if (m_etc_timezone)
-+    {
-+        g_warning("Getting timezone from /etc/timezone");
-+        m_file.timezone.changed().connect([this](const std::string&){update_timezones();});
-+    }
-+    else
-+    {
-+        g_warning("Getting timezone from systemd's timedate1 interface");
-+        m_systemd.timezone.changed().connect([this](const std::string&){update_timezones();});
-+    }
- 
-     m_settings->show_detected_location.changed().connect([this](bool){update_geolocation();});
-     update_geolocation();
-@@ -54,7 +66,8 @@ void LiveTimezones::update_geolocation()
- 
- void LiveTimezones::update_timezones()
- {
--    const auto a = m_file.timezone.get();
-+    const auto tz = m_etc_timezone ? m_file.timezone : m_systemd.timezone;
-+    const auto a = tz.get();
-     const auto b = m_geo ? m_geo->timezone.get() : "";
- 
-     timezone.set(a.empty() ? b : a);
--- 
+
 2.3.7
 
