@@ -1,14 +1,15 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=vivid
+# vercheck-ubuntu: name=${pkgname}, repo=wily
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-datetime
 _actual_ver=13.10.0
-_extra_ver=+15.04.20150406
+_extra_ver=+15.10.20150909
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="A very, very simple clock"
@@ -24,10 +25,10 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${_actu
         0001-Get-timezone-from-systemd-s-timedate1-interface.patch
         0002-Not-a-phone.patch
         0003-Add-support-for-EDS-3.16-API.patch)
-sha512sums=('62bb299876407be983f14590b7e8732f8c46f9633290368c36d90ce0ab75592dc5e56bd58c50ae2d75b122a18f63be185de5f127feaa9b3f5f29d7e46ae3b2c0'
-            '0a53962469e967142edf43e52a815d9062ca76233299c68c2b345a983dbdf4232d68d9924551a7cea222cdc712eb5f8347960775721bfcba2d99381ba22971cd'
-            '5a13c4da2b8475a684a03cd89a78acf45430e574ad20f2c9f45fca800e456c8077cf870d9d1d53716585a9cb290826f70874101d5c1dbc6912990b0216319a20'
-            '50573f6d3e3fb06999bea186c09b8dfc3a4ecafc245398821918462c92c791ac01cbd04818e22eac43787fb1981e2d15315973b0a40782b9e178cc51aa039ee3')
+sha512sums=('875779bf3a6df3e36e8ed10ade376612a3e61a4ec17825cd539ac81a946ce33f40c3306b1db5956352f91cd125200fa76eda0446a7157f6e3dd6ad14fb7bc91d'
+            '0bf981faa8a7dea78f9d4c5c6c1a540cc3f6fba087849d834c18c807bb1f39bc82891142e66d32646cd807d140ff6f75ff13b0394dd6d7480441754833f54e57'
+            'f7a38476245a233454463ccef33af52dc62738640161de8647185ad26f1b1e3004b10e4adb3fa841b58143f502330776868e116657579be6bd3e076fed184759'
+            'f1597b7b46390d786d3e2c04477ae612987508f22fada666402cf514b2b9bc99ced7f8c3b34b70fa91422ed05ac139e8d05b48c0c148f57c39ba323958aef21f')
 
 prepare() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
