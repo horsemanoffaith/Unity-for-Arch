@@ -22,7 +22,7 @@ install=${pkgname}.install
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-power_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001-Not-a-phone.patch)
 sha512sums=('77e839c1d40e53a9c48325ab9d6b2f8d4f9aa7dbca731b85ba8f0f7220aabbbc2b600f92a4fd67ab424a68734241a16a3125dd3e77ad33fed3648a24acbb8e7c'
-            'cffea943e48c03bff2155cdadfeac630ca91c68556606418acdd4708fb77712746dd5f691d64a7e426445180dea8ab7b4bdde5dece37855af058996e97e9fc54')
+            '636d1b72ee1adeb2cdd04f2c71742a1a4a15d7c205968bb140ef500f7c7ef4bd7b0e33eef8034bb596c176e869a1c8b5758ebb0d83971bd5f243f4a2856be791')
 
 prepare() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
