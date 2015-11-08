@@ -1,0 +1,59 @@
+#Maintainer: Michael Healy <horsemanoffaith@gmail.com>
+#Date: November 8th, 2015 0115
+#Removing URL Dispatcher from build
+
+--- a/CMakeLists.txt	2015-09-15 00:47:26.000000000 -0700
++++ b/CMakeLists.txt	2015-11-08 00:53:22.110407243 -0800
+@@ -29,8 +29,7 @@
+ include (FindPkgConfig)
+ pkg_check_modules (SERVICE REQUIRED
+                    glib-2.0>=2.36
+-                   gio-unix-2.0>=2.36
+-                   url-dispatcher-1>=1)
++                   gio-unix-2.0>=2.36)
+ include_directories (${SERVICE_INCLUDE_DIRS})
+ 
+ set (CC_WARNING_ARGS " -Wall -pedantic -Wextra -Wno-missing-field-initializers")
+--- a/src/backend-dbus/actions.c	2015-09-15 00:47:26.000000000 -0700
++++ b/src/backend-dbus/actions.c	2015-11-08 01:06:40.727075507 -0800
+@@ -19,7 +19,6 @@
+ 
+ #include <glib.h>
+ #include <glib/gi18n.h>
+-#include <url-dispatcher.h>
+ 
+ #include "dbus-end-session-dialog.h"
+ #include "dbus-login1-manager.h"
+@@ -863,9 +862,7 @@
+ static void
+ my_settings (IndicatorSessionActions * self G_GNUC_UNUSED)
+ {
+-  if (g_getenv ("MIR_SOCKET") != NULL)
+-    url_dispatch_send("settings:///system", NULL, NULL);
+-  else if (have_unity_control_center ())
++  if (have_unity_control_center ())
+     run_outside_app ("unity-control-center");
+   else
+     run_outside_app ("gnome-control-center");
+@@ -874,9 +871,7 @@
+ static void
+ my_online_accounts (IndicatorSessionActions * self G_GNUC_UNUSED)
+ {
+-  if (g_getenv ("MIR_SOCKET") != NULL)
+-    url_dispatch_send("settings:///system/online-accounts", NULL, NULL);
+-  else if (have_unity_control_center ())
++  if (have_unity_control_center ())
+     run_outside_app ("unity-control-center credentials");
+   else
+     run_outside_app ("gnome-control-center credentials");
+@@ -885,9 +880,7 @@
+ static void
+ my_about (IndicatorSessionActions * self G_GNUC_UNUSED)
+ {
+-  if (g_getenv ("MIR_SOCKET") != NULL)
+-    url_dispatch_send("settings:///system/about", NULL, NULL);
+-  else if (have_unity_control_center ())
++  if (have_unity_control_center ())
+     run_outside_app ("unity-control-center info");
+   else
+     run_outside_app ("gnome-control-center info");
