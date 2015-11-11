@@ -1,0 +1,30 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
+
+# vercheck-pkgbuild: auto
+# vercheck-ubuntu: name=${pkgname}, repo=wily
+
+pkgname=libqtdee
+_actual_ver=0.2.4
+pkgver=${_actual_ver}
+pkgrel=1
+pkgdesc="Qt5 bindings for dee"
+arch=(i686 x86_64)
+url="https://launchpad.net/dee-qt"
+license=(LGPL)
+groups=(unity)
+depends=(dee-ubuntu qt5-base qt5-declarative)
+makedepends=(cmake qtchooser)
+source=("https://launchpad.net/ubuntu/+archive/primary/+files/libqtdee_${_actual_ver}${_extra_ver}.orig.tar.gz")
+sha512sums=('7d2b0c8dc9fe83c99d265e6e65cc9c2f250bcd5f1786f4b5feb75861ba7c96555534e52a3ccec2a2dec1691822ac70b2969eb3e479ffab798433f77c38c0c9e8')
+
+build() {
+  cd "${pkgname}-${_actual_ver}"
+  cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITHQT5=1
+  make
+}
+
+package() {
+  cd "${pkgname}-${_actual_ver}"
+  make DESTDIR="${pkgdir}/" install
+}
