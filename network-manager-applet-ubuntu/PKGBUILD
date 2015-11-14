@@ -4,17 +4,18 @@
 # Contributor: Wael Nasreddine <gandalf@siemens-mobiles.org>
 # Contributor: Tor Krill <tor@krill.nu>
 # Contributor: Will Rea <sillywilly@gmail.com>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase%-*}, repo=vivid
+# vercheck-ubuntu: name=${pkgbase%-*}, repo=wily
 # vercheck-archlinux: name=${pkgbase%-*}, repo=extra, arch=x86_64
 # vercheck-gnome: name=${pkgbase%-*}, majorver=0.9
 
 pkgbase=network-manager-applet-ubuntu
 pkgname=(network-manager-applet-ubuntu libnm-gtk-ubuntu)
-_ubuntu_rel=0ubuntu1
+_ubuntu_rel=0ubuntu7
 pkgver=0.9.10.1
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Applet for managing network connections"
 arch=(i686 x86_64)
@@ -27,7 +28,7 @@ extrafiles=(network-manager-applet.install)
 source=("http://ftp.gnome.org/pub/GNOME/sources/${pkgbase%-*}/${pkgver%.*.*}/${pkgbase%-*}-${pkgver}.tar.xz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/${pkgbase%-*}_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.xz")
 sha512sums=('7f11a01bbc22c201bb41ef6bf4c65a13c1f136d86c6e84c43f8ea6b537379eebaf9512642581988d4a67bb033c918708b53b29edf736460d0744ef41672843f1'
-            '15d98bc4288757d779dfbe6e24e334839f635da01c1db2b6aa54788a5e3a95ba0c076b988d6ce695ba600dd3c822a1fa45897236a2477b60255784ef1f2f45f6')
+            '0de0bc0f272e5718df05dbf00d709096a20a14059f4135e461451b76c9529b6ee977bf87b1340ad661c4f390f6959b4878ab2f4a4c3aa63e533f5159a011dd89')
 
 prepare() {
   cd "${pkgbase%-*}-${pkgver}"
