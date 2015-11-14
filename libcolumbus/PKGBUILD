@@ -1,13 +1,15 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=vivid
+# vercheck-ubuntu: name=${pkgname}, repo=wily
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=libcolumbus
+_ubuntu_rel=0ubuntu2
 _actual_ver=1.1.0
-_extra_ver=+14.04.20140325.3
-pkgver=${_actual_ver}${_extra_ver/+/.}
+_extra_ver=+15.10.20150806
+pkgver=${_actual_ver}${_extra_ver}
 pkgrel=4
 epoch=1
 pkgdesc="A small, fast, error tolerant matcher"
@@ -17,8 +19,18 @@ license=(LGPL)
 groups=(unity)
 depends=(icu)
 makedepends=(boost cmake sparsehash)
-source=("https://launchpad.net/ubuntu/+archive/primary/+files/libcolumbus_${_actual_ver}${_extra_ver}.orig.tar.gz")
-sha512sums=('510f059dc3e5438c60b1d5fef41c5f0681374a721fe9df286e8bed7147c3268cacb9d588bf36c10169a3460bb25b1cda0ac52c2f7b2880a4f0a28aa1988b738c')
+source=("https://launchpad.net/ubuntu/+archive/primary/+files/libcolumbus_${_actual_ver}${_extra_ver}.orig.tar.gz"
+         libcolumbus.map.patch)
+
+sha512sums=('72a67115c813ceb575eb237c28eb096232e319524718f8fa4d28dab2fd42bf3eb637366ac829d9fb0999d119413b5259d6802de3beb5dff52983ce80ffe5fe41'
+
+'9f5c0255df923aed69687209367606d302e74e47e4d8e7a06d30fa5caab6447067282cd4a3a75aa2fb3fa9163c16d803034a0652eef778593d7f19b5b03b9bc8')
+
+prepare() {
+  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+
+  patch -p1 -i ../libcolumbus.map.patch
+}
 
 build() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
