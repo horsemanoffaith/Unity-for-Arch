@@ -1,12 +1,13 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=vivid
+# vercheck-ubuntu: name=${pkgname}, repo=wily
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=hud
 _actual_ver=14.10
-_extra_ver=+14.10.20140924
+_extra_ver=+15.10.20151012
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=3
 pkgdesc="Backend for the Unity HUD"
@@ -24,10 +25,10 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/hud_${_actual_ver}
         0001_Python_2.patch
         0002_Remove_tests.patch
         0003_Remove_voice_recognition.patch)
-sha512sums=('e1718f5e54eb659ab21e65527b858638c17fccd171a91ca0bf54989559c2fe2f35321f728883f909cb6e12b0f030b7ad8889e0eabd7127e8fa6e7601ca45b1e0'
+sha512sums=('eedc155fd3914e075994caef6c39efe4f5738fef8679653c838248226add20b27f68395c556df6441aec0cf667d0f75065c7066334b1f67d1c42faa720b2f4e5'
             '1d560db046c56ecff0d6566c98684962f179326009fb2bfdbaab3fc1df265afa5cb2da202fb13b4889ade0244eaf39f3aea4d7c9e434c2bd1334f75bc969cc90'
-            '546aa6b2c1a6e9f9de8f6c4a5d53fe48af39e0f0a96a2e2c3923d44187046ee7da89cba6b9e043e2cf14fd1b333db18fc0d91cb7530b7bc2394080d2b690e602'
-            '599b9c5e1acbb530bc225a8b0f5e68ff4863b57009da35d75bebbf9b40655903405fe00434b375f1d699d52bdeb4c27ef6539f36634e77ce8c72f09ff4a21805')
+            'c38e555315f16014aa66c20dde02d8902db97de44b9771d0d4269758889cf4a3106da26300d2a26177fd36b66847c9cd2f2117355e40239b2fa0a8c9238594eb'
+            '66ad6b36cff47e3fe9c75d728e8297dbcee4122bf47858c231b8425ca3925afd31a23715d4f63b98abc974e06a354fe526ac6d20e8b57bdb9a6f23e8045d9753')
 
 prepare() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
