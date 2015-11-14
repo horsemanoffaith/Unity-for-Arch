@@ -40,5 +40,5 @@ package() {
   rm "${pkgdir}/usr/share/unity/scopes/photos/picasa.scope"
 
   # Use language packs
-  rm -r "${pkgdir}/usr/locale/"
+  rm -r "${pkgdir}/usr/share/locale/"
 }
