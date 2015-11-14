@@ -1,12 +1,13 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=vivid
+# vercheck-ubuntu: name=${pkgname}, repo=wily
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=geis
-_actual_ver=2.2.16
-_extra_ver=+15.04.20150304
+_actual_ver=2.2.17
+_extra_ver=+15.10.20150728
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
 epoch=1
@@ -18,7 +19,7 @@ depends=(grail xorg-xinput python3 dbus-core)
 makedepends=(xorg-server-devel)
 options=(!emptydirs)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/geis_${_actual_ver}${_extra_ver}.orig.tar.gz")
-sha512sums=('3837c5433f53068233c2e3502a9c65434844c4be95cd3c22f83bbfb2c077001f265ded29bed9dc2ad113857d204ffbd55a4ddce97981323402f2452da09ac478')
+sha512sums=('9fb43bed0d427f9b43e779256c50c7ce2ad7f018f1f931621a24348e8d91043265a4bb8e3c4c2049f25f4aebbfd36b94dec29852de2202b6049cf9b334ac4f94')
 
 build() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
