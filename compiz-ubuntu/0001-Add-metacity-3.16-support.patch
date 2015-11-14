@@ -1,6 +1,8 @@
 From bf3acf4f1b6505961f7ed2bc954b6bbd0dc23eca Mon Sep 17 00:00:00 2001
 From: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+Edited: Michael Healy <horsemanoffaith@gmail.com>
 Date: Fri, 1 May 2015 16:37:22 -0400
+Date Edited: 14 Nov 2015 14:27:00 -0800
 Subject: [PATCH 1/2] Add metacity 3.16 support
 
 Based on revision 3951 from
