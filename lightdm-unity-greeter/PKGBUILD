@@ -106,3 +106,4 @@ package() {
   # Use language packs
   rm -r "${pkgdir}/usr/share/locale/"
 }
+
