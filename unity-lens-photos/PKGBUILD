@@ -1,7 +1,8 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Contributor: Michael Healy <horsemanoffaith@gmai.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=vivid
+# vercheck-ubuntu: name=${pkgname}, repo=wily
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=unity-lens-photos
@@ -39,5 +40,5 @@ package() {
   rm "${pkgdir}/usr/share/unity/scopes/photos/picasa.scope"
 
   # Use language packs
-  rm -r "${pkgdir}/usr/share/locale/"
+  rm -r "${pkgdir}/usr/locale/"
 }
