@@ -1,6 +1,7 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
-# vercheck-ubuntudb: pkgprefix=unity-scope-, verprefix=_ver_, relprefix=_rel_, skip=home, repo=vivid
+# vercheck-ubuntudb: pkgprefix=unity-scope-, verprefix=_ver_, relprefix=_rel_, skip=home, repo=wily
 
 # When updating, check if any packages are missing when compared to
 # /usr/share/unity/client-scopes.json
