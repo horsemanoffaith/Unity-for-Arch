@@ -15,7 +15,7 @@ pkgrel=2
 epoch=1
 pkgdesc="A daemon exposing your files and file history to Unity"
 arch=(i686 x86_64)
-url="https://launchpad.net/unity-place-files"
+url="https://launchpad.net/unity-lens-files"
 license=(GPL)
 depends=(zeitgeist-ubuntu libgee06 libunity libxdg-basedir xdg-user-dirs pyxdg
          dconf)
