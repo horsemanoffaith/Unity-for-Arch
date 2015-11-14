@@ -1,6 +1,6 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -105,12 +105,6 @@
+@@ -98,12 +98,6 @@
  find_package(Qt5Test REQUIRED)
  include_directories(${Qt5Test_INCLUDE_DIRS})
  
@@ -10,6 +10,7 @@
 -pkg_check_modules(QTDBUSMOCK REQUIRED libqtdbusmock-1 REQUIRED)
 -include_directories(${QTDBUSMOCK_INCLUDE_DIRS})
 -
- pkg_check_modules(UNITYVOICE REQUIRED libunityvoice-1 REQUIRED)
- include_directories(${UNITYVOICE_INCLUDE_DIRS})
+ find_package(Vala 0.12)
+
+ find_package(GObjectIntrospection 0.9.12)
  
