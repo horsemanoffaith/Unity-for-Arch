@@ -14,7 +14,7 @@ override_vers=(
     '1020::14.10+20141020'
 )
 
-basever='15.04+20150416'
+basever='15.10+20151016'
 
 # Adding a language to the 'languages' array below will add the '<lang>',
 # '<lang>-base', 'gnome-<lang>', 'gnome-<lang>-base', and 'touch-<lang>'
