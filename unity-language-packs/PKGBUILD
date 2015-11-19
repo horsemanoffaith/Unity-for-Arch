@@ -1,6 +1,6 @@
 # Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 
-# vercheck-ubuntudb: pkgprefix=language-pack-, verprefix=_ver_, ignorerel, onlyver=".*1[45].(04|10).*", repo=vivid
+# vercheck-ubuntudb: pkgprefix=language-pack-, verprefix=_ver_, ignorerel, onlyver=".*1[46].(10|10).*", repo=wily
 
 # Thanks to the unity-gentoo project for many of the ideas used in here!
 
