@@ -8,6 +8,7 @@
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-messages
+_actual_ver=13.10.1
 _extra_ver=+15.10.20150505
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
