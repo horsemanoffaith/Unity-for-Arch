@@ -48,6 +48,7 @@ To compile from source, just build all of the packages in the following order:
 | indicator-messages               | Collects messages that need a response     |
 | bamf-ubuntu                      | Application matching framework             |
 | libtimezonemap                   | GTK+3 timezone map widget                  |
+| geonames                         | Parse and query the geonames database dump |
 | gsettings-desktop-schemas-ubuntu | Shared GSettings schemas for the desktop   |
 | gnome-settings-daemon-ubuntu     | Daemon handling the GNOME session settings |
 | gnome-session-ubuntu             | GNOME Session Manager                      |
