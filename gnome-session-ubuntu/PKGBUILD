@@ -1,25 +1,24 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: Jan de Groot <jgc@archlinux.org>
 # Contributor: thn81 <root@scrat>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname%-*}, repo=wily
+# vercheck-ubuntu: name=${pkgname%-*}, repo=xenial
 # vercheck-archlinux: name=${pkgname%-*}, repo=extra, arch=x86_64
 # vercheck-gnome: name=${pkgname%-*}, majorver=3.18
 # vercheck-ppa: name=${pkgname%-*}, url=ppa:gnome3-team/gnome3-staging
 
 pkgname=gnome-session-ubuntu
 _use_ppa=true
-_ppa_rel=0ubuntu1~wily1
+_ppa_rel=3.19.2~git20151123.b4927603-0ubuntu1~xenial1
 #_ubuntu_rel=1ubuntu2
 #_ubuntu_ver=3.18.1.2
 pkgver=3.18.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc="The GNOME Session Handler"
 arch=(i686 x86_64)
 license=(GPL LGPL)
-depends=(systemd dconf gsettings-desktop-schemas gtk3 gnome-desktop
+depends=(systemd dconf gsettings-desktop-schemas gtk3-ubuntu gnome-desktop
          hicolor-icon-theme json-glib libgl libsm libxtst systemd polkit-gnome)
 makedepends=(gnome-common intltool mesa gtk-doc xtrans)
 groups=(gnome unity)
@@ -30,10 +29,11 @@ install=gnome-session.install
 url="http://www.gnome.org"
 source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname%-*}/${pkgver:0:4}/${pkgname%-*}-${pkgver}.tar.xz"
         timeout.patch
-        polkit-gnome-authentication-agent-1-unity.desktop)
+        polkit-gnome-authentication-agent-1-unity.desktop
+        50_ubuntu_sessions.patch)
 
 if [[ "${_use_ppa}" == "true" ]]; then
-    source+=("https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/gnome-session_${_ppa_ver:-${pkgver}}-${_ppa_rel}.debian.tar.xz")
+    source+=("https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/gnome-session_${_ppa_rel}.debian.tar.xz")
 else
     source+=("https://launchpad.net/ubuntu/+archive/primary/+files/gnome-session_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.gz")
 fi
@@ -41,14 +41,17 @@ fi
 sha512sums=('741da4ebdc6eccef35ee3e1be124785ad7e2e6de49c2fbb88568cff91c8cd5133e71064d8c74181052a9ce4df446fad7358bb61fc1d1a5746ab76a655d35f72a'
             '81d28b8f345c3a16dbb443ee8f195f802b572941aeac2dafaf6ea6b231ccb89a280aa855d09744dfc7ef2ad794a5e7b0002b54b14465865441367055514bcb70'
             '34e32d1c3fd7c417b5dc70737b9dff9c9b0b660a6c99cb8c29e944818df0cb643fcac01c6c5252849bb8595a348aaf4d2a24985560c6b8a9653544e146e5b4af'
-            'd237511084501f862fa5a79fd438b577b46fa5899f5c8824d4fc6e9e4e782907f297de79611675260f1ff503061c391ada7aa580d4f8901dfefe7ce723d3ea7e')
-
+            '3478c133370bd6ca33bebb440867b07eeedb8ccd69524bcb0c6aa9bab9238a6e65e4074531e92c4cf21a7418e74364ca5ef3782cb17669787afd0d7908311566'
+            'c1fce8ccb15efc8c96dc7c892d9bc6b04bdfa7deca4a1de88d3d9b710c979b1caac0b09f7ccb66291599875537bb8bb1ec36770b0f6971b13285ce230b120176')
 prepare() {
   cd "${pkgname%-*}-${pkgver}"
 
   # Increase timeout, for slow machines
   patch -p1 -i ../timeout.patch
 
+  sed -i '/0001-Revert-data-add-GNOME-on-Xorg-session.patch/d' ../debian/patches/series
+  sed -i '/0002-Partial-Revert-data-merge-wayland-and-X11-session-fi.patch/d' ../debian/patches/series
+  sed -i '/50_ubuntu_sessions.patch/d' ../debian/patches/series
   sed -i '/53_add_sessionmigration.patch/d' ../debian/patches/series
 
   # If you want this, install gnome-session-properties from the AUR
