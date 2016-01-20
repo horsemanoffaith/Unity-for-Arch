@@ -1,8 +1,7 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=dee, repo=wily
+# vercheck-ubuntu: name=dee, repo=xenial
 # vercheck-launchpad: name=dee
 
 pkgname=dee-ubuntu
