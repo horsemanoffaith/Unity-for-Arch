@@ -1,18 +1,17 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, native, repo=wily
+# vercheck-ubuntu: name=${pkgname}, native, repo=xenial
 
 pkgname=libtimezonemap
-pkgver=0.4.4
-pkgrel=2
+pkgver=0.4.5
+pkgrel=1
 pkgdesc="GTK+3 timezone map widget"
 arch=(i686 x86_64)
 url="https://launchpad.net/ubuntu/+source/libtimezonemap"
 license=(GPL)
 groups=(unity)
-depends=(cairo gtk3 json-glib)
+depends=(cairo gtk3-ubuntu json-glib)
 makedepends=(gobject-introspection intltool python2)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${pkgver}.tar.gz")
 sha512sums=('d15ec97d7b4522fbc3acf29d6873c124e321150a14ab00321904445d918cd69b9210d25e5a9b07876a6da31d0a466cf45237e7acacf9e4b37a3427ccfbbe0014')
