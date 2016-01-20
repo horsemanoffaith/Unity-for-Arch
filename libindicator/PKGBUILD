@@ -60,7 +60,7 @@ build() {
 
 package_libindicator() {
   pkgdesc+=" (GTK+ 2 library)"
-  depends=(cairo gtk2 glib2)
+  depends=(cairo gtk2-ubuntu glib2)
 
   cd "${pkgbase}-${_actual_ver}${_extra_ver}/build-gtk2"
 
@@ -69,7 +69,7 @@ package_libindicator() {
 
 package_libindicator3() {
   pkgdesc+=" (GTK+ 3 library)"
-  depends=(gtk3 glib2 ido)
+  depends=(gtk3-ubuntu glib2 ido)
   options+=(!emptydirs)
 
   cd "${pkgbase}-${_actual_ver}${_extra_ver}/build-gtk3"
