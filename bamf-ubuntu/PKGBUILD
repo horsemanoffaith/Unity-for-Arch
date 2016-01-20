@@ -1,15 +1,14 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=bamf, repo=wily
+# vercheck-ubuntu: name=bamf, repo=xenial
 # vercheck-launchpad: name=bamf
 
 pkgname=bamf-ubuntu
 _actual_ver=0.5.2~bzr0
-_extra_ver=+15.10.20150627.1
+_extra_ver=+16.04.20151217
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="Removes the headache of applications matching into a simple DBus daemon and c wrapper library"
