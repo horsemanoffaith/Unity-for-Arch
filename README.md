@@ -65,6 +65,7 @@ To compile from source, just build all of the packages in the following order:
 | indicator-power                  | Indicator to show battery information      |
 | indicator-printers               | Indicator to show active print jobs        |
 | indicator-session                | Indicator for session management           |
+| unity-api                        | API for Unity shell integration
 | indicator-sound                  | Indicator to show a unified sound menu     |
 | gsettings-qt                     | Library to access GSettings from Qt        |
 | dee-qt                           | Qt5 bindings for dee                       |
