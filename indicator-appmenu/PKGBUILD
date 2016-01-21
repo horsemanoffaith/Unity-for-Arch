@@ -1,15 +1,14 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=wily
+# vercheck-ubuntu: name=${pkgname}, repo=xenial
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-appmenu
 _actual_ver=15.02.0
-_extra_ver=+15.10.20151002
+_extra_ver=+16.04.20151104
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
 epoch=1
@@ -26,7 +25,7 @@ options=(!emptydirs)
 install="${pkgname}.install"
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-appmenu_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001_autoconf.patch)
-sha512sums=('69c1d1fdc8a1611e222ac569c28409803761bdc8a6d94e531c2a91a686442699490ec6e1e6d8845711fcbe0ef6496a096f06c3675131ca848212ea8360204c35'
+sha512sums=('b8b027e70a6a6da941fc11fa3d161bdbe27a2d3e2b5b85b6830a76ebe8487612fbe74e171ba3d7b04b814ae55053b07a6807a5cd1df6a280c76a5ad1d4b108aa'
             '31b83e433824bd7acd7be93bfd60932114eff344fea77c8ea1125272d5881fd61c1609d4fbf24de0cc8838e76d8ac405e7a19162e3ce2021b6b5b6dbb61c31f8')
 
 prepare() {
