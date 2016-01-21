@@ -1,16 +1,15 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=wily
+# vercheck-ubuntu: name=${pkgname}, repo=xenial
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=libcolumbus
-_ubuntu_rel=0ubuntu2
+_ubuntu_rel=0ubuntu4
 _actual_ver=1.1.0
 _extra_ver=+15.10.20150806
 pkgver=${_actual_ver}${_extra_ver}
-pkgrel=4
+pkgrel=5
 epoch=1
 pkgdesc="A small, fast, error tolerant matcher"
 arch=(i686 x86_64)
@@ -20,16 +19,17 @@ groups=(unity)
 depends=(icu)
 makedepends=(boost cmake sparsehash)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/libcolumbus_${_actual_ver}${_extra_ver}.orig.tar.gz"
-         libcolumbus.map.patch)
+        "https://launchpad.net/ubuntu/+archive/primary/+files/libcolumbus_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff.gz")
 
 sha512sums=('72a67115c813ceb575eb237c28eb096232e319524718f8fa4d28dab2fd42bf3eb637366ac829d9fb0999d119413b5259d6802de3beb5dff52983ce80ffe5fe41'
-
-'9f5c0255df923aed69687209367606d302e74e47e4d8e7a06d30fa5caab6447067282cd4a3a75aa2fb3fa9163c16d803034a0652eef778593d7f19b5b03b9bc8')
-
+            '24175b431617f250764aa090ddf75fdd53de43d74077c32d67e5ca9abe2e82e78fff50fbc781464ca5729300ab8e52a7a697a03bd4124dd34e654200dd65d437')
+            
 prepare() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  patch -p1 -i ../libcolumbus.map.patch
+# Apply Ubuntu patches
+  patch -p1 -i ../${pkgname}_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff
+
 }
 
 build() {
