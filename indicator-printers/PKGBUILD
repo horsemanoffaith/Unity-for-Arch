@@ -1,12 +1,11 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=wily
+# vercheck-ubuntu: name=${pkgname}, repo=xenial
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-printers
-_ubuntu_rel=0ubuntu1
+_ubuntu_rel=0ubuntu2
 _actual_ver=0.1.7
 _extra_ver=+15.04.20150220
 pkgver=${_actual_ver}${_extra_ver/\+/.}
