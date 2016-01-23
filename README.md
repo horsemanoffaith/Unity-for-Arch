@@ -79,8 +79,8 @@ To compile from source, just build all of the packages in the following order:
 | geis                             | Implementation of the GEIS interface       |
 | nux                              | An OpenGL toolkit for Unity                |
 | unity-asset-pool                 | Design assets for Unity                    |
-| nautilus-ubuntu                  | File manager for GNOME and Unity           |
 | zeitgeist-ubuntu                 | Service for logging user activities        |
+| nautilus-ubuntu                  | File manager for GNOME and Unity           |
 | unity-lens-applications          | Unity lens for searching applications      |
 | unity-lens-files                 | Unity lens for searching files             |
 | unity-lens-music                 | Unity lens for searching music library     |
