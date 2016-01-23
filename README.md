@@ -90,6 +90,7 @@ To compile from source, just build all of the packages in the following order:
 | unity-scopes                     | Unity scopes for searching online sources  |
 | compiz-ubuntu                    | Compositing window manager                 |
 | lightdm-unity-greeter            | LightDM greeter for Unity                  |
+| gmock                            | Library for writing/using C++ mock classes |
 | unity                            | Desktop shell designed for efficiency      |
 | unity-language-packs             | Unity language packs                       |
 
