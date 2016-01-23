@@ -20,7 +20,6 @@ setver firefoxbookmarks		0.1+13.10.20130809.1	0ubuntu1
 setver gallica			0.1+13.10.20130816.2	0ubuntu1
 setver gdrive			0.9+13.10.20130723	0ubuntu1
 setver github			0.1+13.10.20130723	0ubuntu1
-setver gmusicbrowser		0.1+13.10.20130723	0ubuntu1
 setver googlenews		0.1+13.10.20130723	0ubuntu1
 setver gourmet			0.1+13.10.20130723	0ubuntu1
 setver guayadeque		0.1+13.10.20130927.1	0ubuntu1
@@ -39,7 +38,7 @@ setver zotero			0.1+13.10.20130723	0ubuntu1
 pkgname=unity-scopes
 epoch=1
 pkgver=1.0
-pkgrel=11
+pkgrel=12
 pkgdesc="Online scopes for the Unity Dash"
 arch=(any)
 url="https://launchpad.net/unity-scope-NAME"
@@ -119,7 +118,6 @@ sha512sums=('3c19ded6c9a5c63b996a4da37afc93200d6e72906062ce94558fdf3c7aba74975c5
             '5ef4a63195396ab42911c1774729d9e7bf36503cbcce6fff7a9b6ad251fc4d6d1b0b2211e473c0a773f457bf888bc841db8b677b3cb90d9be3ec1b9b5a642a5f'
             '348b11527792ef7c0cbf46300d056c6fbaa5539fa22262fcf72f0c8b5ce9c6e583e2904b95d1be6d0b2860ad84179f05228457b718db83e5cd39b8904d7e47ab'
             '52def4d9a7ff94a67138d2a80c4556ee610c79312c021c8d69029991914ccdcf73e6c3cd310de006cfb3e1a35f84b8679269af3c8abbc54afa99a57ae262726f'
-            '04b3ddd4c90e596acba32f94b6c5d1c738fc8d363cc678895e62b6b5a3c45bfb038f0d48acb82bcdd47c97418b30485c54e3ea40dad30d3a1b67f8469a187437'
             '745decd18f64c4ff9d020d06c24d23d728c2018a7859c1ec6ef9849cb22e340fd3cd1d5b6ea71954f1d17526a3c8ebc9f516434ed5f7f1491afd285ce216b9de'
             '07152b0c744488dc7689bc18a9fd82d670cc15e0b8b2aa8eb312691be6cc4103ec3b70ab2e1e133864be1f42ab1098906f773badb8c7529aec595dd01ba5098e'
             '685cb9b1592759337a8f85cdfb5deb7f914ef491f6a9428a0751b645f8c645fdfcb2f421cda441221aebfe40e42e6073407a662ce1e2651a76b7907c4aea94cd'
