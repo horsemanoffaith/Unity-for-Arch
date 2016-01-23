@@ -15,7 +15,7 @@ arch=(i686 x86_64)
 url="https://launchpad.net/dee"
 license=(LGPL)
 groups=(unity)
-depends=(dbus-glib glib2 icu python python-gobject python2 python2-gobject)
+depends=(dbus-glib glib2 icu icu55 python python-gobject python2 python2-gobject)
 makedepends=(gnome-common gobject-introspection gtk-doc vala)
 provides=("dee=${pkgver}")
 conflicts=(dee)
