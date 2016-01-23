@@ -1,10 +1,9 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: Jan de Groot <jgc@archlinux.org>
 # Contributor: thn81 <root@scrat>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase%-*}, repo=wily
+# vercheck-ubuntu: name=${pkgbase%-*}, repo=xenial
 # vercheck-archlinux: name=${pkgbase%-*}, repo=extra, arch=x86_64
 # vercheck-gnome: name=${pkgbase%-*}, majorver=3.18
 # vercheck-ppa: name=${pkgbase%-*}, url=ppa:gnome3-team/gnome3-staging
@@ -13,17 +12,17 @@ _use_ppa=true
 
 pkgbase=nautilus-ubuntu
 pkgname=(nautilus-ubuntu libnautilus-extension-ubuntu)
-#_ubuntu_rel=0ubuntu13
-#_ubuntu_ver=3.14.2
-_ppa_rel=0ubuntu1~wily1
-pkgver=3.18.1
+#_ubuntu_rel=0ubuntu1
+#_ubuntu_ver=3.18.4
+_ppa_rel=0ubuntu1~xenial1
+pkgver=3.18.4
 pkgrel=1
 pkgdesc="GNOME and Unity file manager"
 arch=(i686 x86_64)
 license=(GPL)
 depends=(libexif gnome-desktop exempi gvfs desktop-file-utils dconf
          libtracker-sparql libnotify nautilus-sendto libunity libzeitgeist)
-makedepends=(intltool gobject-introspection python python2)
+makedepends=(intltool gobject-introspection python python2 zeitgeist)
 url="http://www.gnome.org"
 options=(!emptydirs)
 install=nautilus.install
@@ -34,8 +33,8 @@ else
     source+=("https://launchpad.net/ubuntu/+archive/primary/+files/nautilus_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.xz")
 fi
 
-sha512sums=('f0000cb9a53834ca1a7cc707ae1b3191cb450b32c141fd95026e9644b3374aa2dcc0b4216959938d08c95d71825d0af794e050cd62267f24b96a1722a4387ff9'
-            '0d577fc5a55a521142316e04fd2f45678a9c9f8c7298767a2f8a51eb7ddb9c5c79564ff3e04cd0321cbbfe5825ab7ef8c57e19af456f7cc9df222ff70b5869d7')
+sha512sums=('671abbb45d888260ed8591106a0da5d9703b050d2d962101eecfa6107ad4d0dfb792f6a8215f70d9c7e98898922ed78c4216c5e327bab573773422626d0905f4'
+            '123ec298419fe284b9ba38c974d036b315d1736697b1ef7efe4cf42eafb83875e9b3e8a75dc235bdfd9be7395e0d2b5e28ee20deb8aeddd330866245721b73b9')
 
 prepare() {
   cd "${pkgname%-*}-${pkgver}"
@@ -95,8 +94,7 @@ package_nautilus-ubuntu() {
   # Ubuntu specific stuff
   install -dm755 "${pkgdir}/usr/share/pixmaps/"
   install -dm755 "${pkgdir}/usr/share/applications/"
-  install -m644 "${srcdir}/debian/nautilus.xpm" "${pkgdir}/usr/share/pixmaps/"
-  install -m644 "${srcdir}/debian/mount-archive.desktop" "${pkgdir}/usr/share/applications/"
+    install -m644 "${srcdir}/debian/mount-archive.desktop" "${pkgdir}/usr/share/applications/"
   install -m644 "${srcdir}/debian/nautilus-folder-handler.desktop" "${pkgdir}/usr/share/applications/"
 
   # Use language packs
