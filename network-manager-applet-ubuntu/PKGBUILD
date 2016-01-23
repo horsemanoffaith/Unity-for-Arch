@@ -1,20 +1,19 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: Jan de Groot <jgc@archlinux.org>
 # Contributor: Arjan Timmerman <arjan@archlinux.org>
 # Contributor: Wael Nasreddine <gandalf@siemens-mobiles.org>
 # Contributor: Tor Krill <tor@krill.nu>
 # Contributor: Will Rea <sillywilly@gmail.com>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase%-*}, repo=wily
+# vercheck-ubuntu: name=${pkgbase%-*}, repo=xenial
 # vercheck-archlinux: name=${pkgbase%-*}, repo=extra, arch=x86_64
-# vercheck-gnome: name=${pkgbase%-*}, majorver=0.9
+# vercheck-gnome: name=${pkgbase%-*}, majorver=1.0
 
 pkgbase=network-manager-applet-ubuntu
 pkgname=(network-manager-applet-ubuntu libnm-gtk-ubuntu)
-_ubuntu_rel=0ubuntu7
-pkgver=0.9.10.1
+_ubuntu_rel=1ubuntu1
+pkgver=1.0.10
 pkgrel=2
 epoch=1
 pkgdesc="Applet for managing network connections"
@@ -25,10 +24,10 @@ makedepends=(libnm-glib libsecret gtk3 gnome-icon-theme
              mobile-broadband-provider-info iso-codes libnotify libmm-glib
              intltool gobject-introspection libappindicator3 python2)
 extrafiles=(network-manager-applet.install)
-source=("http://ftp.gnome.org/pub/GNOME/sources/${pkgbase%-*}/${pkgver%.*.*}/${pkgbase%-*}-${pkgver}.tar.xz"
+source=("http://ftp.gnome.org/pub/GNOME/sources/${pkgbase%-*}/${pkgver%.*}/${pkgbase%-*}-${pkgver}.tar.xz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/${pkgbase%-*}_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.xz")
-sha512sums=('7f11a01bbc22c201bb41ef6bf4c65a13c1f136d86c6e84c43f8ea6b537379eebaf9512642581988d4a67bb033c918708b53b29edf736460d0744ef41672843f1'
-            '0de0bc0f272e5718df05dbf00d709096a20a14059f4135e461451b76c9529b6ee977bf87b1340ad661c4f390f6959b4878ab2f4a4c3aa63e533f5159a011dd89')
+sha512sums=('dc13881243e5232d0c45563442f906a93c4d196a69c52c45d335f755bbc73c4d3131ba59180a102f65ca2066d40127b9db8cf85da2b41ec18efda482a9d210aa'
+            '0500eb1cb771e48ee04fa736397f0d98c5642f34a290b80d46349046bf3e1f55d42b0a0a2e3cbefca78236ec285ecf6585db69a3750c3c9366cead54220ce4b7')
 
 prepare() {
   cd "${pkgbase%-*}-${pkgver}"
