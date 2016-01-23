@@ -1,5 +1,4 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-ubuntudb: pkgprefix=unity-scope-, verprefix=_ver_, relprefix=_rel_, skip=home, repo=wily
 
