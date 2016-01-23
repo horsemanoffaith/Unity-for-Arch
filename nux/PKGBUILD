@@ -1,15 +1,14 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=wily
+# vercheck-ubuntu: name=${pkgname}, repo=xenial
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=nux
 _actual_ver=4.0.8
-_extra_ver=+15.10.20150921.1
+_extra_ver=+16.04.20151210
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="Graphical user interface toolkit for applications that mixes OpenGL hardware acceleration with high quality visual rendering"
@@ -28,8 +27,8 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/nux_${_actual_ver}
         0001_autoconf.patch
         01_blacklist_llvmpipe.patch
         50_check_unity_support)
-sha512sums=('44253d5ea96b34b1d6fad27f209d6d5730349c480747a22bee2936508f1fa01a2121f6b80b89914fd86bdfccf26df7cd6e2472deda38cf4f74c621b4374dae5f'
-            'e0a3d3d9cf7d4ba7da541a6383e5c545b37ce4099c1e7b716b18c47e68f0068d522ab06658f759df9c717503a46f0ca946ef2f256264c5c3fbb03fc7635038e2'
+sha512sums=('e0eca096607c07c219010c32ac6f2083c2fd0339ea05ca7bd3a1af8b0debe7a7d4149b4cf1eed31e8b0cca95a76b643906680f6a3bbab5f089129e3574a068bd'
+            '84d41b3ca21457f141d5203b1483f26190f161858d97176a04d0c2cafe6d01ea32f87fe6dc7cbe9234389e627669e34331ad400386733d5363d0145cbab63bb9'
             'a6122d47bef574df7e4f3aa3ddff34ca7a6e291878665f3dfdbb9ea071394180ab31aadcb79efd53ebb1ec2a86a15d53c9394478305c3fd5f10ece049265b374'
             '1e82b11357f9db45fa6fff002cef11acaf53a8381e2bc28b84e9e0300502c0b1922d9273b44d4cfbbd51d004a9eb1eb2e780db7a39e2d9153c9c4efafb9314a9')
 
