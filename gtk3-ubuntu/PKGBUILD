@@ -1,9 +1,7 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-# Contributor: Christopher Reimer <github@creimer.net>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=gtk+3.0, repo=wily
+# vercheck-ubuntu: name=gtk+3.0, repo=xenial
 # vercheck-archlinux: name=gtk3, repo=extra, arch=x86_64
 # vercheck-gnome: name=gtk+, majorver=3.18
 # vercheck-ppa: name=gtk+3.0, url=ppa:gnome3-team/gnome3-staging
@@ -11,11 +9,11 @@
 _use_ppa=true
 
 pkgname=gtk3-ubuntu
-_ppa_rel=0ubuntu1~wily1
-#_ubuntu_rel=0ubuntu3
-#_ubuntu_ver=3.16.7
-pkgver=3.18.3
-pkgrel=1
+_ppa_rel=1ubuntu1~wily1
+#_ubuntu_rel=1ubuntu1
+#_ubuntu_ver=3.18.6
+pkgver=3.18.6
+pkgrel=2
 pkgdesc="GObject-based multi-platform toolkit (v3)"
 arch=(i686 x86_64)
 url="http://www.gtk.org/"
@@ -36,8 +34,8 @@ else
   source+=("http://ppa.launchpad.net/gnome3-team/gnome3-staging/ubuntu/pool/main/g/gtk+3.0/gtk+3.0_${_ppa_ver:-${pkgver}}-${_ppa_rel}.debian.tar.xz")
 fi
 
-sha512sums=('2e79074fb932f05d4b345f75e70a0101d3a360ff2ec3ecff3d16f9a031b4627ffb757f749cf8e385072166c9c118d8d6b7602a38b7ad36e48bc920a226ff0c1b'
-            '1e8af47f68f256afd15e0f38170477938a881c7fb3f11c5d44ea4cd1d645353883b507a07a0baa107ced5a5cf5abe986ced9ef5d4e9b384f264222f6c821f64e')
+sha512sums=('a606bfeb7e6991c9c367d6c93d04d70daed6c59b95d1ef14b971acb32b23e71894b0aef16b4c673e1cb2ae0fd08de3f65b7aa5512fd74253efe30f16b0dbac11'
+            '03296946286788d96572b7a17381191ee86d30736f652f678190b0c305ab70b10c65b0d732e213745bb24e44c3981c7dcafb1e83d0c519deef440fa25a36e00f')
 
 prepare() {
     cd "gtk+-${pkgver}"
