@@ -1,14 +1,13 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase}, repo=wily
+# vercheck-ubuntu: name=${pkgbase}, repo=xenial
 # vercheck-launchpad: name=${pkgbase}
 
 pkgname=(overlay-scrollbar liboverlay-scrollbar liboverlay-scrollbar3)
 pkgbase=overlay-scrollbar
 _actual_ver=0.2.17.1
-_extra_ver=+15.10.20150604.1
+_extra_ver=+16.04.20151117
 pkgver=${_actual_ver}${_extra_ver//\+/.}
 pkgrel=1
 epoch=2
@@ -20,8 +19,11 @@ groups=(unity)
 makedepends=(gtk2-ubuntu gtk3)
 options=(!emptydirs)
 extrafiles=(overlay-scrollbar.install)
-source=("https://launchpad.net/ubuntu/+archive/primary/+files/overlay-scrollbar_${_actual_ver}${_extra_ver}.orig.tar.gz")
-sha512sums=('9fcee20e8cb8164e92d56a33b5f88e55d8290ac296e91771310ead72e07653be60470f7a1b0630d8c1f6d4f78732942b3a5b710d9de2ce3aaa1dbbd85a9704a6')
+source=("https://launchpad.net/ubuntu/+archive/primary/+files/overlay-scrollbar_${_actual_ver}${_extra_ver}.orig.tar.gz"
+       0001-Fix-makefile.patch)
+sha512sums=('0e718acb39307c6aa92747eb7b353a8468c358c5a25525ae2df830a4b3cb1c1bf7a3ee03410330db12c253be2d09211603cfc7274e67fa19917463b57eda899b'
+            'c13cb1f2263ef0a3b0ab4b59bca6df65aba5cd898464188a634d1dd6574703f24959cde253a56696320aa2bf13a81b0f71b6cad3b3d7eab20b8c503ccd195720')
+
 
 build() {
   cd "${pkgbase}-${_actual_ver}${_extra_ver}"
@@ -39,6 +41,8 @@ build() {
   ../configure --prefix=/usr --sysconfdir=/etc --with-gtk=3 --disable-static
   make
   popd
+
+  patch -p1 -i ../0001-Fix-makefile.patch
 }
 
 package_overlay-scrollbar() {
