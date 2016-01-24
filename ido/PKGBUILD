@@ -1,10 +1,10 @@
-# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-# Original Maintainer: György Balló <ballogy@freestart.hu>
+# Maintainer: Maxime Gauduin <alucryd@archlinux.org>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
+# Contributor: Balló György <ballogyor+arch@gmail.com>
 # Contributor: thn81 <root@scrat>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=wily
+# vercheck-ubuntu: name=${pkgname}, repo=xenial
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=ido
