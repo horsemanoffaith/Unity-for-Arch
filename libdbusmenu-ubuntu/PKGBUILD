@@ -1,10 +1,9 @@
-# Maintainer: Xiao-Long Chen
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
-# Contributor: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=libdbusmenu, repo=wily
+# vercheck-ubuntu: name=libdbusmenu, repo=xenial
 # vercheck-launchpad: name=dbusmenu, tarname=libdbusmenu
 
 pkgbase=libdbusmenu-ubuntu
@@ -14,7 +13,7 @@ _extra_ver=+15.04.20150410.2
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
 epoch=1
-pkgdesc="A small little library that was created by pulling out some comon code out of indicator-applet"
+pkgdesc="A small little library that was created by pulling out some common code out of indicator-applet"
 arch=(i686 x86_64)
 url="https://launchpad.net/dbusmenu"
 license=(LGPL)
@@ -75,7 +74,7 @@ package_libdbusmenu-glib-ubuntu() {
 
 package_libdbusmenu-gtk2-ubuntu() {
   pkgdesc+=" (GTK+ 2 library)"
-  depends=(gtk2 libdbusmenu-glib-ubuntu)
+  depends=(gtk2-ubuntu libdbusmenu-glib-ubuntu)
   provides=(libdbusmenu-gtk2)
   replaces=(libdbusmenu-gtk2)
   conflicts=(libdbusmenu-gtk2)
@@ -88,7 +87,7 @@ package_libdbusmenu-gtk2-ubuntu() {
 
 package_libdbusmenu-gtk3-ubuntu() {
   pkgdesc+=" (GTK+ 3 library)"
-  depends=(gtk3 libdbusmenu-glib-ubuntu)
+  depends=(gtk3-ubuntu libdbusmenu-glib-ubuntu)
   provides=(libdbusmenu-gtk3)
   replaces=(libdbusmenu-gtk3)
   conflicts=(libdbusmenu-gtk3)
