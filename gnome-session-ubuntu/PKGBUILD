@@ -29,8 +29,7 @@ install=gnome-session.install
 url="http://www.gnome.org"
 source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname%-*}/${pkgver:0:4}/${pkgname%-*}-${pkgver}.tar.xz"
         timeout.patch
-        polkit-gnome-authentication-agent-1-unity.desktop
-        50_ubuntu_sessions.patch)
+        polkit-gnome-authentication-agent-1-unity.desktop)
 
 if [[ "${_use_ppa}" == "true" ]]; then
     source+=("https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/gnome-session_${_ppa_rel}.debian.tar.xz")
@@ -41,8 +40,8 @@ fi
 sha512sums=('741da4ebdc6eccef35ee3e1be124785ad7e2e6de49c2fbb88568cff91c8cd5133e71064d8c74181052a9ce4df446fad7358bb61fc1d1a5746ab76a655d35f72a'
             '81d28b8f345c3a16dbb443ee8f195f802b572941aeac2dafaf6ea6b231ccb89a280aa855d09744dfc7ef2ad794a5e7b0002b54b14465865441367055514bcb70'
             '34e32d1c3fd7c417b5dc70737b9dff9c9b0b660a6c99cb8c29e944818df0cb643fcac01c6c5252849bb8595a348aaf4d2a24985560c6b8a9653544e146e5b4af'
-            '3478c133370bd6ca33bebb440867b07eeedb8ccd69524bcb0c6aa9bab9238a6e65e4074531e92c4cf21a7418e74364ca5ef3782cb17669787afd0d7908311566'
             'c1fce8ccb15efc8c96dc7c892d9bc6b04bdfa7deca4a1de88d3d9b710c979b1caac0b09f7ccb66291599875537bb8bb1ec36770b0f6971b13285ce230b120176')
+
 prepare() {
   cd "${pkgname%-*}-${pkgver}"
 
