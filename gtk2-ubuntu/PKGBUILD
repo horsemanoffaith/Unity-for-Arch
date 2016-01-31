@@ -91,3 +91,4 @@ package() {
 
   # Use the official gtk-update-icon-cache package
   rm -v "${pkgdir}/usr/bin/gtk-update-icon-cache"
+}
