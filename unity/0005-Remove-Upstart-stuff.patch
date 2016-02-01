@@ -132,6 +132,16 @@ index 5ec3add..0c2995e 100644
  }
  
  }
+--- a/tests/CMakeLists.txt	2016-01-31 16:18:52.356108056 -0800
++++ b/tests/CMakeLists.txt	2016-01-31 16:19:13.626108976 -0800
+@@ -8,7 +8,7 @@
+ #
+ # Unit tests
+ #
+-set (TEST_DEPS "${UNITY_PLUGIN_DEPS};unity>=4.99.0;libupstart;")
++set (TEST_DEPS "${UNITY_PLUGIN_DEPS};unity>=4.99.0;")
+ pkg_check_modules (TEST_UNIT_DEPS REQUIRED ${TEST_DEPS})
+ 
+ string (REPLACE ";" " " TEST_UNIT_DEPS_CFLAGS_OTHER "${TEST_UNIT_CFLAGS_OTHER}")
 -- 
 2.3.7
-
