@@ -7,8 +7,8 @@
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-datetime
-_actual_ver=13.10.0
-_extra_ver=+15.10.20151005
+_actual_ver=15.10
+_extra_ver=+16.04.20160129
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="A very, very simple clock"
@@ -24,10 +24,11 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${_actu
         0001-Get-timezone-from-systemd-s-timedate1-interface.patch
         0002-Not-a-phone.patch
         0003-Add-support-for-EDS-3.16-API.patch)
-sha512sums=('3d28cab736f427c3902460a76b93ef8f7ca5ad3738b909829e4b25a4fb8b356c8ab230d3bb7d0a53c727cd324e681feaa2eb72107415b11d46a402d0bf6672e4'
-            '0bf981faa8a7dea78f9d4c5c6c1a540cc3f6fba087849d834c18c807bb1f39bc82891142e66d32646cd807d140ff6f75ff13b0394dd6d7480441754833f54e57'
+sha512sums=('3c84758a8f0cb410b773b80a4311a46ca54d0ff6c98fa176e1cb4a6f88532157931be9cf5b343cbae91820217be01b5a0a37992b47db398d6c0be0839403218e'
+            'bbc2ff79258864a13d3c8a535489e4f2a18ad888298ccd854023f2453781ed1e588d9bcd5f2bede90b20261de12fc7f10eae4aacf239c5705bef37d80c0aed74'
             'f7a38476245a233454463ccef33af52dc62738640161de8647185ad26f1b1e3004b10e4adb3fa841b58143f502330776868e116657579be6bd3e076fed184759'
             'f1597b7b46390d786d3e2c04477ae612987508f22fada666402cf514b2b9bc99ced7f8c3b34b70fa91422ed05ac139e8d05b48c0c148f57c39ba323958aef21f')
+
 prepare() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
