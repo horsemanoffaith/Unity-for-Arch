@@ -29,7 +29,8 @@ install=gnome-session.install
 url="http://www.gnome.org"
 source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname%-*}/${pkgver:0:4}/${pkgname%-*}-${pkgver}.tar.xz"
         timeout.patch
-        polkit-gnome-authentication-agent-1-unity.desktop)
+        polkit-gnome-authentication-agent-1-unity.desktop
+        50_ubuntu_sessions.patch)
 
 if [[ "${_use_ppa}" == "true" ]]; then
     source+=("https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/gnome-session_${_ppa_rel}.debian.tar.xz")
@@ -40,6 +41,7 @@ fi
 sha512sums=('1893f28a6e0cfd2c0c507e34c82138f6d19f4847bd22b4ce3337e9302a76454a0b18163f92f16d8c51aa9ab217d15376e089beb6c58329a69f3bdd3133301370'
             '81d28b8f345c3a16dbb443ee8f195f802b572941aeac2dafaf6ea6b231ccb89a280aa855d09744dfc7ef2ad794a5e7b0002b54b14465865441367055514bcb70'
             '34e32d1c3fd7c417b5dc70737b9dff9c9b0b660a6c99cb8c29e944818df0cb643fcac01c6c5252849bb8595a348aaf4d2a24985560c6b8a9653544e146e5b4af'
+            '4fb0619502984c85bced2095304b51a93106c7778dbf4d81405addc8c5b0bf5b9dcb9e79a9942eb4991c0da485bb741c9ca6c6fd89a8168989641eda2c227063'
             '5abf10ed5a5f99a2dc646eebfa2c0a7028b27f2995dbc5da307bc6453184526d0b746b9d2661b8eada0d3227e3c6c31f5f878d1bfd800af8cb3649eb40d80113')
 
 prepare() {
@@ -47,6 +49,9 @@ prepare() {
 
   # Increase timeout, for slow machines
   patch -p1 -i ../timeout.patch
+
+  # Change the session from GNOME to Ubuntu
+  patch -p1 -i ../50_ubuntu_sessions.patch
 
   sed -i '/0001-Revert-data-add-GNOME-on-Xorg-session.patch/d' ../debian/patches/series
   sed -i '/0002-Partial-Revert-data-merge-wayland-and-X11-session-fi.patch/d' ../debian/patches/series
