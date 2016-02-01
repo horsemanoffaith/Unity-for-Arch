@@ -26,7 +26,6 @@ source=("http://ftp.gnome.org/pub/GNOME/sources/gnome-screensaver/${pkgver%.*}/g
         "https://launchpad.net/ubuntu/+archive/primary/+files/gnome-screensaver_${pkgver}-${_ubuntu_rel}.debian.tar.xz"
         01_no_autostart.patch
         libsystemd.patch
-        gs-manager.c
         move-desktop-file.patch
         fix-autoconf.patch
         fix-systemd-support.patch
