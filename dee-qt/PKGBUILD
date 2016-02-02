@@ -18,12 +18,12 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/libqtdee_${_actual
 sha512sums=('7d2b0c8dc9fe83c99d265e6e65cc9c2f250bcd5f1786f4b5feb75861ba7c96555534e52a3ccec2a2dec1691822ac70b2969eb3e479ffab798433f77c38c0c9e8')
 
 build() {
-  cd "${pkgname}-${_actual_ver}"
+  cd "libqtdee-${_actual_ver}"
   cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITHQT5=1
   make
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}"
+  cd "libqtdee-${_actual_ver}"
   make DESTDIR="${pkgdir}/" install
 }
