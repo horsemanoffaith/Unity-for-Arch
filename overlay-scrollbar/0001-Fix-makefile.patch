@@ -1,0 +1,55 @@
+--- a/build-gtk3/Makefile	2016-01-22 21:48:41.961404262 -0800
++++ b/build-gtk3/Makefile	2016-01-22 21:49:16.798070614 -0800
+@@ -245,7 +245,7 @@
+ GLIB_MKENUMS = /usr/bin/glib-mkenums
+ GREP = /usr/bin/grep
+ GSETTINGS_DISABLE_SCHEMAS_COMPILE = 
+-GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-2.0/modules
++GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-3.0/modules
+ INSTALL = /usr/bin/install -c
+ INSTALL_DATA = ${INSTALL} -m 644
+ INSTALL_PROGRAM = ${INSTALL}
+--- a/build-gtk3/build/Makefile
++++ b/build-gtk3/build/Makefile
+@@ -160,7 +160,7 @@
+ GLIB_MKENUMS = /usr/bin/glib-mkenums
+ GREP = /usr/bin/grep
+ GSETTINGS_DISABLE_SCHEMAS_COMPILE = 
+-GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-2.0/modules
++GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-3.0/modules
+ INSTALL = /usr/bin/install -c
+ INSTALL_DATA = ${INSTALL} -m 644
+ INSTALL_PROGRAM = ${INSTALL}
+--- a/build-gtk3/data/Makefile
++++ b/build-gtk3/data/Makefile
+@@ -189,7 +189,7 @@
+ GLIB_MKENUMS = /usr/bin/glib-mkenums
+ GREP = /usr/bin/grep
+ GSETTINGS_DISABLE_SCHEMAS_COMPILE = 
+-GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-2.0/modules
++GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-3.0/modules
+ INSTALL = /usr/bin/install -c
+ INSTALL_DATA = ${INSTALL} -m 644
+ INSTALL_PROGRAM = ${INSTALL}
+--- a/build-gtk3/os/Makefile
++++ b/build-gtk3/os/Makefile
+@@ -248,7 +248,7 @@
+ GLIB_MKENUMS = /usr/bin/glib-mkenums
+ GREP = /usr/bin/grep
+ GSETTINGS_DISABLE_SCHEMAS_COMPILE = 
+-GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-2.0/modules
++GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-3.0/modules
+ INSTALL = /usr/bin/install -c
+ INSTALL_DATA = ${INSTALL} -m 644
+ INSTALL_PROGRAM = ${INSTALL}
+--- a/build-gtk3/tests/Makefile
++++ b/build-gtk3/tests/Makefile
+@@ -212,7 +212,7 @@
+ GLIB_MKENUMS = /usr/bin/glib-mkenums
+ GREP = /usr/bin/grep
+ GSETTINGS_DISABLE_SCHEMAS_COMPILE = 
+-GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-2.0/modules
++GTK_MODULES_DIR = ${exec_prefix}/lib/gtk-3.0/modules
+ INSTALL = /usr/bin/install -c
+ INSTALL_DATA = ${INSTALL} -m 644
+ INSTALL_PROGRAM = ${INSTALL}
