@@ -8,7 +8,7 @@
 
 pkgname=indicator-sound
 _actual_ver=12.10.2
-_extra_ver=+16.04.20160113.1
+_extra_ver=+16.04.20160120
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
 epoch=1
@@ -26,7 +26,7 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-sound_${
         0001-Not-running-on-Ubuntu-Touch.patch
         0002-Remove-tests.patch
         libpulse.vapi)
-sha512sums=('e1734660edfd424d2f046de042041e1a65de156405b77a3ebd7f88742da25dd18ed63bdee78566ee1eecfa9518987065a536d261d591dd94048d2e7c80350212'
+sha512sums=('60ba692c20369788532c999d78261c588cc50af97416a359e9873834e1f8d66517f0831fdca47bcfaa611e112b67483365f903c686fc0243a10182f40b887421'
             '04e662c9724f983c0b9129e13394937541949d481de3722e72046a68a49772707a145854a09bc7830e10ddd9bcf3b3095c9101fbc0c29fd03cfd267a074aee3c'
             'e0b051509b14838072a4b01dd1ea3d3f169f89c6a5ec36d544edddba2b3f680858c91179062ed0942e5f2fb1d5ed3a7b88b71d8aaea78959992ada9dc9e44f85'
             '5a4c1b4feb999428c691cc6d7654a4a89567691e0819b57726113f9a3599881c5777446ae4dd4038ab6f0cc8fd55aa7c2943e460ab6ae356b0e4a80f65db712c'
