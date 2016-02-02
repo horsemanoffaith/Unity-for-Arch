@@ -24,17 +24,17 @@ install=${pkgname}.install
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-session_${_actual_ver}${_extra_ver}.orig.tar.gz"
         indicator-session.service
         0001-There-is-no-help.patch
-        0002-Remove-url_dispatch.patch)
+        0002-Remove-url_dispatcher.patch)
 sha512sums=('31646ca4bd58f5dd3a4b83e103e5c60df2ca687f4bfc23576941f6702c1485cc5b0e5b02e33e2601b3efa274c4eac871491c32eb8316167eabdea57849670243'
             '540c76c0f68b028194bb1000dd61a0c24f2f16427e79d237b94b8c65fe5e3e16eb6ea645f0fd33d734113727e25b6eb7452cb72f72399c9e8d370f74abba7511'
-            'a7998f6c1021efae2b8145de909fb3642ded2b614ac8f36c01448fd3b1ce89f8ce8c08fcbfec1b3ba7ad4c4aab5f48b1a82d171b05813e2de33c5444e6117150'
-            'caa53a433aee9a68ca233f817868def74d4f5fe69ad760df9caa9da112b36753a4fb3395970c611ec77c7d9ee8c028fb2b8228629073d5ad9b484bbb5dfed5b9')
+            'eceaaff3c90cd04bd2f1fd11f987965fdbfdfabf29aff6a258fb426ac0c2c33b2543b92d9e15cb3f7742619817f70c22867aed29978f9ab6dc17490dc4d1654b'
+            'bb2dafa11923e0878de6126fa1e6557c2a7194c59111cbc4dab226d0403d27ad4e6bfe93ada668f1370cfb60188bf1adc4e85541bef0b0a3273e874d596dcb3b')
 
 prepare() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
   patch -p1 -i ../0001-There-is-no-help.patch
-  patch -p1 -i ../0002-Remove-url_dispatch.patch
+  patch -p1 -i ../0002-Remove-url_dispatcher.patch
 }
 
 build() {
