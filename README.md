@@ -37,7 +37,7 @@ To compile from source, just build all of the packages in the following order:
 | gtk3-ubuntu                      | GTK toolkit 3.0 with Ubuntu's patches      |
 | libdbusmenu-ubuntu               | Library for passing menus over DBus        |
 | ido-ubuntu                       | Widgets and objects used for indicators    |
-| libindicator                     | Symbols and functions for indicators       |
+| libindicator-ubuntu              | Symbols and functions for indicators       |
 | libindicate                      | Libraries to raise 'flags' on DBus         |
 | libindicate-qt                   | Qt 4 bindings for libindicate              |
 | libappindicator                  | Library to export menu bar to Unity        |
