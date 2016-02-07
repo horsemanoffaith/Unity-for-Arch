@@ -40,7 +40,7 @@ To compile from source, just build all of the packages in the following order:
 | libindicator-ubuntu              | Symbols and functions for indicators       |
 | libindicate                      | Libraries to raise 'flags' on DBus         |
 | libindicate-qt                   | Qt 4 bindings for libindicate              |
-| libappindicator                  | Library to export menu bar to Unity        |
+| libappindicator-ubuntu           | Library to export menu bar to Unity        |
 | unity-gtk-module                 | Application menu module for GTK+           |
 | icu55                            | Provides needed icu55 library files        |
 | dee-ubuntu                       | Model to synchronize instances over DBus   |
