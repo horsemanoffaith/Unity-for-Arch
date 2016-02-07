@@ -10,12 +10,11 @@ pkgbase=libindicate
 pkgname=(libindicate libindicate-gtk2 libindicate-gtk3)
 pkgver=12.10.1
 pkgrel=5
-epoch=1
 pkgdesc="Library for raising indicators via DBus"
 arch=(i686 x86_64)
 url="https://launchpad.net/libindicate"
 license=(LGPL)
-makedepends=(libdbusmenu-glib dbus-glib gtk2-ubuntu gtk3-ubuntu gobject-introspection vala
+makedepends=(libdbusmenu-glib-ubuntu dbus-glib gtk2-ubuntu gtk3-ubuntu gobject-introspection vala
              gtk-sharp-2 pygtk gnome-doc-utils perl-xml-libxml)
 groups=(unity)
 source=("http://launchpad.net/${pkgbase}/12.10/${pkgver}/+download/${pkgbase}-${pkgver}.tar.gz"
@@ -57,7 +56,7 @@ build() {
 }
 
 package_libindicate() {
-  depends=(libdbusmenu-glib dbus-glib)
+  depends=(libdbusmenu-glib-ubuntu dbus-glib)
 
   cd "${pkgbase}-${pkgver}/build-gtk2"
 
