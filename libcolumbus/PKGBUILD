@@ -10,7 +10,6 @@ _actual_ver=1.1.0
 _extra_ver=+15.10.20150806
 pkgver=${_actual_ver}${_extra_ver}
 pkgrel=5
-epoch=1
 pkgdesc="A small, fast, error tolerant matcher"
 arch=(i686 x86_64)
 url="https://launchpad.net/libcolumbus"
