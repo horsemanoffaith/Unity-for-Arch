@@ -11,13 +11,12 @@ _actual_ver=15.02.0
 _extra_ver=+16.04.20151104
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
-epoch=1
 pkgdesc="An indicator to host the menus from an application"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-appmenu"
 license=(GPL)
 groups=(unity)
-depends=(dconf libappindicator3 libindicator3 libdbusmenu-gtk3 bamf-ubuntu)
+depends=(dconf libappindicator-gtk3-ubuntu libindicator-gtk3-ubuntu libdbusmenu-gtk3-ubuntu bamf-ubuntu)
 makedepends=(gtk-doc intltool vala)
 optdepends=('unity-gtk-module: support for GTK+ 2 and GTK+ 3 apps'
             'appmenu-qt: support for Qt apps')
