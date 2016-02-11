@@ -14,7 +14,7 @@ arch=(i686 x86_64)
 url="https://launchpad.net/hud"
 license=(GPL)
 groups=(unity)
-depends=(bamf-ubuntu libdbusmenu-gtk3 sqlite gsettings-qt libcolumbus
+depends=(bamf-ubuntu libdbusmenu-gtk3-ubuntu sqlite gsettings-qt libcolumbus
          libdbusmenu-qt5 libqtdee)
 makedepends=(cmake gnome-common gnome-doc-utils gobject-introspection gtk-doc
              intltool qt5-base python2-distribute vala)
