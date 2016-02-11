@@ -66,11 +66,12 @@ To compile from source, just build all of the packages in the following order:
 | indicator-power                  | Indicator to show battery information      |
 | indicator-printers               | Indicator to show active print jobs        |
 | indicator-session                | Indicator for session management           |
-| unity-api                        | API for Unity shell integration
+| unity-api                        | API for Unity shell integration            |
 | indicator-sound                  | Indicator to show a unified sound menu     |
 | gsettings-qt                     | Library to access GSettings from Qt        |
 | dee-qt                           | Qt5 bindings for dee                       |
 | libcolumbus                      | Small, fast, error tolerant matcher        |
+| libqtdee                         | Qt5 bindings for dee                       |
 | hud                              | Backend for the Unity HUD                  |
 | network-manager-applet-ubuntu    | NetworkManager applet w/indicator support  |
 | overlay-scrollbar                | Overlay scrollbars for GTK+2 and GTK+3     |
