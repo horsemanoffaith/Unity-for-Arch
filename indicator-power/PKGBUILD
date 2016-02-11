@@ -21,8 +21,8 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-power_${
         0001-Not-a-phone.patch
         0002-Remove-accountsservice-dependency.patch)
 sha512sums=('90f6b08d3bc4f86ad429f8dfa6c1cf5a250ab1747d5cab83158b9540810304bf5666d79f51c99f35a2039fcaf8f71b7743b644001a10258174403639db77fd8b'
-            'd51f3abe6c32ed5f9009e3633ed070f3985980e279504091c6ee8b942bca99c414fb465c8e6bacb333d2fc3412de673ed4a65f6f658003a51fdf36eee43a0431'
-            'f71b333a8532af4bc2d71d18097f2b05093bcf68c6a15b9da930dba03e4b342c98afc6de910a7b99d2640b5cca589e31038b5240c1718aba274da8556faa52e0')
+            'e3418b8dbe11d07cdc0376523dad73c3b1a11682a95768664927ceebf4ab36eb9b4cc1e35765cc02adcd8af89288ef4a6bc261999cbca725f93cb71e27a41076'
+            '18a9dade1df6fd622099d402a40662edd27354f644673870806ea4137440869794ae46b605330d1b1785707dca120560cb2562d40be7c22b3976206aff8c5204')
 
 prepare() {
   cd "${pkgname}-${_actual_ver}${_extra_ver}"
