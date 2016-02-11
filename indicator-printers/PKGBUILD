@@ -10,13 +10,12 @@ _actual_ver=0.1.7
 _extra_ver=+15.04.20150220
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=2
-epoch=1
 pkgdesc="Indicator showing active print jobs"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-printers"
 license=(GPL)
 groups=(unity)
-depends=(cups libdbusmenu-glib libdbusmenu-gtk3 libindicator3)
+depends=(cups libdbusmenu-glib-ubuntu libdbusmenu-gtk3-ubuntu libindicator-gtk3-ubuntu)
 makedepends=(intltool python2)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-printers_${_actual_ver}${_extra_ver}.orig.tar.gz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/indicator-printers_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff.gz")
