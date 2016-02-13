@@ -4,19 +4,18 @@
 # vercheck-ubuntu: name=${pkgbase}, repo=xenial
 # vercheck-launchpad: name=${pkgbase}
 
-pkgname=(overlay-scrollbar liboverlay-scrollbar liboverlay-scrollbar3)
+pkgname=(overlay-scrollbar liboverlay-scrollbar-gtk2 liboverlay-scrollbar-gtk3)
 pkgbase=overlay-scrollbar
 _actual_ver=0.2.17.1
 _extra_ver=+16.04.20151117
 pkgver=${_actual_ver}${_extra_ver//\+/.}
 pkgrel=1
-epoch=2
 pkgdesc="Overlaid Scrollbars that take up no active screen real-estate"
 arch=(i686 x86_64)
 url="https://launchpad.net/overlay-scrollbar"
 license=(LGPL)
 groups=(unity)
-makedepends=(gtk2-ubuntu gtk3)
+makedepends=(gtk2-ubuntu gtk3-ubuntu)
 options=(!emptydirs)
 extrafiles=(overlay-scrollbar.install)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/overlay-scrollbar_${_actual_ver}${_extra_ver}.orig.tar.gz"
@@ -47,7 +46,7 @@ build() {
 
 package_overlay-scrollbar() {
   pkgdesc="Scrollbar overlayed widget"
-  depends=(dconf liboverlay-scrollbar liboverlay-scrollbar3)
+  depends=(dconf liboverlay-scrollbar-gtk2 liboverlay-scrollbar-gtk3)
   install=overlay-scrollbar.install
 
   cd "${pkgbase}-${_actual_ver}${_extra_ver}/build-gtk3/"
@@ -62,9 +61,9 @@ package_overlay-scrollbar() {
   chmod 755 "${pkgdir}/etc/X11/xinit/xinitrc.d/81overlay-scrollbar"
 }
 
-package_liboverlay-scrollbar3() {
+package_liboverlay-scrollbar-gtk3() {
   pkgdesc="Scrollbar overlayed widget - GTK 3 library"
-  depends=(cairo gtk3)
+  depends=(cairo gtk3-ubuntu)
 
   cd "${pkgbase}-${_actual_ver}${_extra_ver}/build-gtk3/"
   make DESTDIR="${pkgdir}/" install
@@ -73,7 +72,7 @@ package_liboverlay-scrollbar3() {
   rm -rvf "${pkgdir}/usr/share/glib-2.0/"
 }
 
-package_liboverlay-scrollbar() {
+package_liboverlay-scrollbar-gtk2() {
   pkgdesc="Scrollbar overlayed widget - GTK 2 library"
   depends=(gtk2-ubuntu)
 
