@@ -4,7 +4,7 @@
 # Contributor: György Balló <ballogy@freestart.hu>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname%-*}, repo=wily
+# vercheck-ubuntu: name=${pkgname%-*}, repo=xenial
 # vercheck-launchpad: name=${pkgname%-*}
 
 pkgname=zeitgeist-ubuntu
@@ -15,7 +15,7 @@ pkgdesc="Service logging user activities and events"
 arch=(i686 x86_64)
 url="http://zeitgeist-project.com/"
 license=(GPL2 LGPL2.1)
-depends=(json-glib telepathy-glib gtk3 xapian-core)
+depends=(json-glib telepathy-glib gtk3-ubuntu xapian-core)
 makedepends=(intltool gobject-introspection vala raptor python2-rdflib)
 provides=(zeitgeist-datahub "zeitgeist=${pkgver}")
 conflicts=(zeitgeist-datahub zeitgeist)
