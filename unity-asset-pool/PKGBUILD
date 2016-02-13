@@ -11,7 +11,6 @@ _actual_ver=0.8.24
 _extra_ver=+15.04.20141217
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
-epoch=1
 pkgdesc="Design assets for Unity"
 arch=(any)
 url="https://launchpad.net/unity-asset-pool"
