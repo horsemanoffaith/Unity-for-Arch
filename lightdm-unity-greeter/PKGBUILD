@@ -14,7 +14,7 @@ arch=(i686 x86_64)
 url="https://launchpad.net/unity-greeter"
 license=(GPL3 LGPL3)
 groups=(unity)
-depends=(cantarell-fonts gnome-doc-utils ido libindicator-gtk3-ubuntu lightdm-ubuntu
+depends=(cantarell-fonts gnome-doc-utils ido-ubuntu libindicator-gtk3-ubuntu lightdm-ubuntu
          libcanberra libxext)
 makedepends=(gnome-common gnome-doc-utils unity-settings-daemon imagemagick
              intltool librsvg vala)
