@@ -9,13 +9,12 @@ _actual_ver=1.0
 _extra_ver=+14.04.20140318
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=2
-epoch=1
 pkgdesc="Unity lens for browsing photos"
 arch=(any)
 url="https://launchpad.net/unity-lens-photos"
 license=(GPL)
 groups=(unity)
-depends=(python-httplib2 python-gobject python-oauthlib dee libunity libsoup
+depends=(python-httplib2 python-gobject python-oauthlib dee-ubuntu libunity libsoup
          libsoup-gnome)
 makedepends=(python python-distutils-extra)
 options=(!emptydirs)
