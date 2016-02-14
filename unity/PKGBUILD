@@ -10,15 +10,13 @@ _extra_ver=+16.04.20151218
 _ubuntu_rel=0ubuntu2
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
-epoch=1
-
 pkgdesc="A desktop experience designed for efficiency of space and interaction"
 arch=(i686 x86_64)
 url="https://launchpad.net/unity"
 license=(GPL)
 depends=(bamf-ubuntu boost cairo compiz-ubuntu clutter-gtk gjs gnome-desktop
-         gnome-screensaver gnome-session-ubuntu hud ido libgnomeui libindicator
-         libindicator3 libnotify libunique libunity libunity-misc libxfixes nux
+         gnome-screensaver gnome-session-ubuntu hud ido-ubuntu libgnomeui libindicator-gtk2-ubuntu
+         libindicator-gtk3-ubuntu libnotify libunique libunity libunity-misc libxfixes nux
          unity-asset-pool unity-scope-home libxi zeitgeist-ubuntu
          lightdm-unity-greeter gmock gtest chrpath)
 groups=(unity)
