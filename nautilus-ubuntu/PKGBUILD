@@ -13,9 +13,9 @@ _use_ppa=true
 pkgbase=nautilus-ubuntu
 pkgname=(nautilus-ubuntu libnautilus-extension-ubuntu)
 #_ubuntu_rel=0ubuntu1
-#_ubuntu_ver=3.18.4
+#_ubuntu_ver=3.18.5
 _ppa_rel=0ubuntu1~xenial1
-pkgver=3.18.4
+pkgver=3.18.5
 pkgrel=1
 pkgdesc="GNOME and Unity file manager"
 arch=(i686 x86_64)
@@ -33,8 +33,8 @@ else
     source+=("https://launchpad.net/ubuntu/+archive/primary/+files/nautilus_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.xz")
 fi
 
-sha512sums=('671abbb45d888260ed8591106a0da5d9703b050d2d962101eecfa6107ad4d0dfb792f6a8215f70d9c7e98898922ed78c4216c5e327bab573773422626d0905f4'
-            '123ec298419fe284b9ba38c974d036b315d1736697b1ef7efe4cf42eafb83875e9b3e8a75dc235bdfd9be7395e0d2b5e28ee20deb8aeddd330866245721b73b9')
+sha512sums=('60ec5c1eb7ba90caed2f536a0fd78d8686b6f7372db36d526d634d727ac03719edee894ca0ff1d90a0974cc0bc76f05bf0f8d4db22845ae3585470aa8e7b8ca6'
+            'deaf6a9252a715500b9e3b2d46e15ab2b28b18f49bdcc6e066dcc4d690f55f5bcbe09d7147a956516ad4621c8bc241164ea123db6cd9f2d50897831159bb7267')
 
 prepare() {
   cd "${pkgname%-*}-${pkgver}"
