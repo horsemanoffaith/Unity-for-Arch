@@ -35,7 +35,6 @@ setver yelp			0.1+13.10.20130723	0ubuntu1
 setver zotero			0.1+13.10.20130723	0ubuntu1
 
 pkgname=unity-scopes
-epoch=1
 pkgver=1.0
 pkgrel=12
 pkgdesc="Online scopes for the Unity Dash"
@@ -55,7 +54,7 @@ depends+=(python-lxml)
 # deviantart, googlenews, openclipart, yahoostock
 depends+=(python-feedparser)
 # manpages
-depends+=(gtk3 man-db)
+depends+=(gtk3-ubuntu man-db)
 
 makedepends=(python-distutils-extra)
 # texdoc
