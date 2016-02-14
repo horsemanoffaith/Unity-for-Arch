@@ -110,7 +110,7 @@ package_nautilus-ubuntu() {
 
 package_libnautilus-extension-ubuntu() {
   pkgdesc="Library for extending the ${pkgdesc}"
-  depends=(cairo gtk3)
+  depends=(cairo gtk3-ubuntu)
   provides=("libnautilus-extension=${pkgver}")
   conflicts=(libnautilus-extension)
 
