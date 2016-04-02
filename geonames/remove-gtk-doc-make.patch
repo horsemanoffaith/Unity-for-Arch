@@ -1,0 +1,8 @@
+--- a/doc/reference/Makefile.am	2016-04-01 23:46:10.240000063 -0700
++++ b/doc/reference/Makefile.am	2016-04-01 23:46:26.449999915 -0700
+@@ -9,4 +9,4 @@
+ 
+ GTKDOC_LIBS = $(GIO_LIBS) $(top_builddir)/src/libgeonames.la
+ 
+-include $(top_srcdir)/gtk-doc.make
++
