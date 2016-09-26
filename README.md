@@ -42,14 +42,14 @@ To compile from source, just build all of the packages in the following order:
 | libindicate-qt                   | Qt 4 bindings for libindicate              |
 | libappindicator-ubuntu           | Library to export menu bar to Unity        |
 | unity-gtk-module                 | Application menu module for GTK+           |
-| icu55                            | Provides needed icu55 library files        |
 | dee-ubuntu                       | Model to synchronize instances over DBus   |
 | libunity                         | Library for integrating with Unity         |
 | libunity-misc                    | Differently licensed stuff for Unity       |
 | indicator-messages               | Collects messages that need a response     |
 | bamf-ubuntu                      | Application matching framework             |
 | libtimezonemap                   | GTK+3 timezone map widget                  |
-| geonames                         | Parse and query the geonames database dump |
+| libnih-ubuntu                    | Lightweight library of standard C funcs.   |
+| upstart-user                     | Event-based user service mgmt. daemon      |
 | gsettings-desktop-schemas-ubuntu | Shared GSettings schemas for the desktop   |
 | gnome-settings-daemon-ubuntu     | Daemon handling the GNOME session settings |
 | gnome-session-ubuntu             | GNOME Session Manager                      |
