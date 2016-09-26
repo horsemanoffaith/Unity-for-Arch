@@ -1,25 +1,24 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=xenial
+# vercheck-ubuntu: name=${pkgname}, repo=yakkety
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-messages
 _actual_ver=13.10.1
 _extra_ver=+15.10.20150505
 pkgver=${_actual_ver}${_extra_ver/+/.}
-pkgrel=1
-epoch=1
+pkgrel=2
 pkgdesc="A place on the user's desktop that collects messages that need a response"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-messages"
 license=(GPL)
-depends=(accountsservice hicolor-icon-theme libindicator3)
+depends=(accountsservice hicolor-icon-theme libindicator-gtk3-ubuntu)
 makedepends=(gobject-introspection gtk-doc intltool vala)
 groups=(unity)
-install=indicator-messages.install
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-messages_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001-autoconf-fix.patch
         0002-Disable-tests.patch)
@@ -28,28 +27,24 @@ sha512sums=('f054af8084b2313c61dce8e3c6fa677d00e2a607a121ac2ca5fddd57deeed6ed22e
             '00e4aed73c5a95500c450bbdd6217bcd904df38272577eb9c496d3a19f030f4feb8346a073b9331122ff408b56c5d1e9ea99745cf56a54d6710d33aade881e2f')
 
 prepare() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  patch -p1 -i ../0001-autoconf-fix.patch
-  patch -p1 -i ../0002-Disable-tests.patch
+    patch -p1 -i ../0001-autoconf-fix.patch
+    patch -p1 -i ../0002-Disable-tests.patch
 }
 
 build() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  #export CFLAGS+=" -Wno-error=deprecated-declarations -Wno-error=return-type"
-
-  gtkdocize
-  intltoolize -f
-  autoreconf -vfi
-  ./configure --prefix=/usr --libexecdir=/usr/lib/${pkgname} --disable-static
-  make
+    gtkdocize
+    intltoolize -f
+    autoreconf -vfi
+    ./configure --prefix=/usr --libexecdir=/usr/lib --disable-static
+    make
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  make DESTDIR="${pkgdir}/" install
-
-  rm -rf "${pkgdir}/usr/share/upstart/"
+    make DESTDIR="${pkgdir}/" install
 }
