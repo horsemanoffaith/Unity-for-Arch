@@ -51,6 +51,7 @@ To compile from source, just build all of the packages in the following order:
 | libnih-ubuntu                    | Lightweight library of standard C funcs.   |
 | upstart-user                     | Event-based user service mgmt. daemon      |
 | gsettings-desktop-schemas-ubuntu | Shared GSettings schemas for the desktop   |
+| gsettings-ubuntu-schemas         | GSettings desktop-wide schemas for Ubuntu  |
 | gnome-settings-daemon-ubuntu     | Daemon handling the GNOME session settings |
 | gnome-session-ubuntu             | GNOME Session Manager                      |
 | gnome-screensaver-ubuntu         | GNOME screen saver and locker              |
