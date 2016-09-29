@@ -1,3 +1,4 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
@@ -8,59 +9,53 @@
 
 pkgname=indicator-datetime
 _actual_ver=15.10
-_extra_ver=+16.04.20160129
+_extra_ver=+16.04.20160406
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="A very, very simple clock"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-datetime"
 license=(GPL)
-depends=(evolution-data-server gstreamer libtimezonemap properties-cpp
-         unity-control-center)
+depends=(evolution-data-server gsettings-ubuntu-schemas gstreamer
+         libtimezonemap properties-cpp unity-control-center)
 makedepends=(intltool cmake)
 groups=(unity)
-install=${pkgname}.install
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${_actual_ver}${_extra_ver}.orig.tar.gz"
-        0001-Get-timezone-from-systemd-s-timedate1-interface.patch
-        0002-Not-a-phone.patch
-        0003-Add-support-for-EDS-3.16-API.patch)
-sha512sums=('3c84758a8f0cb410b773b80a4311a46ca54d0ff6c98fa176e1cb4a6f88532157931be9cf5b343cbae91820217be01b5a0a37992b47db398d6c0be0839403218e'
-            'a7f956ef0d6ba3282941d14723845dc982cdcb95504b717bbbf8cf32582949d209ff4fc8ee3a05069f7c396b76ef113ffb449ceb7eaa69f73969b3f6b32b90e0'
-            'f7a38476245a233454463ccef33af52dc62738640161de8647185ad26f1b1e3004b10e4adb3fa841b58143f502330776868e116657579be6bd3e076fed184759'
-            'f1597b7b46390d786d3e2c04477ae612987508f22fada666402cf514b2b9bc99ced7f8c3b34b70fa91422ed05ac139e8d05b48c0c148f57c39ba323958aef21f')
+        0001-Not-a-phone.patch
+        0001-Properly-initialize-timezone-from-timedated.patch)
+sha512sums=('0e8be3ca123d5bdea1049aaed8dd0089af429c43624be706d7e62cf8ed79362497962ba37f15d3f2b7c0d422588325fe2cc31a748c83b6890ca247d2a3722fc4'
+            '903886cc0c60193d289cbdb99cba5fde50ad476b71830387351369e5dd425277efddd8506bdc32a1597ba690630f0687847ef9816c92b841b4ac74f5659c86ba'
+            'd25d24ef61a4e9651654f18fc3b8a1dd407d93d3ad118ac611edd87eccfbc7368e9d94483fbe213fc5f17c02c02c4e14ec0797162f22d430bb6bebc91ff64851')
 
 prepare() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  # Port to systemd's timedated (because /etc/timezone is no longer used)
-  patch -p1 -i ../0001-Get-timezone-from-systemd-s-timedate1-interface.patch
-  patch -p1 -i ../0002-Not-a-phone.patch
-  patch -p1 -i ../0003-Add-support-for-EDS-3.16-API.patch
+    patch -p1 -i 0001-Not-a-phone.patch
+    patch -p1 -i 0001-Properly-initialize-timezone-from-timedated.patch
 }
 
 build() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  export CFLAGS+=" -Wno-error"
+    export CFLAGS+=" -Wno-error"
 
-  mkdir build
-  cd build
-  cmake .. \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
-    -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib \
-    -Denable_tests=OFF
+    mkdir -p build
+    cd build
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+        -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib \
+        -Denable_tests=OFF
 
-  make
+    make
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}/build/"
+    #cd "${pkgname}-${_actual_ver}${_extra_ver}/build/"
+    cd build
 
-  make DESTDIR="${pkgdir}/" install
+    make DESTDIR="${pkgdir}/" install
 
-  rm -r "${pkgdir}/usr/share/upstart/"
-
-  # Use language packs
-  rm -r "${pkgdir}/usr/share/locale/"
+    # Use language packs
+    rm -r "${pkgdir}/usr/share/locale/"
 }
