@@ -60,7 +60,7 @@ To compile from source, just build all of the packages in the following order:
 | unity-control-center             | Utilities to configure the Unity desktop   |
 | properties-cpp                   | C++11 library providing properties/signals |
 | lightdm-ubuntu                   | Cross-desktop lightweight display manager  |
-| libgee06                         | Legacy GObject collection library          |
+| unity-api                        | API for Unity shell integration            |
 | indicator-application            | Takes menus and puts them in the panel     |
 | indicator-appmenu                | Indicator to host the menus from apps      |
 | indicator-datetime               | Indicator to show the date and time        |
@@ -68,7 +68,6 @@ To compile from source, just build all of the packages in the following order:
 | indicator-power                  | Indicator to show battery information      |
 | indicator-printers               | Indicator to show active print jobs        |
 | indicator-session                | Indicator for session management           |
-| unity-api                        | API for Unity shell integration            |
 | indicator-sound                  | Indicator to show a unified sound menu     |
 | gsettings-qt                     | Library to access GSettings from Qt        |
 | dee-qt                           | Qt5 bindings for dee                       |
