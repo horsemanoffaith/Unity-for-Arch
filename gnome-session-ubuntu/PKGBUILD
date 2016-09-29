@@ -1,99 +1,98 @@
-# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Original Maintainer: Jan de Groot <jgc@archlinux.org>
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
 # vercheck-ubuntu: name=${pkgname%-*}, repo=xenial
 # vercheck-archlinux: name=${pkgname%-*}, repo=extra, arch=x86_64
-# vercheck-gnome: name=${pkgname%-*}, majorver=3.18
+# vercheck-gnome: name=${pkgname%-*}, majorver=3.20
 # vercheck-ppa: name=${pkgname%-*}, url=ppa:gnome3-team/gnome3-staging
 
 pkgname=gnome-session-ubuntu
 _use_ppa=true
-_ppa_rel=3.19.4-0ubuntu1~xenial1
-#_ubuntu_rel=1ubuntu1
-#_ubuntu_ver=3.18.1.2
-pkgver=3.19.4
+_ppa_rel=2ubuntu1~xenial1
+_ppa_ver=3.20.0
+#_ubuntu_rel=1ubuntu4
+pkgver=3.20.2
 pkgrel=1
 pkgdesc="The GNOME Session Handler"
 arch=(i686 x86_64)
 license=(GPL LGPL)
-depends=(systemd dconf gsettings-desktop-schemas gtk3-ubuntu gnome-desktop
-         hicolor-icon-theme json-glib libgl libsm libxtst systemd polkit-gnome)
-makedepends=(gnome-common intltool mesa gtk-doc xtrans)
+depends=(systemd dconf gsettings-desktop-schemas-ubuntu gtk3-ubuntu gnome-desktop
+         json-glib libgl libsm libxtst systemd polkit-gnome)
+makedepends=(intltool mesa gtk-doc xtrans)
 groups=(gnome unity)
 provides=("gnome-session=${pkgver}")
 conflicts=(gnome-session)
 options=(!emptydirs)
-install=gnome-session.install
 url="http://www.gnome.org"
-source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname%-*}/${pkgver:0:4}/${pkgname%-*}-${pkgver}.tar.xz"
+source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname%-*}/${pkgver%.*}/${pkgname%-*}-${pkgver}.tar.xz"
         timeout.patch
-        polkit-gnome-authentication-agent-1-unity.desktop
-        50_ubuntu_sessions.patch)
+        platformtheme.patch
+        polkit-gnome-authentication-agent-1-unity.desktop)
 
 if [[ "${_use_ppa}" == "true" ]]; then
-    source+=("https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/gnome-session_${_ppa_rel}.debian.tar.xz")
+    source+=("https://launchpad.net/~gnome3-team/+archive/ubuntu/gnome3-staging/+files/gnome-session_${_ppa_ver:-${pkgver}}-${_ppa_rel}.debian.tar.xz")
 else
-    source+=("https://launchpad.net/ubuntu/+archive/primary/+files/gnome-session_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.gz")
+    source+=("https://launchpad.net/ubuntu/+archive/primary/+files/gnome-session_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.xz")
 fi
 
-sha512sums=('1893f28a6e0cfd2c0c507e34c82138f6d19f4847bd22b4ce3337e9302a76454a0b18163f92f16d8c51aa9ab217d15376e089beb6c58329a69f3bdd3133301370'
+sha512sums=('0973c9763195a79038d99139f56eff8d7ad1fccc4c4e41a6439b5c65c615059a21446545af70f4ed83ec6925fd61a7664e70eec844dfe5e2a1001dffdbbea13a'
             '81d28b8f345c3a16dbb443ee8f195f802b572941aeac2dafaf6ea6b231ccb89a280aa855d09744dfc7ef2ad794a5e7b0002b54b14465865441367055514bcb70'
+            '6aabb1dd679c3e0cdbc109651fd600b6c50a6ec8a0e445edd37e09163e5a851596aa59ab872f3c61baeeff7b8cc703dbe7450af3450617b8ffd288d4c5497843'
             '34e32d1c3fd7c417b5dc70737b9dff9c9b0b660a6c99cb8c29e944818df0cb643fcac01c6c5252849bb8595a348aaf4d2a24985560c6b8a9653544e146e5b4af'
-            'fe9f5d2ac66595726285ae54a3e21439f3cea1bf97ef3b4bbc11de9f6b319dfd9775460873df6ef65bee20ed9de99bf068a50357cc9447d2f03659ef01189d4e'
-            '5abf10ed5a5f99a2dc646eebfa2c0a7028b27f2995dbc5da307bc6453184526d0b746b9d2661b8eada0d3227e3c6c31f5f878d1bfd800af8cb3649eb40d80113')
+            'b29521684b255d6d20f75d7a57eb7b9a53624b0ef7707540888137049c0e8749e8db58263184af849f32a73d55151195dc8b3851c27f670953f1851e92e59427')
 
 prepare() {
-  cd "${pkgname%-*}-${pkgver}"
+    cd "${pkgname%-*}-${pkgver}"
 
-  # Increase timeout, for slow machines
-  patch -p1 -i ../timeout.patch
+    # Increase timeout, for slow machines
+    patch -p1 -i ../timeout.patch
 
-  # Change the session from GNOME to Ubuntu
-  patch -p1 -i ../50_ubuntu_sessions.patch
+    # FS#49977
+    patch -Np1 -i ../platformtheme.patch
 
-  sed -i '/0001-Revert-data-add-GNOME-on-Xorg-session.patch/d' ../debian/patches/series
-  sed -i '/0002-Partial-Revert-data-merge-wayland-and-X11-session-fi.patch/d' ../debian/patches/series
-  sed -i '/50_ubuntu_sessions.patch/d' ../debian/patches/series
-  sed -i '/53_add_sessionmigration.patch/d' ../debian/patches/series
+    sed -i '/50_ubuntu_sessions.patch/d' ../debian/patches/series
+    sed -i '/53_add_sessionmigration.patch/d' ../debian/patches/series
 
-  # If you want this, install gnome-session-properties from the AUR
-  sed -i '/13_display_session_properties.patch/d' ../debian/patches/series
-  sed -i '/revert_remove_gnome_session_properties.patch/d' ../debian/patches/series
+    # If you want this, install gnome-session-properties from the AUR
+    sed -i '/13_display_session_properties.patch/d' ../debian/patches/series
+    sed -i '/revert_remove_gnome_session_properties.patch/d' ../debian/patches/series
 
-  for i in $(grep -v '#' ../debian/patches/series); do
-    msg "Applying ${i} ..."
-    patch -p1 -i "../debian/patches/${i}"
-  done
+    # Already applied in 3.20.1
+    sed -i '/0001-main-fix-starting-gnome-session-via-startx.patch/d' ../debian/patches/series
+
+    for i in $(grep -v '#' ../debian/patches/series); do
+        msg "Applying ${i} ..."
+        patch -p1 -i "../debian/patches/${i}"
+    done
 }
 
 build() {
-  cd "${pkgname%-*}-${pkgver}"
+    cd "${pkgname%-*}-${pkgver}"
 
-  autoreconf -vfi
+    autoreconf -vfi
 
-  ./configure \
-    --prefix=/usr \
-    --sysconfdir=/etc \
-    --localstatedir=/var \
-    --libexecdir=/usr/lib/gnome-session \
-    --disable-schemas-compile \
-    --enable-systemd \
-    --disable-gconf
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --libexecdir=/usr/lib/gnome-session \
+        --disable-schemas-compile \
+        --enable-systemd \
+        --disable-gconf
 
-  make
+    make
 }
 
 package() {
-  cd "${pkgname%-*}-${pkgver}"
-  make DESTDIR="${pkgdir}" install
+    cd "${pkgname%-*}-${pkgver}"
+    make DESTDIR="${pkgdir}" install
 
-  # Symlink session files so that KDM can find them
-  install -dm755 "${pkgdir}/usr/share/apps/kdm/sessions/"
-  ln -s /usr/share/xsessions/ubuntu.desktop "${pkgdir}/usr/share/apps/kdm/sessions/"
+    install -dm755 "${pkgdir}/etc/xdg/autostart/"
+    install -m644 "${srcdir}/polkit-gnome-authentication-agent-1-unity.desktop" \
+        "${pkgdir}/etc/xdg/autostart/"
 
-  install -dm755 "${pkgdir}/etc/xdg/autostart/"
-  install -m644 "${srcdir}/polkit-gnome-authentication-agent-1-unity.desktop" \
-    "${pkgdir}/etc/xdg/autostart/"
+    install -Dm644 "${srcdir}/debian/gnome-session-bin.user-session.upstart" \
+        "${pkgdir}/usr/share/upstart/sessions/gnome-session.conf"
 }
