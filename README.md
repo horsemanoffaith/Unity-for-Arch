@@ -6,15 +6,7 @@ This project is a port of the Ubuntu Unity desktop and most of its features to A
 
 Installation from binary repositories
 -------------------------------------
-The packages in this repo are automatically built by my Jenkins server whenever a commit is made. To use these packages, just add the following to `/etc/pacman.conf`:
-
-    [Unity-for-Arch]
-    SigLevel = Optional TrustAll
-    Server = http://dl.dropbox.com/u/486665/Repos/$repo/$arch
-
-    [Unity-for-Arch-Extra]
-    SigLevel = Optional TrustAll
-    Server = http://dl.dropbox.com/u/486665/Repos/$repo/$arch
+Per Chenxiaolong (see his comment here: https://github.com/chenxiaolong/Unity-for-Arch/issues/232), the binary repos are no longer being maintained. Building from source is the only available option at this time.
 
 Thanks
 ------
