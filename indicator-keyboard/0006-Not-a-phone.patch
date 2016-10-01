@@ -1,0 +1,58 @@
+--- a/configure.ac	2016-09-30 21:44:52.792484425 -0700
++++ b/configure.ac2	2016-09-30 21:41:30.425819595 -0700
+@@ -46,7 +46,6 @@
+ PKG_CHECK_MODULES([FCITX_GCLIENT], [fcitx-gclient])
+ PKG_CHECK_MODULES([ACCOUNTSSERVICE], [accountsservice])
+ PKG_CHECK_MODULES([LIGHTDM], [liblightdm-gobject-1])
+-PKG_CHECK_MODULES([URLDISPATCHER], [url-dispatcher-1 >= 1])
+ 
+ m4_include([m4/gcov.m4])
+ AC_TDD_GCOV
+--- a/lib/Makefile.am	2016-09-30 22:03:13.485807772 -0700
++++ b/lib/Makefile.am	2016-09-30 22:37:13.542455931 -0700
+@@ -1,7 +1,7 @@
+ pkglibexec_PROGRAMS = indicator-keyboard-service
+ 
+ AM_CFLAGS = -w -DGNOME_DESKTOP_USE_UNSTABLE_API
+-AM_LDFLAGS = -lm -lurl-dispatcher
++AM_LDFLAGS = -lm
+ AM_VALAFLAGS = \
+                --metadatadir $(top_srcdir)/deps \
+                --vapidir $(top_srcdir)/deps
+@@ -27,8 +27,7 @@
+                                        --pkg ibus-1.0             \
+                                        --pkg Fcitx-1.0            \
+                                        --pkg AccountsService-1.0  \
+-                                       --pkg liblightdm-gobject-1 \
+-                                       --pkg url-dispatcher
++                                       --pkg liblightdm-gobject-1 
+ indicator_keyboard_service_CFLAGS = $(AM_CFLAGS)              \
+                                     $(GEE_CFLAGS)             \
+                                     $(PANGOCAIRO_CFLAGS)      \
+@@ -40,8 +39,7 @@
+                                     $(FCITX_GCLIENT_CFLAGS)   \
+                                     $(ACCOUNTSSERVICE_CFLAGS) \
+                                     $(LIGHTDM_CFLAGS)         \
+-                                    $(COVERAGE_CFLAGS)        \
+-                                    $(URLDISPATCHER_CFLAGS)
++                                    $(COVERAGE_CFLAGS)        
+ indicator_keyboard_service_LDFLAGS = $(AM_LDFLAGS)           \
+                                      $(GEE_LIBS)             \
+                                      $(PANGOCAIRO_LIBS)      \
+@@ -53,5 +51,4 @@
+                                      $(FCITX_GCLIENT_LIBS)   \
+                                      $(ACCOUNTSSERVICE_LIBS) \
+                                      $(LIGHTDM_LIBS)         \
+-                                     $(COVERAGE_LDFLAGS)     \
+-                                     $(URLDISPATCHER_LDFLAGS)
++                                     $(COVERAGE_LDFLAGS)     
+--- a/lib/main.vala	2016-09-30 22:09:14.395804498 -0700
++++ b/lib/main.vala	2016-09-30 22:09:53.065804147 -0700
+@@ -1086,7 +1086,6 @@
+ 	[DBus (visible = false)]
+ 	private void handle_activate_settings (Variant? parameter) {
+ 		if (Environment.get_variable ("MIR_SOCKET") != null) {
+-			UrlDispatch.send ("settings:///system/hw-keyboard-layouts");
+ 			return;
+ 		}
+ 
