@@ -1,12 +1,13 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=xenial
+# vercheck-ubuntu: name=${pkgname}, repo=yakkety
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-power
 _actual_ver=12.10.6
-_extra_ver=+16.04.20160105
+_extra_ver=+16.10.20160708
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
 pkgdesc="An indicator to show the power status of your devices"
@@ -16,42 +17,32 @@ license=(GPL)
 depends=(dconf libnotify upower unity-control-center)
 makedepends=(cmake intltool python2)
 groups=(unity)
-install=${pkgname}.install
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-power_${_actual_ver}${_extra_ver}.orig.tar.gz"
-        0001-Not-a-phone.patch
-        0002-Remove-accountsservice-dependency.patch)
-sha512sums=('90f6b08d3bc4f86ad429f8dfa6c1cf5a250ab1747d5cab83158b9540810304bf5666d79f51c99f35a2039fcaf8f71b7743b644001a10258174403639db77fd8b'
-            'e3418b8dbe11d07cdc0376523dad73c3b1a11682a95768664927ceebf4ab36eb9b4cc1e35765cc02adcd8af89288ef4a6bc261999cbca725f93cb71e27a41076'
-            '18a9dade1df6fd622099d402a40662edd27354f644673870806ea4137440869794ae46b605330d1b1785707dca120560cb2562d40be7c22b3976206aff8c5204')
+        0001-Not-a-phone.patch)
+sha512sums=('639e62fdfe1b6712a107be184c789d4ba218086699bb9ffcc414d9a64bee82304455ee8421f5351bb0dcc6c022bbddf8c8183b0696b522a6a65eb00bc1838cb9'
+            'edc6430bbaa2e7fbac1bb2a4439e063c9c7654cff0586f20f20c524b89c4beb2ec1864e87c53027a6c42464adf3770066ccdd4788266a3553046a41608fd9d8a')
 
 prepare() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    patch -p1 -i 0001-Not-a-phone.patch
 
-  patch -p1 -i ../0001-Not-a-phone.patch
-  patch -p1 -i ../0002-Remove-accountsservice-dependency.patch
-
-  sed -ie '/NotShowIn=/d' data/indicator-power.desktop.in
+    sed -ie '/NotShowIn=/d' data/indicator-power.desktop.in
 }
 
 build() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    export CFLAGS+=" -Wno-error"
 
-  export CFLAGS+=" -Wno-error"
-
-  rm -rf build; mkdir build; cd build
-  cmake .. \
-      -DCMAKE_INSTALL_PREFIX=/usr \
-      -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib/${pkgname} \
-      -Denable_tests=OFF
-  make
+    rm -rf build; mkdir build; cd build
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBEXECDIR=/usr/lib \
+        -Denable_tests=OFF
+    make
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}/build/"
+    cd build
 
-  make DESTDIR="${pkgdir}/" install
+    make DESTDIR="${pkgdir}/" install
 
-  find "${pkgdir}" -type f -name '*.a' -delete
-
-  rm -r "${pkgdir}/usr/share/upstart/"
+    find "${pkgdir}" -type f -name '*.a' -delete
 }
