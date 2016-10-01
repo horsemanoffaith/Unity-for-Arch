@@ -1,84 +1,42 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase}, repo=xenial
-# vercheck-launchpad: name=${pkgbase}
+# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-launchpad: name=${pkgname}
 
-pkgname=(overlay-scrollbar liboverlay-scrollbar-gtk2 liboverlay-scrollbar-gtk3)
-pkgbase=overlay-scrollbar
+pkgname=overlay-scrollbar
 _actual_ver=0.2.17.1
 _extra_ver=+16.04.20151117
 pkgver=${_actual_ver}${_extra_ver//\+/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Overlaid Scrollbars that take up no active screen real-estate"
 arch=(i686 x86_64)
-url="https://launchpad.net/overlay-scrollbar"
+url="https://launchpad.net/ayatana-scrollbar"
 license=(LGPL)
 groups=(unity)
-makedepends=(gtk2-ubuntu gtk3-ubuntu)
+depends=(dconf gtk2-ubuntu)
+conflicts=(liboverlay-scrollbar liboverlay-scrollbar3)
+replaces=(liboverlay-scrollbar liboverlay-scrollbar3)
 options=(!emptydirs)
-extrafiles=(overlay-scrollbar.install)
-source=("https://launchpad.net/ubuntu/+archive/primary/+files/overlay-scrollbar_${_actual_ver}${_extra_ver}.orig.tar.gz"
-       0001-Fix-makefile.patch)
-sha512sums=('0e718acb39307c6aa92747eb7b353a8468c358c5a25525ae2df830a4b3cb1c1bf7a3ee03410330db12c253be2d09211603cfc7274e67fa19917463b57eda899b'
-            'c13cb1f2263ef0a3b0ab4b59bca6df65aba5cd898464188a634d1dd6574703f24959cde253a56696320aa2bf13a81b0f71b6cad3b3d7eab20b8c503ccd195720')
-
+source=("https://launchpad.net/ubuntu/+archive/primary/+files/overlay-scrollbar_${_actual_ver}${_extra_ver}.orig.tar.gz")
+sha512sums=('0e718acb39307c6aa92747eb7b353a8468c358c5a25525ae2df830a4b3cb1c1bf7a3ee03410330db12c253be2d09211603cfc7274e67fa19917463b57eda899b')
 
 build() {
-  cd "${pkgbase}-${_actual_ver}${_extra_ver}"
+    cd "${pkgbase}-${_actual_ver}${_extra_ver}"
 
-  autoreconf -vfi
-
-  [[ -d build-gtk2 ]] || mkdir build-gtk2
-  pushd build-gtk2
-  ../configure --prefix=/usr --sysconfdir=/etc --with-gtk=2 --disable-static
-  make
-  popd
-
-  [[ -d build-gtk3 ]] || mkdir build-gtk3
-  pushd build-gtk3
-  ../configure --prefix=/usr --sysconfdir=/etc --with-gtk=3 --disable-static
-  make
-  popd
-
-  patch -p1 -i ../0001-Fix-makefile.patch
+    autoreconf -vfi
+    ./configure --prefix=/usr --sysconfdir=/etc --disable-static
+    make
 }
 
-package_overlay-scrollbar() {
-  pkgdesc="Scrollbar overlayed widget"
-  depends=(dconf liboverlay-scrollbar-gtk2 liboverlay-scrollbar-gtk3)
-  install=overlay-scrollbar.install
+package() {
+    cd "${pkgbase}-${_actual_ver}${_extra_ver}"
+    make DESTDIR="${pkgdir}/" install
 
-  cd "${pkgbase}-${_actual_ver}${_extra_ver}/build-gtk3/"
-  make DESTDIR="${pkgdir}/" install
-
-  rm -rvf "${pkgdir}/usr/lib/"
-
-  # Put X11 startup script in correct directory
-  install -dm755 "${pkgdir}/etc/X11/xinit/xinitrc.d/"
-  mv "${pkgdir}/etc/X11/Xsession.d/81overlay-scrollbar" \
-    "${pkgdir}/etc/X11/xinit/xinitrc.d/"
-  chmod 755 "${pkgdir}/etc/X11/xinit/xinitrc.d/81overlay-scrollbar"
-}
-
-package_liboverlay-scrollbar-gtk3() {
-  pkgdesc="Scrollbar overlayed widget - GTK 3 library"
-  depends=(cairo gtk3-ubuntu)
-
-  cd "${pkgbase}-${_actual_ver}${_extra_ver}/build-gtk3/"
-  make DESTDIR="${pkgdir}/" install
-
-  rm -rvf "${pkgdir}/etc/"
-  rm -rvf "${pkgdir}/usr/share/glib-2.0/"
-}
-
-package_liboverlay-scrollbar-gtk2() {
-  pkgdesc="Scrollbar overlayed widget - GTK 2 library"
-  depends=(gtk2-ubuntu)
-
-  cd "${pkgbase}-${_actual_ver}${_extra_ver}/build-gtk2/"
-  make DESTDIR="${pkgdir}/" install
-
-  rm -rvf "${pkgdir}/etc/"
-  rm -rvf "${pkgdir}/usr/share/glib-2.0/"
+    # Put X11 startup script in correct directory
+    install -dm755 "${pkgdir}/etc/X11/xinit/xinitrc.d/"
+    mv "${pkgdir}/etc/X11/Xsession.d/81overlay-scrollbar" \
+        "${pkgdir}/etc/X11/xinit/xinitrc.d/"
+    chmod 755 "${pkgdir}/etc/X11/xinit/xinitrc.d/81overlay-scrollbar"
 }
