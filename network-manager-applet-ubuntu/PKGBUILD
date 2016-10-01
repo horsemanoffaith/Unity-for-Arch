@@ -1,3 +1,4 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: Jan de Groot <jgc@archlinux.org>
 # Contributor: Arjan Timmerman <arjan@archlinux.org>
@@ -6,131 +7,145 @@
 # Contributor: Will Rea <sillywilly@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase%-*}, repo=xenial
+# vercheck-ubuntu: name=${pkgbase%-*}, repo=yakkety
 # vercheck-archlinux: name=${pkgbase%-*}, repo=extra, arch=x86_64
-# vercheck-gnome: name=${pkgbase%-*}, majorver=1.0
+# vercheck-gnome: name=${pkgbase%-*}, majorver=1.2
 
 pkgbase=network-manager-applet-ubuntu
-pkgname=(network-manager-applet-ubuntu libnm-gtk-ubuntu)
-_ubuntu_rel=1ubuntu1
-pkgver=1.0.10
-pkgrel=2
+pkgname=(nm-connection-editor-ubuntu network-manager-applet-ubuntu)
+_ubuntu_rel=0ubuntu2
+pkgver=1.2.4
+pkgrel=1
 pkgdesc="Applet for managing network connections"
 arch=(i686 x86_64)
 url="http://www.gnome.org/projects/NetworkManager/"
-license=(GPL LGPL2.1)
-makedepends=(libnm-glib libsecret gtk3-ubuntu gnome-icon-theme
-             mobile-broadband-provider-info iso-codes libnotify libmm-glib
-             intltool gobject-introspection libappindicator-gtk3-ubuntu python2)
-extrafiles=(network-manager-applet.install)
+license=(GPL2 LGPL2.1)
+depends=(libnm-glib libgudev gtk3-ubuntu mobile-broadband-provider-info iso-codes
+         libappindicator-gtk3-ubuntu python2)
+makedepends=(libsecret libnotify libmm-glib intltool gobject-introspection)
 source=("http://ftp.gnome.org/pub/GNOME/sources/${pkgbase%-*}/${pkgver%.*}/${pkgbase%-*}-${pkgver}.tar.xz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/${pkgbase%-*}_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.xz")
-sha512sums=('dc13881243e5232d0c45563442f906a93c4d196a69c52c45d335f755bbc73c4d3131ba59180a102f65ca2066d40127b9db8cf85da2b41ec18efda482a9d210aa'
-            '0500eb1cb771e48ee04fa736397f0d98c5642f34a290b80d46349046bf3e1f55d42b0a0a2e3cbefca78236ec285ecf6585db69a3750c3c9366cead54220ce4b7')
+sha512sums=('0cf9dd2db3289b29e550f96212c425c807b4a425d6a98cf00981e44d2bd5d1eb41c482072b5b030f32ae744c27f49a7757d762f7eda17cbba90560f0b3af1a30'
+            '6d1cbb49e9a6c09a0739b97b20f757bfa0ab9ad7495a1ae97f423dfdd7f5951d42bf5a1188878c1050878109f10dd3acf7a23979ecf26244ae09dc53cb30a4bc')
 
 prepare() {
-  cd "${pkgbase%-*}-${pkgver}"
+    mkdir -p nma/etc/xdg nma/usr/bin \
+        nma/usr/share/{applications,icons/hicolor/22x22/apps,man/man1,nm-applet}
 
-  # Apply Ubuntu's patches
+    cd "${pkgbase%-*}-${pkgver}"
 
-  sed -i -e '/key-certificate-extensions.patch/d' \
-         -e '/lp829673_gconf_hide_applet.patch/d' \
-         -e '/hide_policy_items_env_var.patch/d' \
-         -e '/0001_Move_on_with_enter_in_the_country_page_of_the_new_mobile_wizard.patch/d' \
-         -e '/set_atk_relations.patch/d' \
-         -e '/11-user-connections.patch/d' \
-         ../debian/patches/series
+    # Apply Ubuntu's patches
+    for i in $(grep -v '#' ../debian/patches/series); do
+        msg "Applying ${i} ..."
+        patch -p1 -i "../debian/patches/${i}"
+    done
 
-  for i in $(grep -v '#' ../debian/patches/series); do
-    msg "Applying ${i} ..."
-    patch -p1 -i "../debian/patches/${i}"
-  done
-
-  sed -i 's/-Werror//g' m4/compiler_warnings.m4
+    sed -i 's/-Werror//g' m4/compiler_warnings.m4
 }
 
 build() {
-  cd "${srcdir}/${pkgbase%-*}-${pkgver}"
+    cd "${pkgbase%-*}-${pkgver}"
 
-  autoreconf -vfi
+    autoreconf -vfi
 
-  ./configure \
-    --prefix=/usr \
-    --sysconfdir=/etc \
-    --localstatedir=/var \
-    --libexecdir=/usr/lib/networkmanager \
-    --disable-static \
-    --disable-maintainer-mode \
-    --disable-migration \
-    --enable-indicator \
-    --with-modem-manager-1
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --libexecdir=/usr/lib/networkmanager \
+        --disable-static \
+        --disable-maintainer-mode \
+        --disable-migration \
+        --with-appindicator \
+        --with-wwan \
+        --with-modem-manager-1
 
-  # https://bugzilla.gnome.org/show_bug.cgi?id=655517
-  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    # https://bugzilla.gnome.org/show_bug.cgi?id=655517
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
-  make -j1
+    make -j1
+
+    cp -rf ../debian/icons/22 icons/
 }
 
 check() {
-  cd "${pkgbase%-*}-${pkgver}"
-  make -k check
+    cd "${pkgbase%-*}-${pkgver}"
+    make -k check
+}
+
+package_nm-connection-editor-ubuntu() {
+    pkgdesc="NetworkManager GUI connection editor"
+    provides=("libnm-gtk=${pkgver}-${pkgrel}" "nm-connection-editor=${pkgver}-${pkgrel}")
+    conflicts=(libnm-gtk libnm-gtk-ubuntu)
+    replaces=(libnm-gtk libnm-gtk-ubuntu)
+
+    cd "${pkgbase%-*}-${pkgver}"
+    make DESTDIR="${pkgdir}" install
+
+    ### Split network-manager-applet
+    cd ../nma
+    mv "${pkgdir}"/etc/xdg/autostart etc/xdg/
+    mv "${pkgdir}"/usr/bin/nm-applet usr/bin/
+    mv "${pkgdir}"/usr/share/GConf usr/share/
+
+    cd usr/share
+    mv "${pkgdir}"/usr/share/applications/nm-applet.desktop applications/
+    mv "${pkgdir}"/usr/share/man/man1/nm-applet.1 man/man1/
+    mv "${pkgdir}"/usr/share/nm-applet/{{8021x,gsm-unlock,info}.ui,keyring.png} nm-applet/
+
+    cd icons/hicolor/22x22
+    mv "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/nm-{adhoc,mb-roam,wwan-tower}.png apps/
+    mv "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/nm-{secure,vpn-active}-lock.png apps/
+    mv "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/nm-{signal,tech}-*.png apps/
+    mv "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/nm-*connecting*.png apps/
+
+    # Use language packs
+    rm -rf "${pkgdir}"/usr/share/locale/
 }
 
 package_network-manager-applet-ubuntu() {
-  depends=(libnm-gtk-ubuntu libmm-glib libnotify libsecret libappindicator-gtk3-ubuntu)
-  install=network-manager-applet.install
-  provides=("network-manager-applet=${pkgver}")
-  conflicts=(network-manager-applet)
+    depends=(nm-connection-editor-ubuntu libmm-glib libnotify libsecret
+             libappindicator-gtk3-ubuntu)
+    provides=("network-manager-applet=${pkgver}")
+    conflicts=(network-manager-applet)
 
-  cd "${pkgbase%-*}-${pkgver}"
-  make DESTDIR="${pkgdir}" install
-  make DESTDIR="${pkgdir}" -C src/libnm-gtk uninstall
+    mv nma/* "${pkgdir}"
 
-  # Install Ubuntu stuff
-  install -dm755 "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
-  install -m644 "${srcdir}"/debian/icons/22/nm-device-wired-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
-  install -m644 "${srcdir}"/debian/icons/22/nm-signal-00-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
-  ln -snf       nm-signal-00.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-none.png
-  ln -snf       nm-signal-00-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-none-secure.png
-  install -m644 "${srcdir}"/debian/icons/22/nm-signal-25-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
-  ln -snf       nm-signal-25.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-low.png
-  ln -snf       nm-signal-25-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-low-secure.png
-  install -m644 "${srcdir}"/debian/icons/22/nm-signal-50-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
-  ln -snf       nm-signal-50.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-medium.png
-  ln -snf       nm-signal-50-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-medium-secure.png
-  install -m644 "${srcdir}"/debian/icons/22/nm-signal-75-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
-  ln -snf       nm-signal-75.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-high.png
-  ln -snf       nm-signal-75-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-high-secure.png
-  install -m644 "${srcdir}"/debian/icons/22/nm-signal-100-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
-  ln -snf       nm-signal-100.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
-  ln -snf       nm-signal-100-secure.png \
-                "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
+    # Install Ubuntu stuff
+    install -dm755 "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
+    install -m644 "${srcdir}"/debian/icons/22/nm-device-wired-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
+    install -m644 "${srcdir}"/debian/icons/22/nm-signal-00-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
+    ln -snf       nm-signal-00.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-none.png
+    ln -snf       nm-signal-00-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-none-secure.png
+    install -m644 "${srcdir}"/debian/icons/22/nm-signal-25-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
+    ln -snf       nm-signal-25.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-low.png
+    ln -snf       nm-signal-25-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-low-secure.png
+    install -m644 "${srcdir}"/debian/icons/22/nm-signal-50-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
+    ln -snf       nm-signal-50.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-medium.png
+    ln -snf       nm-signal-50-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-medium-secure.png
+    install -m644 "${srcdir}"/debian/icons/22/nm-signal-75-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
+    ln -snf       nm-signal-75.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-high.png
+    ln -snf       nm-signal-75-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-high-secure.png
+    install -m644 "${srcdir}"/debian/icons/22/nm-signal-100-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/
+    ln -snf       nm-signal-100.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-full.png
+    ln -snf       nm-signal-100-secure.png \
+                  "${pkgdir}"/usr/share/icons/hicolor/22x22/apps/gsm-3g-full-secure.png
 
-  # Use language packs
-  rm -r "${pkgdir}/usr/share/locale/"
-}
-
-package_libnm-gtk-ubuntu() {
-  pkgdesc="NetworkManager GUI library"
-  depends=(libnm-glib gtk3-ubuntu mobile-broadband-provider-info iso-codes)
-  provides=("libnm-gtk=${pkgver}")
-  conflicts=(libnm-gtk)
-
-  cd "${pkgbase%-*}-${pkgver}"
-  make DESTDIR="${pkgdir}" -C src/libnm-gtk install
+    # Use language packs
+    rm -rf "${pkgdir}"/usr/share/locale/
 }
