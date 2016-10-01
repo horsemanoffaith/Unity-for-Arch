@@ -64,7 +64,6 @@ To compile from source, just build all of the packages in the following order:
 | gsettings-qt                     | Library to access GSettings from Qt        |
 | dee-qt                           | Qt5 bindings for dee                       |
 | libcolumbus                      | Small, fast, error tolerant matcher        |
-| libqtdee                         | Qt5 bindings for dee                       |
 | hud                              | Backend for the Unity HUD                  |
 | network-manager-applet-ubuntu    | NetworkManager applet w/indicator support  |
 | overlay-scrollbar                | Overlay scrollbars for GTK+2 and GTK+3     |
@@ -74,6 +73,7 @@ To compile from source, just build all of the packages in the following order:
 | nux                              | An OpenGL toolkit for Unity                |
 | unity-asset-pool                 | Design assets for Unity                    |
 | zeitgeist-ubuntu                 | Service for logging user activities        |
+| libzeitgeist                     | Zeitgeist client library                   |
 | nautilus-ubuntu                  | File manager for GNOME and Unity           |
 | unity-lens-applications          | Unity lens for searching applications      |
 | unity-lens-files                 | Unity lens for searching files             |
