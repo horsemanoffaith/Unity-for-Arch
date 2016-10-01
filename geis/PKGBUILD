@@ -1,7 +1,8 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=xenial
+# vercheck-ubuntu: name=${pkgname}, repo=yakkety
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=geis
@@ -13,22 +14,22 @@ pkgdesc="Implementation of the GEIS (Gesture Engine Interface and Support) inter
 arch=(i686 x86_64)
 url="https://launchpad.net/geis"
 license=(GPL LGPL)
-depends=(grail xorg-xinput python3 dbus-core)
+depends=(grail xorg-xinput python3 dbus)
 makedepends=(xorg-server-devel)
 options=(!emptydirs)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/geis_${_actual_ver}${_extra_ver}.orig.tar.gz")
 sha512sums=('5d50405e0b4520f163239a8d65adc6e71844eaf95d96c3c9683db4de995c8af960991ff29450c1d9ce7bfceb74acd97623274a978e509bf09ac9ba1d3983c0cc')
 
 build() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  autoreconf -vfi
+    autoreconf -vfi
 
-  ./configure --prefix=/usr --disable-static
-  make
+    ./configure --prefix=/usr --disable-static
+    make
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
-  make DESTDIR="${pkgdir}/" install
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    make DESTDIR="${pkgdir}/" install
 }
