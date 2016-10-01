@@ -1,15 +1,15 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=xenial
+# vercheck-ubuntu: name=${pkgname}, repo=yakkety
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=libcolumbus
-_ubuntu_rel=0ubuntu4
 _actual_ver=1.1.0
 _extra_ver=+15.10.20150806
-pkgver=${_actual_ver}${_extra_ver}
-pkgrel=5
+pkgver=${_actual_ver}${_extra_ver/+/.}
+pkgrel=4
 pkgdesc="A small, fast, error tolerant matcher"
 arch=(i686 x86_64)
 url="https://launchpad.net/libcolumbus"
@@ -17,32 +17,21 @@ license=(LGPL)
 groups=(unity)
 depends=(icu)
 makedepends=(boost cmake sparsehash)
-source=("https://launchpad.net/ubuntu/+archive/primary/+files/libcolumbus_${_actual_ver}${_extra_ver}.orig.tar.gz"
-        "https://launchpad.net/ubuntu/+archive/primary/+files/libcolumbus_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff.gz")
-
-sha512sums=('72a67115c813ceb575eb237c28eb096232e319524718f8fa4d28dab2fd42bf3eb637366ac829d9fb0999d119413b5259d6802de3beb5dff52983ce80ffe5fe41'
-            '24175b431617f250764aa090ddf75fdd53de43d74077c32d67e5ca9abe2e82e78fff50fbc781464ca5729300ab8e52a7a697a03bd4124dd34e654200dd65d437')
-            
-prepare() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
-# Apply Ubuntu patches
-  patch -p1 -i ../${pkgname}_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff
-
-}
+source=("https://launchpad.net/ubuntu/+archive/primary/+files/libcolumbus_${_actual_ver}${_extra_ver}.orig.tar.gz")
+sha512sums=('72a67115c813ceb575eb237c28eb096232e319524718f8fa4d28dab2fd42bf3eb637366ac829d9fb0999d119413b5259d6802de3beb5dff52983ce80ffe5fe41')
 
 build() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
-  mkdir build
-  cd build
-  cmake .. \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
-    -DCMAKE_BUILD_TYPE=''
-  make
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    mkdir -p build
+    cd build
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+        -DCMAKE_BUILD_TYPE=''
+    make
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}/build"
-  make DESTDIR="${pkgdir}/" install
+    cd "${pkgname}-${_actual_ver}${_extra_ver}/build"
+    make DESTDIR="${pkgdir}/" install
 }
