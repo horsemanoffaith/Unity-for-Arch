@@ -1,7 +1,8 @@
-# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Maintainer: Michael Healy <horsemanffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=xenial
+# vercheck-ubuntu: name=${pkgname}, repo=yakkety
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-printers
@@ -9,7 +10,7 @@ _ubuntu_rel=0ubuntu2
 _actual_ver=0.1.7
 _extra_ver=+15.04.20150220
 pkgver=${_actual_ver}${_extra_ver/\+/.}
-pkgrel=2
+pkgrel=3
 pkgdesc="Indicator showing active print jobs"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-printers"
@@ -23,35 +24,26 @@ sha512sums=('c4aff3d515d64c78085175c5ff807b32c3fcc501dc879247a34545cdfc25d45d445
             'ce9865bf8b2421926132ecd066af335eb4a42c50887488b3a9045d19fe159407cd6aa5541f5d563adb47027774cf4eec36ad3c97653b1c42e07e521eaa56ce22')
 
 prepare() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  # Apply Ubuntu's patches
-  patch -p1 -i ../indicator-printers_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff
+    # Apply Ubuntu's patches
+    patch -p1 -i ../indicator-printers_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff
 
+    sed -i '/SERVICE_LIBS/ i SERVICE_LIBS+=" "' configure.ac
 }
 
 build() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  autoreconf -vfi
-  intltoolize -f
-  ./configure --prefix=/usr --libexecdir=/usr/lib/${pkgname} --disable-static \
-  SERVICE_LIBS=-lindicator3\ -lgtk-3\ -lgdk-3\ -lpangocairo-1.0\ -lpango-1.0\ -latk-1.0\ -lcairo-gobject\ -lcairo\ -lgdk_pixbuf-2.0\ -lgio-2.0\ -lgobject-2.0\ -lglib-2.0\ -ldbusmenu-glib\   
-  make
+    ./autogen.sh --prefix=/usr --libexecdir=/usr/lib --disable-static
+    make
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  make DESTDIR="${pkgdir}/" install
+    make DESTDIR="${pkgdir}/" install
 
-  rm -r "${pkgdir}/usr/share/upstart/"
-}
-
-package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
-  make DESTDIR="${pkgdir}/" install
-
-  rm -r "${pkgdir}/usr/share/upstart/"
+    install -dm755 "${pkgdir}"/usr/share/icons/
+    cp -r debian/local/* "${pkgdir}"/usr/share/icons/
 }
