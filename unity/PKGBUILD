@@ -1,155 +1,152 @@
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=xenial
+# vercheck-ubuntu: name=${pkgname}, repo=yakkety
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=unity
-_actual_ver=7.4.0
-_extra_ver=+16.04.20151218
-_ubuntu_rel=0ubuntu2
+_actual_ver=7.5.0
+_extra_ver=+16.10.20160906.1
+_ubuntu_rel=0ubuntu1
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="A desktop experience designed for efficiency of space and interaction"
 arch=(i686 x86_64)
 url="https://launchpad.net/unity"
 license=(GPL)
-depends=(bamf-ubuntu boost cairo compiz-ubuntu clutter-gtk gjs gnome-desktop
-         gnome-screensaver gnome-session-ubuntu hud ido-ubuntu libgnomeui libindicator-gtk2-ubuntu
-         libindicator-gtk3-ubuntu libnotify libunique libunity libunity-misc libxfixes nux
-         unity-asset-pool unity-scope-home libxi zeitgeist-ubuntu
-         lightdm-unity-greeter gmock gtest chrpath)
+depends=(appstream-glib bamf-ubuntu boost cairo compiz-ubuntu clutter-gtk gjs
+         gnome-desktop gnome-screensaver-ubuntu gnome-session-ubuntu
+         gsettings-ubuntu-schemas hud ido-ubuntu libgnomeui libindicator-gtk2-ubuntu
+         libindicator-gtk3-ubuntu libnotify libunique libunity libunity-misc libxfixes
+         nux unity-asset-pool unity-scope-home libxi zeitgeist-ubuntu
+         lightdm-unity-greeter upstart-user)
+makedepends=(chrpath cmake doxygen intltool patchutils pkg-config
+             python2-distribute)
 groups=(unity)
-
 #options=(!ccache)
-install=unity.install
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/unity_${_actual_ver}${_extra_ver}.orig.tar.gz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/unity_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff.gz"
-        0001-Disable-tests.patch
-        0002-Revert-r3134-Remove-Systray-Whitelist.patch
-        0003-Disable-Werror.patch
-        0004-Fix-launchers.patch
-        0005-Remove-Upstart-stuff.patch
-        0006-Remove-social.scope.patch
-        0007-Remove-xpathselect-dependency.patch
-        com.ubuntu.user-interface.gschema.xml
+        0001-Revert-r3134-Remove-Systray-Whitelist.patch
+        0002-Disable-Werror.patch
+        0006-Remove-xpathselect-dependency.patch
         launcher_bfb.png
-        99unity-panel-service
         unity-debug
         run_this_if_unity_is_on_fire.py
-        unity.pam)
-sha512sums=('462e7f47fa2aed8f712d2737260ffd102efd6756db76c98bcc0a617cc7407ea6e8483fdec039eab37ee043af6e8e45034f63410e7e81cf1d923e2ce558691678'
-            'ba542eccb59e6502d8d5b889409d46f3bd11ec509e4973193e71c8cbd4da47ec2c2e53beed48f9bf17265fbb7939c5d87222f5bd9dd7efbe4f3ade0885ac03ea'
-            '34a7878f6823b913a9eb12e799cfe73fc24afec74069fdec2e2245df273a99ef8c365c56dc7a34853d9aa30c49abd99cd76da7c21ecad863cf5a6ca02b91d340'
-            'b5e75fb4580195cd997af95aad65a21404477a3233546458639f7ea71cd5c4295d9886adc444179866fc5dac9cf1a98e2c56fe7f48aafbab00c6c466a3c99a23'
-            '3b9c0181426356c635be8771a4308e5783165201a446271109990c2f2db2eb586ebb26efc32606360658b552128b28c2f8469a26da58a075cc9b50c36cd5124e'
-            '12f85ee5a223fb329f578efd31cb40737d6522362cd32a0020990826bf63e3982745353a9b62d9cc1a5cc6229efc0d3518c30d72b5c6d020970f8ee0df3a6588'
-            '1f776429ae20b9e1a3c6d743b4f78e4463f5bab0f2d658c6cdbd092958e18068b574a5a681b81c9ad4680a73229baf231e3770d1b7463199905ab771db4dfc55'
-            'ed2d7c211fa8fda79798e6497eed1763e2a39427d1352df9c93fe1e5eaf30c1db0aaa90012bc52fd5f76823bc0e382cf7d626f8234a632c32ba7ac5ed53ca5a7'
-            '0f101f9912e0684733e1d0b3317a9c3b6b39167af1ecf1ba9610f8ecedf14461cfb94a4ef6149def54f92a9ce8b790f44507ee48675e2cef2e8688973b77a610'
-            '126ed309012d60ef51da95b115d877f65c8f8dee415be781ad9f6c0efedc5639227f72218d9c790f5d00937378ba62691d0d29fd9ac757d75dd156fd4f4b7eba'
+        unity.pam
+        ubuntu.gnome-session
+        ubuntu.xsession)
+sha512sums=('38e149902e96ab18736f475f399fcceaa61c072c05786ea2e187936c0b9f5b1df51216d83e2de76f10d8e6eb8cc0fb4a53365c960df0b09944c7d16c44aaa7f4'
+            'db6bc90116bcc8fcafc5b30803143a71ef53c36e53e31fee10019625765b0808113dab4df5710196e3a9d06770697e06048025956f9c9eae84be5f4189475710'
+            '89089ae0b1f8f7c61cd4077d9652902b45c56843800ac9d4e0b67a7486df2844b0996e9586cf1eea745c359c03e1886addecc8454d25f8acf9845e20feb7f79a'
+            'ec0d228b4a117883e5dfbca0404614bd107d27d709554cde5a4cbe946a500381ff729a7a5942fbbfc9c449d0d404bde343ff5e536e390c8146df5bca243b781e'
+                        '8ae32bb07dad5bcb264e3de621b29b1bd535fa80c205098990896f1c16f99cfa889234d55b4ce505b5ab5141c64269d9c5775a9666a45f65c699aa4f0382e94d'
             'ec9ea91d79129b23aae6c4b9584fb396ecc572a0bafcac6229cc413ee441f610cb51ffce9383544c9fc62e747d5718be9be050850943eac4820095f190dc0ed0'
-            '126bdb4a4515e029acb31c255299caee06b246800f7fc833f0bd80a5d90e95b5a38000620cbba627a607100e6f734c4b1b677c84407c7d87cc8561aef102758e'
             'b217490bf5eb5b0e83dbc9737b80b2ab9d7288362f370625f3c99d5a862c0e1947376b9fab4fdc9c2ddd4e8bd6e8d2ff5763a3a4391732f0781abbc60b159db5'
             'f76ce70ee8ad4a83c94a5919fcabadf7f82e90cf3c70079344e8ab4069dd41f9055f86e01ee5d96ff52819ed9979bdbe85c59e0d50aa4c511e5a20e19a9ea06d'
-            '1067bcb25b6d6d01256b176b5854d1ace700ba2b7323b4af257aa95d2f47d5043ac22811f65e99f1e961772cd1e81c153ef69b162918827bd9d7d50d458908df')
-prepare() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+            '08d43702e1e356725096e4dbf9f6b3833b21b5ff88cca4db35097743acba157b37478baad19e66bcc61e01c8d3bfdbe44a4958808860b22d54fb38309bf9f011'
+            '975fa1c67092dc9b9dff639a05891f1a15131e3756d88cfe6534649644a7a09f78ec1151c70d56957906c51c73b29faaf83a33e26eca720867b6742f6bdc588f'
+            '4cfba3ad561cc73b60ae3622b4ee968f283288249c17a541afbb856c24cfad1326ed591dea5fc93e3d2ae93fb59b80db691838905651bd7e4741959461f19978')
 
-  patch -p1 -i ../0001-Disable-tests.patch
-  patch -p1 -i ../0002-Revert-r3134-Remove-Systray-Whitelist.patch
-  patch -p1 -i ../0003-Disable-Werror.patch
-  patch -p1 -i ../0004-Fix-launchers.patch
-  patch -p1 -i ../0005-Remove-Upstart-stuff.patch
-  patch -p1 -i ../0006-Remove-social.scope.patch
-  patch -p1 -i ../0007-Remove-xpathselect-dependency.patch
-  
-  # Apply Ubuntu patches
-  patch -p1 -i "../unity_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff"
-  for i in $(grep -v '#' debian/patches/series); do
-    patch -p1 -i "debian/patches/${i}"
-  done
+prepare() {
+    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
+
+    patch -p1 -i 0001-Revert-r3134-Remove-Systray-Whitelist.patch
+    patch -p1 -i 0002-Disable-Werror.patch
+    patch -p1 -i 0006-Remove-xpathselect-dependency.patch
+
+    # Apply Ubuntu patches
+    patch -p1 -i "unity_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff"
+    for i in $(grep -v '#' debian/patches/series); do
+        patch -p1 -i "debian/patches/${i}"
+    done
 }
 
 build() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  export CXXFLAGS+=" -lc"
+    #export CXXFLAGS+=" -lc"
 
-  # (From debian/rules) http://ccache.samba.org/manual.html#_precompiled_headers
-  export CCACHE_SLOPPINESS=time_macros
+    # (From debian/rules) http://ccache.samba.org/manual.html#_precompiled_headers
+    export CCACHE_SLOPPINESS=time_macros
 
-  [[ -d build ]] && rm -rvf build/
-  mkdir build/ && cd build/
+    [[ -d build ]] && rm -rvf build/
+    mkdir build/ && cd build/
 
-  cmake -Wno-dev \
-    -DCOMPIZ_BUILD_WITH_RPATH=FALSE \
-    -DCOMPIZ_PACKAGING_ENABLED=TRUE \
-    -DCOMPIZ_PLUGIN_INSTALL_TYPE=package \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_SYSCONFDIR=/etc \
-    -DUSE_GSETTINGS=TRUE \
-    ..
+    cmake -Wno-dev \
+        -DCOMPIZ_BUILD_WITH_RPATH=FALSE \
+        -DCOMPIZ_PACKAGING_ENABLED=TRUE \
+        -DCOMPIZ_PLUGIN_INSTALL_TYPE=package \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DCMAKE_INSTALL_SYSCONFDIR=/etc \
+        -DUSE_GSETTINGS=TRUE \
+        -DENABLE_UNIT_TESTS=FALSE \
+        ..
 
-  make
+    make
 
-  # Make sure that the GSettings schema files were created
-  gen=generated/glib-2.0/schemas
-  if \
-    [ ! -f ${gen}/org.compiz.networkarearegion.gschema.xml ] || \
-    [ ! -f ${gen}/org.compiz.unitydialog.gschema.xml ] || \
-    [ ! -f ${gen}/org.compiz.unitymtgrabhandles.gschema.xml ] ||
-    [ ! -f ${gen}/org.compiz.unityshell.gschema.xml ]; then
-    make compiz_gsettings_compile_local
-  fi
+    # Make sure that the GSettings schema files were created
+    gen=generated/glib-2.0/schemas
+    if \
+        [ ! -f ${gen}/org.compiz.networkarearegion.gschema.xml ] || \
+        [ ! -f ${gen}/org.compiz.unitydialog.gschema.xml ] || \
+        [ ! -f ${gen}/org.compiz.unitymtgrabhandles.gschema.xml ] ||
+        [ ! -f ${gen}/org.compiz.unityshell.gschema.xml ]; then
+        make compiz_gsettings_compile_local
+    fi
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}/build"
-  make DESTDIR="${pkgdir}/" install
+    #cd "${pkgname}-${_actual_ver}${_extra_ver}/build"
+    cd build
+    make DESTDIR="${pkgdir}/" install
 
-  # Install profile convert files
-  install -dm755 "${pkgdir}/usr/lib/compiz/migration/"
-  install -m644 ../tools/convert-files/* "${pkgdir}/usr/lib/compiz/migration/"
+    # Install profile convert files
+    install -dm755 "${pkgdir}"/usr/lib/compiz/migration/
+    install -m644 ../tools/convert-files/* \
+        "${pkgdir}"/usr/lib/compiz/migration/
 
-  # Taken from Ubuntu source package's debian/rules file
-  find "${pkgdir}/usr/lib" -name \*.*a -exec rm {} \;
-  rm -vf "${pkgdir}/usr/share/compiz/networkarearegion.xml"
-  rm -vf "${pkgdir}/usr/lib/compiz/libnetworkarearegion.so"
-  rm -vf "${pkgdir}/usr/share/compiz/unitydialog.xml"
-  rm -vf "${pkgdir}/usr/lib/compiz/libunitydialog.so"
+    # Taken from Ubuntu source package's debian/rules file
+    find "${pkgdir}"/usr/lib -name '*.*a' -exec rm {} \;
 
-  # Fix Python 2 scripts
-  sed -i 's|^\(#!.*python$\)|\12|g' \
-    "${pkgdir}/usr/bin/unity" \
-    "${pkgdir}/usr/lib/unity/makebootchart.py"
+    # Fix Python 2 scripts
+    sed -i '1s/^#!.*python$/&2/g' \
+        "${pkgdir}"/usr/bin/unity \
+        "${pkgdir}"/usr/lib/unity/makebootchart.py
 
-  # Arch Linux logo
-  install -m644 "${srcdir}/launcher_bfb.png" \
-    "${pkgdir}/usr/share/unity/icons/launcher_bfb.png"
+    # Arch Linux logo
+    install -m644 "${srcdir}"/launcher_bfb.png \
+        "${pkgdir}"/usr/share/unity/icons/launcher_bfb.png
 
-  install -m644 "${srcdir}/com.ubuntu.user-interface.gschema.xml" \
-    "${pkgdir}/usr/share/glib-2.0/schemas/"
+    # Install script for running Unity with debug output (from unity-gentoo project)
+    install -m755 "${srcdir}"/unity-debug "${pkgdir}"/usr/bin/
 
-  # Fix launching of unity-panel-service (from unity-gentoo project)
-  install -dm755 "${pkgdir}/etc/X11/xinit/xinitrc.d/"
-  install -m755 "${srcdir}/99unity-panel-service" \
-                "${pkgdir}/etc/X11/xinit/xinitrc.d/"
-
-  # Install script for running Unity with debug output (from unity-gentoo project)
-  install -m755 "${srcdir}/unity-debug" "${pkgdir}/usr/bin/"
-
-  # Use language packs
-  rm -r "${pkgdir}/usr/share/locale/"
+    # Use language packs
+    rm -r "${pkgdir}"/usr/share/locale/
   
-  # Fix insecure rpath in libunityshell.so
-  chrpath --replace /usr/lib/libunity:/usr/lib/compiz "$pkgdir/usr/lib/compiz/libunityshell.so"
+    # Fix insecure rpath in libunityshell.so
+    chrpath --replace /usr/lib/libunity:/usr/lib/compiz \
+        "${pkgdir}"/usr/lib/compiz/libunityshell.so
 
-  # FIRE!
-  install -m755 "${srcdir}/run_this_if_unity_is_on_fire.py" "${pkgdir}/usr/bin/"
+    # FIRE!
+    install -m755 "${srcdir}"/run_this_if_unity_is_on_fire.py \
+        "${pkgdir}"/usr/bin/
 
-  # Install PAM configuration file
-  rm "${pkgdir}/etc/pam.d/unity"
-  install -m644 "${srcdir}/unity.pam" "${pkgdir}/etc/pam.d/unity"
+    # Install PAM configuration file
+    rm "${pkgdir}"/etc/pam.d/unity
+    install -m644 "${srcdir}"/unity.pam "${pkgdir}"/etc/pam.d/unity
+
+    # Install session files
+    install -dm755 "${pkgdir}"/usr/share/gnome-session/sessions/
+    install -m644 "${srcdir}"/ubuntu.gnome-session \
+        "${pkgdir}"/usr/share/gnome-session/sessions/ubuntu.session
+    install -dm755 "${pkgdir}"/usr/share/xsessions/
+    install -m644 "${srcdir}"/ubuntu.xsession \
+        "${pkgdir}"/usr/share/xsessions/ubuntu.desktop
+
+    # Install upstart service
+    install -dm755 "${pkgdir}"/usr/share/upstart/sessions/
+    
 }
