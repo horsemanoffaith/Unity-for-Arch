@@ -1,4 +1,5 @@
-# Maintainer: Michael Healy: <horsemanoffaith@gmail.com>
+# Maintainer: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
+# Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
 
@@ -10,39 +11,40 @@ pkgname=unity-lens-music
 _actual_ver=6.9.1
 _extra_ver=+16.04
 pkgver=${_actual_ver}${_extra_ver/+/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="Music, in the dash"
 arch=(i686 x86_64)
 url="https://launchpad.net/unity-place-music"
 license=(GPL)
-depends=(gstreamer gst-plugins-base libgee06 libnotify liboauth libsoup libunity
+depends=(gstreamer gst-plugins-base libgee libnotify liboauth libsoup libunity
          tdb)
 makedepends=(vala intltool json-glib)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/unity-lens-music_${_actual_ver}${_extra_ver}.orig.tar.gz"
-     0001-Remove-Ubuntu-One-support-service-is-dead.patch)
-
+        0001-Remove-broken-reference-to-musicstore.scope.in.patch
+        0001-Use-libgee.patch)
 sha512sums=('fb97b3d6472fe2f97365c3fbd0864bab7f19aacaeb9cb3439a4bfc5a0506a26b8ecdb9389189db23549bcede288e04e6af6f6b7b58957ef35e0f8145cda23afc'
-            'd3f07b3ea42708ac3a323ecf827b6b43ee6682a9aa9df9f8be0e9071ac38adc2c289b79fb13eddce683ff6098655c5cf631ef9116119c5694299aace2e9f1bcd')
-                        
-prepare() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+            'a63bb4a0740142d70d4c0855a0011368202efe691c5b047629fcff1d671795ac91bd3cc506786b2849d60463c962c1dfb604c449af70f1902b1e0a0e210a3da5'
+            '2e15bcbd663550a4289a0870d971b71705950a9b23ef1c869396d945a58c0cf5369710229bd268c1e0412916bcaaf15dbe51c153fb8ff6fb35d3b7819b42e8c9')
 
-  patch -p1 -i ../0001-Remove-Ubuntu-One-support-service-is-dead.patch
+prepare() {
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    patch -p1 -i ../0001-Remove-broken-reference-to-musicstore.scope.in.patch
+    patch -p1 -i ../0001-Use-libgee.patch
 }
 
 build() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  aclocal --install --force
-  autoreconf -vfi
-  intltoolize -f
-  ./configure --prefix=/usr --libexecdir=/usr/lib/${pkgname} --disable-static
-  make
+    ./autogen.sh \
+        --prefix=/usr \
+        --libexecdir=/usr/lib/${pkgname} \
+        --disable-static
+    make
 }
 
 package() {
-  cd "${pkgname}-${_actual_ver}${_extra_ver}"
+    cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
-  make DESTDIR="${pkgdir}/" install
+    make DESTDIR="${pkgdir}/" install
 }
