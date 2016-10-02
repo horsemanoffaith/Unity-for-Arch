@@ -1,34 +1,16 @@
-From f1ada2355936063018215d0e605b9164163a9889 Mon Sep 17 00:00:00 2001
+From a87ba7ecf3a1c6ee788b50935aa21a68d625ce56 Mon Sep 17 00:00:00 2001
 From: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
 Date: Thu, 10 Apr 2014 20:09:48 -0400
-Subject: [PATCH 2/8] Revert r3134: Remove Systray Whitelist
+Subject: [PATCH 1/7] Revert r3134: Remove Systray Whitelist
 
 ---
- com.canonical.Unity.gschema.xml |  7 +++++
  panel/PanelTray.cpp             | 48 +++++++++++++++++++++---------
  panel/PanelTray.h               |  4 +--
  tests/CMakeLists.txt            |  1 -
  tests/test_panel_tray.cpp       | 65 -----------------------------------------
- 5 files changed, 44 insertions(+), 81 deletions(-)
+ 4 files changed, 37 insertions(+), 81 deletions(-)
+ delete mode 100644 tests/test_panel_tray.cpp
 
-diff --git a/com.canonical.Unity.gschema.xml b/com.canonical.Unity.gschema.xml
-index 02d13a6..2e404e2 100644
---- a/com.canonical.Unity.gschema.xml
-+++ b/com.canonical.Unity.gschema.xml
-@@ -130,6 +130,13 @@
-       <description>This is a detection key for the favorite migration script to know whether the needed migration is done or not.</description>
-     </key>
-   </schema>
-+  <schema path="/com/canonical/unity/panel/" id="com.canonical.Unity.Panel" gettext-domain="unity">
-+    <key type="as" name="systray-whitelist">
-+      <default>[ 'JavaEmbeddedFrame', 'Wine', 'Update-notifier' ]</default>
-+      <summary>List of client names, resource classes or wm classes to allow in the Panel's systray implementation.</summary>
-+      <description>"" (empty) will not allow any tray icons, "all" will allow all tray icons, otherwise there will be an attempt to match each icon to a value here.</description>
-+    </key>
-+  </schema>
-   <schema path="/com/canonical/unity/devices/" id="com.canonical.Unity.Devices" gettext-domain="unity">
-     <key type="as" name="blacklist">
-         <default>[]</default>
 diff --git a/panel/PanelTray.cpp b/panel/PanelTray.cpp
 index 20be87f..90da16b 100644
 --- a/panel/PanelTray.cpp
@@ -159,10 +141,10 @@ index b2ff8e0..e11fe93 100644
    glib::Signal<void, GSettings*, gchar*> whitelist_changed_;
    glib::Signal<gboolean, GtkWidget*, cairo_t*> draw_signal_;
 diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
-index 782ef6e..05d7f36 100644
+index 17ea9b7..1483e5a 100644
 --- a/tests/CMakeLists.txt
 +++ b/tests/CMakeLists.txt
-@@ -250,7 +250,6 @@ if (ENABLE_X_SUPPORT)
+@@ -251,7 +251,6 @@ if (ENABLE_X_SUPPORT)
                   test_panel_menu_view.cpp
                   test_panel_service.cpp
                   test_panel_style.cpp
@@ -171,9 +153,10 @@ index 782ef6e..05d7f36 100644
                   test_places_group.cpp
                   test_preview_player.cpp
 diff --git a/tests/test_panel_tray.cpp b/tests/test_panel_tray.cpp
-index c407576..e69de29 100644
+deleted file mode 100644
+index c407576..0000000
 --- a/tests/test_panel_tray.cpp
-+++ b/tests/test_panel_tray.cpp
++++ /dev/null
 @@ -1,65 +0,0 @@
 -/*
 - * Copyright 2013 Canonical Ltd.
@@ -241,5 +224,4 @@ index c407576..e69de29 100644
 -}
 -
 -- 
-2.3.7
-
+2.8.2
