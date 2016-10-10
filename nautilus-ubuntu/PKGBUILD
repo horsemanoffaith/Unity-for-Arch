@@ -51,11 +51,24 @@ prepare() {
     git config --local submodule.libgd.url "${srcdir}/libgd"
     git submodule update
 
+    # Apply Ubuntu's patches
+    sed -i -e '/0001-mime-actions-use-format-argument.patch/d' \
+	   -e '/0003-Fix-white-desktop.patch/d' \
+	   -e '/08_clean_session_capplet.patch/d' \
+	   -e '/15_use-ubuntu-help.patch/d' \
+	   -e '/17_static_unity_quicklist.patch/d' \
+	   -e '/ubuntu_revert_no_wallpaper.patch/d' \
+	   -e '/ubuntu_sync_background_to_accountsservice.patch/d' \
+	   ../debian/patches/series
+	   
+
+    for i in $(grep -v '#' ../debian/patches/series); do
+	msg "Applying ${i} ..."
+	patch -p1 -i "../debian/patches/${i}"
+    done
+
     NOCONFIGURE=1 ./autogen.sh
 
-    #Enable Unity launcher support
-
-	patch -p1 -i "../debian/patches/12_unity_launcher_support.patch"
 }
 
 build() {
@@ -99,6 +112,12 @@ package_nautilus-ubuntu() {
         "${srcdir}/debian/nautilus-folder-handler.desktop" \
         "${pkgdir}/usr/share/applications/"
 
+    # Make Unity happy
+    cp "${pkgdir}"/usr/share/applications/{org.gnome.Nautilus,nautilus}.desktop
+    sed -i 's/NoDisplay=true/OnlyShowIn=Unity;/' \
+        "${pkgdir}"/usr/share/applications/org.gnome.Nautilus.desktop
+    sed -i 's/\[Desktop Entry\]/\0\nNotShowIn=Unity;/' \
+        "${pkgdir}"/usr/share/applications/nautilus.desktop
 }
 
 package_libnautilus-extension-ubuntu() {
@@ -111,4 +130,3 @@ package_libnautilus-extension-ubuntu() {
     make DESTDIR="$pkgdir" -C libnautilus-extension install
     make DESTDIR="$pkgdir" -C docs/reference/libnautilus-extension install
 }
-
