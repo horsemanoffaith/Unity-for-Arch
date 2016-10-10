@@ -87,6 +87,7 @@ To compile from source, just build all of the packages in the following order:
 | gmock                            | Library for writing/using C++ mock classes |
 | unity                            | Desktop shell designed for efficiency      |
 | unity-language-packs             | Unity language packs                       |
+| ubuntu-themes                    | Ubuntu-related window and icon themes      |
 
 Troubleshooting
 ---------------
