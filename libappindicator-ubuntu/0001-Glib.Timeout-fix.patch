@@ -30,3 +30,4 @@ index f8cd874..6d8d71b 100644
  				ci.set_label(@"$(percentage+1)%", "");
 -- 
 2.1.2
+
