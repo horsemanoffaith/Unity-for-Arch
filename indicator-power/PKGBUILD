@@ -20,8 +20,8 @@ groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-power_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001-Not-a-phone.patch)
 sha512sums=('639e62fdfe1b6712a107be184c789d4ba218086699bb9ffcc414d9a64bee82304455ee8421f5351bb0dcc6c022bbddf8c8183b0696b522a6a65eb00bc1838cb9'
-            'edc6430bbaa2e7fbac1bb2a4439e063c9c7654cff0586f20f20c524b89c4beb2ec1864e87c53027a6c42464adf3770066ccdd4788266a3553046a41608fd9d8a')
-
+            '82f7de1adba428bbe640e50cecdfc3d27cf13062df0739b66330e2cdf2063f9d5eef3fb4e826c5ef645356e9e4719ff3a93fe9f7d7ea93567081b47d69874c4a')
+            
 prepare() {
     patch -p1 -i 0001-Not-a-phone.patch
 
