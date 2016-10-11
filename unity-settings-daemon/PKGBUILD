@@ -30,11 +30,11 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/unity-settings-dae
         0001-usd-test-screensaver-proxy-fails-to-compile.patch)
 sha512sums=('89d9dcbc5d17ccb09bc4299f869b41d8c977ba46a2766ad6b4c4e8b536ab0aba0be3adb45f0c39388f12b5f13b41a076646fd1fe3a2c5f37dc6a2e08ad2aac7f'
             'be4c7718bd4a000b61997c2385ba9d1d044523017363bdd3aac196454a3c6ddaf6e1a224a0381572923d655605f7567e7157bc379668024ddfed9719d82a0e5d'
-            'ddfbab090fe8d8272be62639cf8473d6b2af0c93734f969038b786e9141be8b9bf4e7298c58a9180ad6fcb632c861384ddb16129ebbdf4ab8f8eefcb847ff663'
-            'deafb16a268d660614dfa37cdbccc5ab8489327e7d61d766dd24f3304bebea3f8991d335d4332e33deea66e12ed4efcee6a606d9638c7457fef39b29f71dea77'
+            '2394d35355f31a1090c96a38f3e33930d70aa1683f1bc3c4b65fd6a70a9bf9e5a592109ed34dd2d5a07822b401a24d11d80a662aae850236434d89c37a9a9c89'
+            '8783935c674e0b76952d9eec5f6d44c43d48a963de91cd5f5eed7cb4e09f9e86d0b516ea4f184859366ab588f5c0c68d431d9a8f35dfeab745b79e17ff711fcc'
             '9d036512105a20f1a2f045a7c6b87faedacb25748239babe3f79514c7899af74ab0e56e8d184406d183cdb2be6518f37681b03cdb6ce20901f0381b6bd0d7d68'
             '0b6fa66ebecef51c54ca04ae5aec6c6e05450668865e544f4c5ed3b142dcb22301bae440f55dfeec8fc5534a3c818d8cba4d019c32f5e3441a588bea9b93dab8')
-
+            
 prepare() {
     patch -p1 -i unity-settings-daemon_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff
 
