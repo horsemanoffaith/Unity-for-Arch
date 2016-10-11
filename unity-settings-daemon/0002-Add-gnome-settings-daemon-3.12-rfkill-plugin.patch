@@ -33,7 +33,7 @@ diff --git a/configure.ac b/configure.ac
 index 824d758..67e3bf5 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -377,6 +377,21 @@ fi
+@@ -422,6 +422,21 @@ fi
  AM_CONDITIONAL(BUILD_PRINT_NOTIFICATIONS, [test x"$enable_cups" = x"yes"])
  
  # ---------------------------------------------------------------------------
@@ -55,14 +55,15 @@ index 824d758..67e3bf5 100644
  # Enable Profiling
  # ---------------------------------------------------------------------------
  AC_ARG_ENABLE(profiling,
-@@ -510,5 +465,6 @@ plugins/media-keys/gvc/Makefile
+@@ -540,6 +555,7 @@ plugins/media-keys/gvc/Makefile
  plugins/mouse/Makefile
  plugins/orientation/Makefile
+ plugins/print-notifications/Makefile
 +plugins/rfkill/Makefile
  plugins/remote-display/Makefile
  plugins/screensaver-proxy/Makefile
  plugins/smartcard/Makefile
-@@ -558,6 +558,7 @@ echo "
+@@ -589,6 +605,7 @@ echo "
          Smartcard support:        ${have_smartcard_support}
          Cups support:             ${enable_cups}
          Wacom support:            ${have_wacom}
@@ -1572,10 +1573,10 @@ diff --git a/po/POTFILES.in b/po/POTFILES.in
 index 67f6ae0..f1eb354 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
-@@ -33,6 +33,7 @@ plugins/power/com.ubuntu.unity-settings-daemon.plugins.power.policy.in.in
- plugins/power/gsd-power-manager.c
- plugins/power/com.ubuntu.unity-settings-daemon.plugins.power.policy.in.in
- [type: gettext/ini]plugins/power/power.gnome-settings-plugin.in
+@@ -36,6 +36,7 @@ plugins/power/com.ubuntu.unity-settings-daemon.plugins.power.policy.in.in
+ plugins/print-notifications/gsd-printer.c
+ plugins/print-notifications/gsd-print-notifications-manager.c
+ [type: gettext/ini]plugins/print-notifications/print-notifications.gnome-settings-plugin.in
 +[type: gettext/ini]plugins/rfkill/rfkill.gnome-settings-plugin.in
  [type: gettext/ini]plugins/remote-display/remote-display.gnome-settings-plugin.in
  [type: gettext/ini]plugins/screensaver-proxy/screensaver-proxy.gnome-settings-plugin.in
