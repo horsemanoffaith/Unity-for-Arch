@@ -22,6 +22,7 @@ Please make sure you don't already have modified versions of the dependencies in
 Packages ending with "-ubuntu" contain Ubuntu patches and *REPLACE* Arch Linux versions of those packages.
 
 To compile from source, just build all of the packages in the following order:
+10/12/16- *** if glew-2.0 is installed on your system, you MUST either downgrade to glew-1.13 or remove glew-2.0 prior to installing glew1.13. Once glew1.13 is installed, you have to force install glew-2.0 to overwrite a few files so that both glew1.13 and glew-2.0 coexist on your filesystem. ***
 
 | Package                          | Description                                |
 | -------------------------------- | ------------------------------------------ |
