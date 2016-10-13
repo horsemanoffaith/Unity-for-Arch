@@ -70,6 +70,7 @@ To compile from source, just build all of the packages in the following order:
 | frame                            | Open Input Framework Frame Library         |
 | grail                            | Gesture recognition and instantiation lib. |
 | geis                             | Implementation of the GEIS interface       |
+| glew1.13                         | OpenGL Extension Wrangler Library- legacy  |
 | nux                              | An OpenGL toolkit for Unity                |
 | unity-asset-pool                 | Design assets for Unity                    |
 | zeitgeist-ubuntu                 | Service for logging user activities        |
