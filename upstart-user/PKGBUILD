@@ -6,9 +6,9 @@
 # vercheck-launchpad: name=upstart
 
 pkgname=upstart-user
-_ubuntu_rel=0ubuntu31
+_ubuntu_rel=0ubuntu34
 pkgver=1.13.2
-pkgrel=6
+pkgrel=7
 pkgdesc="Event-based user sessions service management daemon"
 arch=(i686 x86_64)
 url="http://upstart.ubuntu.com/"
@@ -22,7 +22,7 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/upstart_${pkgver}.
 		upstart-xsessions
         dbus.conf)
 sha512sums=('07a3db5547996772bd6fe0ecb323214698634490eec36b7753a6d0a3ee07caa456696d0fbd9c031d61875dd4b27c9f2bbac37c7511acc54b7bb0146662e35520'
-            'af7df7ff9a2670ab8f0952e3b9121a7fd1f06cabf287366062d1f0b5d385b3e34e61f63107f6eac6fc6cc6d4eaf9347e97546db7b1d9b2d412a08902999cdea1'
+            '75612b2f472c128da7f9f8c89bbe77b8d36f743efcd8c54a5052ce6480f4318479c15a802f215a3491445b91d5a6ec46708603a28cd511158c1ad91d775c8b9b'
             '7894335605e1960258ebf2791e1cd37ce9932ed3fbef0ce923454eed69792d7c1a013e22463c99654f4b62ca447a956abd2e01901cbc0f2dcedb370dfe13c9e6'
             '090f53ee2af576745d16b3a1372aefda9ad3c7682f7bd963718076110e54c767e6e9d009d66bc49984e9ffa7be510170dd780ef8e25ba7ccfde2362aa06ecd8b'
             '7e6d1e78975b3b5b368732a19bc9d67520055192efc54951fa8dc1567180a365ae57542272f85acaf59489172c7c7131dd6a73f58825b6f0abc0893c2cd91c12'
