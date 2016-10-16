@@ -20,7 +20,6 @@ depends=(humanity-icon-theme adwaita-icon-theme hicolor-icon-theme
 makedepends=(python2 imagemagick icon-naming-utils)
 provides=(light-themes ubuntu-mono)
 conflicts=(light-themes ubuntu-mono)
-install=${pkgname}.install
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${_actual_ver}${_extra_ver}.orig.tar.gz")
 
 sha512sums=('bded13a3bbf7f3dbd247352bb1521f1b9983171a4474a40e58fb8b69ea0c9e17dd271d9b02beb110ec8c197184f96a9d0d8a26a75a0ff94d6bf21b4e421a7d4d')
