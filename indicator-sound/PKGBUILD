@@ -25,7 +25,7 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-sound_${
         0002-Remove-tests.patch)
 sha512sums=('304b2452c400b533a042b943a3e4ec9712de453aae23a597fa67f9f949d02214062ba2693fdcc335f7ac3f1e821c08af38c9de010a3bb82bd3e3391e7b03f476'
             '3c57829cd55b1aea14b5bc2f66e8b015d28ccdd8a7d56c5d445efb61d149a49159e6be0c267d8eded5884d53361705373837cfe789d39ced9d262a5fa630491f'
-            'a2c8b9f23419c8554a38ac6e3128841e38d15e6ca2f1c70a28a01546ca61090059304974a2d5d8ed5e7c9cc68a2762c6b856d575bae3d74e81b45c0b13e517ce')
+            '3e635f7271b67274f68f291a730893b5c0e73d2c9e18f30b86b6d06601c0eef4f09e587374f09422ce96d8601bd666945a931d32c19cbf514f1a1735003664d3')
 
 prepare() {
     #cd "${pkgname}-${_actual_ver}${_extra_ver}"
