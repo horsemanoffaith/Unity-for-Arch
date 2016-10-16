@@ -22,7 +22,7 @@ optdepends=('lightdm: support for lightdm')
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-session_${_actual_ver}${_extra_ver}.orig.tar.gz"
 	0001-There-is-no-help.patch
-        0002-Remove-url-dispatcher-dependency.patch)
+        0002-Remove-url_dispatcher.patch)
 
 sha512sums=('0142ab02e5dba9a543c6785ea1409fe1d95ed57b395f8ceea526fbe4c2b726088d37a927c1fac6c8a3a31125478c7aa76bc45b8687bd96b1125892f84d329529'
             'd6fb693580c921ce397124e12222aeff63734b1a2729f9e661a432613178ed8ff8da6107364e151bbd2bd58c3e70e18b71d8b96988025134f0fee8bc03868135'
@@ -32,7 +32,7 @@ prepare() {
     #cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
         patch -p1 -i ../0001-There-is-no-help.patch
-    patch -p1 -i ../0002-Remove-url-dispatcher-dependency.patch
+    patch -p1 -i ../0002-Remove-url_dispatcher.patch
 }
 
 build() {
