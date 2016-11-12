@@ -1,10 +1,10 @@
-# Maintainer: Xiao-long Chen <chenxiaolong@cxl.epac.to>
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 # Original Maintainer: György Balló <ballogy@freestart.hu>
 # Contributor: thn81 <root@scrat>
+# Contributor: Xiao-long Chen <chenxiaolong@cxl.epac.to>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase}, repo=yakkety
+# vercheck-ubuntu: name=${pkgbase}, repo=zesty
 # vercheck-launchpad: name=${pkgbase}
 
 pkgbase=libindicator-ubuntu
@@ -17,7 +17,7 @@ pkgdesc="A set of symbols and convience functions that all indicators would like
 arch=(i686 x86_64)
 url="https://launchpad.net/libindicator"
 license=(GPL)
-makedepends=(gtk2-ubuntu gtk3-ubuntu glib2 ido-ubuntu)
+makedepends=(ido-ubuntu glib2 gtk2-ubuntu gtk3-ubuntu)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgbase/\-*/}_${_actual_ver}${_extra_ver}.orig.tar.gz")
 sha512sums=('d5a82fa3ee9db1b85680c348041aee88fe83d3f221d6f5b5abd2d4ac0394ece8fdfc146db88ad3a945496c4c3654ce121c60907c26b307015334537ccb73ba48')
