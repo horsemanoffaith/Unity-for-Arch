@@ -3,7 +3,7 @@
 # Contributor: Christopher Reimer <github@creimer.net>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=gtk+2.0, repo=yakkety
+# vercheck-ubuntu: name=gtk+2.0, repo=zesty
 # vercheck-archlinux: name=gtk2, repo=extra, arch=x86_64
 # vercheck-gnome: name=gtk+, majorver=2.24
 
@@ -16,12 +16,10 @@ pkgdesc="GObject-based multi-platform GUI toolkit (legacy)"
 arch=(i686 x86_64)
 url="http://www.gtk.org/"
 license=(LGPL)
-depends=(atk pango libxcursor libxinerama libxrandr libxi libxcomposite
-         libxdamage shared-mime-info cairo libcups gtk-update-icon-cache
-         librsvg desktop-file-utils)
-makedepends=(gobject-introspection python2 gtk-doc)
-optdepends=('gnome-themes-standard: Default widget theme'
-            'adwaita-icon-theme: Default icon theme')
+depends=(atk cairo desktop-file-utils gtk-update-icon-cache libcups librsvg libxcomposite 		libxcursor libxdamage libxi libxinerama libxrandr pango shared-mime-info)
+makedepends=(gobject-introspection gtk-doc python2)
+optdepends=('adwaita-icon-theme: Default icon theme'
+	    'gnome-themes-standard: Default widget theme')
 provides=("gtk2=${pkgver}")
 conflicts=(gtk2)
 install=gtk2.install
@@ -61,9 +59,7 @@ prepare() {
         print-dialog-show-options-of-remote-dnssd-printers.patch
         gtk-shell-shows-menubar.patch
         backport_search_printer_location.patch
-        menubar_toolbar_dragging.patch
-        #printing-initialize-auth_info.patch
-        #gdkcairo-Avoid-integer-overflow.patch
+        menubar_toolbar_dragging.patch        
     )
 
     for i in "${patches[@]}"; do
