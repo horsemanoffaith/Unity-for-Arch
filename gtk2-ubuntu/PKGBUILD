@@ -16,7 +16,8 @@ pkgdesc="GObject-based multi-platform GUI toolkit (legacy)"
 arch=(i686 x86_64)
 url="http://www.gtk.org/"
 license=(LGPL)
-depends=(atk cairo desktop-file-utils gtk-update-icon-cache libcups librsvg libxcomposite 		libxcursor libxdamage libxi libxinerama libxrandr pango shared-mime-info)
+depends=(atk cairo desktop-file-utils gtk-update-icon-cache libcups librsvg libxcomposite 
+         libxcursor libxdamage libxi libxinerama libxrandr pango shared-mime-info)
 makedepends=(gobject-introspection gtk-doc python2)
 optdepends=('adwaita-icon-theme: Default icon theme'
 	    'gnome-themes-standard: Default widget theme')
