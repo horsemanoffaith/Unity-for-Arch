@@ -3,7 +3,7 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=libdbusmenu, repo=xenial
+# vercheck-ubuntu: name=libdbusmenu, repo=zesty
 # vercheck-launchpad: name=dbusmenu, tarname=libdbusmenu
 
 pkgbase=libdbusmenu-ubuntu
@@ -16,8 +16,7 @@ pkgdesc="A small little library that was created by pulling out some common code
 arch=(i686 x86_64)
 url="https://launchpad.net/dbusmenu"
 license=(LGPL)
-makedepends=(json-glib gtk2-ubuntu gtk3-ubuntu intltool gtk-doc gobject-introspection vala
-             python2 valgrind)
+makedepends=(gobject-introspection gtk-doc gtk2-ubuntu gtk3-ubuntu intltool json-glib python2 vala valgrind)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/libdbusmenu_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001_autoconf.patch)
