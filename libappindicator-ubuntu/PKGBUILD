@@ -4,7 +4,7 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase}, repo=yakkety
+# vercheck-ubuntu: name=${pkgbase}, repo=zesty
 # vercheck-launchpad: name=${pkgbase}
 
 pkgbase=libappindicator-ubuntu
@@ -17,7 +17,7 @@ pkgdesc="A library to allow applications to export a menu into the Unity Menu ba
 arch=(i686 x86_64)
 url="https://launchpad.net/libappindicator"
 license=(LGPL)
-makedepends=(dbus-glib libindicator-gtk2-ubuntu libindicator-gtk3-ubuntu libdbusmenu-gtk2-ubuntu libdbusmenu-gtk3-ubuntu gobject-introspection vala gtk-sharp-2 pygtk perl-xml-libxml gtk-doc)
+makedepends=(dbus-glib gobject-introspection gtk-doc gtk-sharp-2 libdbusmenu-gtk2-ubuntu libdbusmenu-gtk3-ubuntu libindicator-gtk2-ubuntu libindicator-gtk3-ubuntu perl-xml-libxml pygtk vala)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgbase/\-*/}_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001-Glib.Timeout-fix.patch
