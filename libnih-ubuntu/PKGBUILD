@@ -20,7 +20,7 @@ conflicts=("${pkgname%-*}")
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname%-*}_${pkgver}.orig.tar.gz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname%-*}_${pkgver}-${_ubuntu_rel}.diff.gz")
 sha512sums=('fce40d2445b28c27b8838631681ca3206a4f053b2dd4fc488fc9ef98bbd3d933e3d62b82cf346be2ef1677f6457f692cf5544cd915a6bb1e5c618f98ffa101b4'
-            'acf748a7906ca8d320a7cec4d01ebb98fbe8631f84e65a6dd2c927da55c2384b998686d2298d095f2b48e10d25bab5c3586a479ae83fc4e6a92fed1b9060e7ff')
+            '9445030b1540ec539858be51c053c22d4bf876e950832809fdace8490e2f119dd8cbc7842817c6e188c29c848dd5d591693479e7913443b53b327e2adf6c0f88')
 
 prepare() {
     cd "${pkgname%-*}-${pkgver}"
