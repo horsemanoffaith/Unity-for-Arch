@@ -4,7 +4,7 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=libunity
@@ -17,8 +17,8 @@ pkgdesc="A library for instrumenting and integrating with all aspects of the Uni
 arch=(i686 x86_64)
 url="https://launchpad.net/libunity"
 license=(LGPL)
-depends=(dee-ubuntu libdbusmenu-glib-ubuntu gtk3-ubuntu)
-makedepends=(intltool vala python2 gobject-introspection)
+depends=(dee-ubuntu gtk3-ubuntu libdbusmenu-glib-ubuntu)
+makedepends=(gobject-introspection intltool python2 vala)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/libunity_${_actual_ver}${_extra_ver}.orig.tar.gz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/libunity_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff.gz"
