@@ -2,11 +2,11 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname%-*}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname%-*}, repo=zesty
 # vercheck-launchpad: name=${pkgname%-*}
 
 pkgname=libnih-ubuntu
-_ubuntu_rel=4.3ubuntu1
+_ubuntu_rel=6ubuntu1
 pkgver=1.0.3
 pkgrel=1
 pkgdesc="Light-weight library of standard C library functions"
