@@ -2,7 +2,7 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${_name}, repo=yakkety
+# vercheck-ubuntu: name=${_name}, repo=zesty
 # vercheck-launchpad: name=${_name}
 
 _name=gsettings-ubuntu-touch-schemas
