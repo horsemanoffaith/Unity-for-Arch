@@ -4,7 +4,7 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=bamf, repo=yakkety
+# vercheck-ubuntu: name=bamf, repo=zesty
 # vercheck-launchpad: name=bamf
 
 pkgname=bamf-ubuntu
@@ -16,7 +16,7 @@ pkgdesc="Removes the headache of applications matching into a simple DBus daemon
 arch=(i686 x86_64)
 url="https://launchpad.net/bamf"
 license=(GPL)
-depends=(libgtop libwnck3 glib2 hicolor-icon-theme libdbusmenu-gtk3-ubuntu procps-ng
+depends=(glib2 hicolor-icon-theme libdbusmenu-gtk3-ubuntu libgtop libwnck3 procps-ng
          startup-notification)
 makedepends=(gnome-common gobject-introspection gtk-doc libxml2 libxslt vala)
 provides=("bamf=${pkgver}")
