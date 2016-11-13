@@ -4,20 +4,20 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-messages
 _actual_ver=13.10.1
-_extra_ver=+15.10.20150505
+_extra_ver=+17.04.20161021
 pkgver=${_actual_ver}${_extra_ver/+/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="A place on the user's desktop that collects messages that need a response"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-messages"
 license=(GPL)
 depends=(accountsservice hicolor-icon-theme libindicator-gtk3-ubuntu)
-makedepends=(gobject-introspection gtk-doc intltool vala)
+makedepends=(intltool gobject-introspection gtk-doc vala)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-messages_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001-autoconf-fix.patch
@@ -27,15 +27,13 @@ sha512sums=('f054af8084b2313c61dce8e3c6fa677d00e2a607a121ac2ca5fddd57deeed6ed22e
             '00e4aed73c5a95500c450bbdd6217bcd904df38272577eb9c496d3a19f030f4feb8346a073b9331122ff408b56c5d1e9ea99745cf56a54d6710d33aade881e2f')
 
 prepare() {
-    cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
+    
     patch -p1 -i ../0001-autoconf-fix.patch
     patch -p1 -i ../0002-Disable-tests.patch
 }
 
 build() {
-    cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
+    
     gtkdocize
     intltoolize -f
     autoreconf -vfi
@@ -44,7 +42,8 @@ build() {
 }
 
 package() {
-    cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
+    
     make DESTDIR="${pkgdir}/" install
+
+    rm -rv "${pkgdir}"/usr/share/upstart/
 }
