@@ -2,7 +2,7 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=dee, repo=yakkety
+# vercheck-ubuntu: name=dee, repo=zesty
 # vercheck-launchpad: name=dee
 
 pkgname=dee-ubuntu
