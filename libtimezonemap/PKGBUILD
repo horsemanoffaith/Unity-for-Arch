@@ -2,7 +2,7 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, native, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, native, repo=zesty
 
 pkgname=libtimezonemap
 pkgver=0.4.5
@@ -13,7 +13,7 @@ url="https://launchpad.net/libtimezonemap"
 license=(GPL)
 groups=(unity)
 depends=(cairo gtk3-ubuntu json-glib libsoup)
-makedepends=(gobject-introspection intltool python2)
+makedepends=(intltool gobject-introspection python2)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${pkgver}.tar.gz")
 sha512sums=('39ebdd2bcc3026c663d18a86dbf178a2cf6435cbc0251897238ac1e2669fd7e4c63ee8355c709f08c0757bafa13dd3a182d1f1d92ad5ad3db837ca367161391c')
 
