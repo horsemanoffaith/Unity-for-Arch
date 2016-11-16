@@ -11,8 +11,8 @@ _use_ppa=false
 
 pkgname=compiz-ubuntu
 
-_actual_ver=0.9.12.2
-_extra_ver=+16.04.20160823
+_actual_ver=0.9.13.1
+_extra_ver=+17.04.20161114.1
 
 if [[ "${_use_ppa}" != true ]]; then
     _ubuntu_rel=0ubuntu1
@@ -29,9 +29,9 @@ pkgdesc="OpenGL window and compositing manager"
 url="http://www.compiz.org/"
 arch=(i686 x86_64)
 license=(GPL)
-depends=(boost-libs dbus fuse glibmm glu librsvg libxcomposite libxdamage
-         libxinerama libxrandr libxslt libwnck3 mesa metacity
-         startup-notification protobuf pygtk pyrex gsettings-desktop-schemas-ubuntu)
+depends=(boost-libs dbus fuse glibmm glu  gsettings-desktop-schemas-ubuntu librsvg
+	 libxcomposite libxdamage libxinerama libxrandr libxslt libwnck3 mesa metacity
+	 protobuf pygtk pyrex startup-notification)
 # The schemas from gnome-settings-daemon are needed
 depends+=(gnome-settings-daemon)
 makedepends=(boost cmake intltool)
@@ -50,15 +50,13 @@ else
 fi
 
 source+=(compiz.reset
-    	 0001-Fix-abs-compile-error.patch
     	 0001-Fix-cmake-install-directory.patch
          0002-Fix-python-install-command.patch
          0003-Use-Python-2.patch
          0004-Disable-Werror.patch)
-sha512sums=('302bd2545cac25baa4f2220d1dc7cd2ecd7ed1a163cc471969e0ac0d48852c5496f1e65b28347ddf0355286b8713ffe5bbc89e713b581f1de945894a0c5d1486'
-            '9398323b12cd826b588b0ff486b76b0140d1596efbd294fddfeb90aa9f98190e2280a4a9a5a7ce7c90fa01daf936300d340599f32d41e34300a91479e8ed7ecb'
+sha512sums=('26d3414556244aba6f3e38578d053ed62be0147a06d0e099cd56f98396b5ff07f632669161754341ac779d4ac8f955a24880a48cebb962df24c17e0a58ad5abd'
+            'a6ffd5f16ef767b1cc0d8d2acbf92ef8feab825895ace7547be6459ab690d46f4a52e1cd76c6e55629fa68a060a5500c4c19aae1cc7f807a86feda5340695245'
             '5f4b38c5fe3af9de0fe7897b9fdd04184dff9bf448f21ef19d9ae1b224c972061d8b183aa01cf8dcdf4fb37bb3466233ce53a6dfbbe51b0ff04f17568d2dc7ff'
-            '8750772b1b392e3af1e4efe0f76211c84cf18f3123110e37637885b182c3950f545d3a1d8d03b518ba081859a26477b857aa4b931da7e4a057181ea23dce58fb'
             '94b139716f74cfb26276dbc0c5a73aa1d6f591e888b976210e7523de83e782a76992350d08b8054c8a04eeeb5273130cdeaaffd155ee3e9800921b7541cbdd82'
             '1107fd002e1123fd52535f0016ee241c12d719a62c0a301a97338a230a73267b43982e0d23250ecac09b3a4b0ae78710fa9e04d84d5729ee6ac7293935579706'
             '247c393a1c84becea57ccae6e1c6ed8c0eae3f874627677f3944dca0197565b6b12912357ad4f025a5a876f294338cb79d498484392aabaf4bfa22e5a2c08b24'
@@ -66,9 +64,6 @@ sha512sums=('302bd2545cac25baa4f2220d1dc7cd2ecd7ed1a163cc471969e0ac0d48852c5496f
 
 prepare() {
     #cd "${_archive_dir}"
-
-    # Fix ambiguous compile error
-    patch -p1 -i 0001-Fix-abs-compile-error.patch
 
     # Fix the directory for FindCompiz.cmake and FindCompizConfig.cmake
     patch -p1 -i 0001-Fix-cmake-install-directory.patch
