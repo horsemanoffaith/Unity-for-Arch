@@ -4,32 +4,30 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname%-*}, repo=xenial
+# vercheck-ubuntu: name=${pkgname%-*}, repo=zesty
 # vercheck-archlinux: name=${pkgname%-*}, repo=extra, arch=x86_64
 # vercheck-gnome: name=${pkgname%-*}, majorver=3.20
 # vercheck-ppa: name=${pkgname%-*}, url=ppa:gnome3-team/gnome3-staging
 
 pkgname=gnome-session-ubuntu
-_use_ppa=true
-_ppa_rel=2ubuntu1~xenial1
-_ppa_ver=3.20.0
-#_ubuntu_rel=1ubuntu4
-pkgver=3.20.2
+_use_ppa=false
+_ppa_rel=1ubuntu1~ubuntu16.10.1
+_ppa_ver=3.22.2
+_ubuntu_rel=1ubuntu1
+pkgver=3.22.2
 pkgrel=1
 pkgdesc="The GNOME Session Handler"
 arch=(i686 x86_64)
 license=(GPL LGPL)
-depends=(systemd dconf gsettings-desktop-schemas-ubuntu gtk3-ubuntu gnome-desktop
-         json-glib libgl libsm libxtst systemd polkit-gnome)
-makedepends=(intltool mesa gtk-doc xtrans)
+depends=(dconf gnome-desktop gsettings-desktop-schemas-ubuntu gtk3-ubuntu json-glib libgl
+	libsm libxtst polkit-gnome systemd)
+makedepends=(gnome-common gtk-doc intltool mesa python xtrans)
 groups=(gnome unity)
 provides=("gnome-session=${pkgver}")
 conflicts=(gnome-session)
 options=(!emptydirs)
 url="http://www.gnome.org"
 source=("http://ftp.gnome.org/pub/gnome/sources/${pkgname%-*}/${pkgver%.*}/${pkgname%-*}-${pkgver}.tar.xz"
-        timeout.patch
-        platformtheme.patch
         polkit-gnome-authentication-agent-1-unity.desktop)
 
 if [[ "${_use_ppa}" == "true" ]]; then
@@ -38,35 +36,19 @@ else
     source+=("https://launchpad.net/ubuntu/+archive/primary/+files/gnome-session_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.xz")
 fi
 
-sha512sums=('0973c9763195a79038d99139f56eff8d7ad1fccc4c4e41a6439b5c65c615059a21446545af70f4ed83ec6925fd61a7664e70eec844dfe5e2a1001dffdbbea13a'
-            '81d28b8f345c3a16dbb443ee8f195f802b572941aeac2dafaf6ea6b231ccb89a280aa855d09744dfc7ef2ad794a5e7b0002b54b14465865441367055514bcb70'
-            '6aabb1dd679c3e0cdbc109651fd600b6c50a6ec8a0e445edd37e09163e5a851596aa59ab872f3c61baeeff7b8cc703dbe7450af3450617b8ffd288d4c5497843'
+sha512sums=('2c84a3a791d740c8edc2af96e8ed0b56f56dfac20fde6e8bc23a7aa75c0a004e98fcb9bb85b043ed3b1cd57cdc889348c461d9536cd2631dd53d8a0d6f8e2acf'
             '34e32d1c3fd7c417b5dc70737b9dff9c9b0b660a6c99cb8c29e944818df0cb643fcac01c6c5252849bb8595a348aaf4d2a24985560c6b8a9653544e146e5b4af'
-            'b29521684b255d6d20f75d7a57eb7b9a53624b0ef7707540888137049c0e8749e8db58263184af849f32a73d55151195dc8b3851c27f670953f1851e92e59427')
+            'f5345f732bbb859658e4d0257dfd51bbc40e8ded4d61862644a2651fe958624fc13933f76c99ddee157c237e4b0fe2de4026c76294009de5f8f42b38089d62a1')
 
 prepare() {
     cd "${pkgname%-*}-${pkgver}"
 
-    # Increase timeout, for slow machines
-    patch -p1 -i ../timeout.patch
-
-    # FS#49977
-    patch -Np1 -i ../platformtheme.patch
-
-    sed -i '/50_ubuntu_sessions.patch/d' ../debian/patches/series
     sed -i '/53_add_sessionmigration.patch/d' ../debian/patches/series
 
-    # If you want this, install gnome-session-properties from the AUR
-    sed -i '/13_display_session_properties.patch/d' ../debian/patches/series
-    sed -i '/revert_remove_gnome_session_properties.patch/d' ../debian/patches/series
-
-    # Already applied in 3.20.1
-    sed -i '/0001-main-fix-starting-gnome-session-via-startx.patch/d' ../debian/patches/series
-
-    for i in $(grep -v '#' ../debian/patches/series); do
+   for i in $(grep -v '#' ../debian/patches/series); do
         msg "Applying ${i} ..."
         patch -p1 -i "../debian/patches/${i}"
-    done
+     done
 }
 
 build() {
@@ -90,10 +72,35 @@ package() {
     cd "${pkgname%-*}-${pkgver}"
     make DESTDIR="${pkgdir}" install
 
+    # polkit
     install -dm755 "${pkgdir}/etc/xdg/autostart/"
     install -m644 "${srcdir}/polkit-gnome-authentication-agent-1-unity.desktop" \
         "${pkgdir}/etc/xdg/autostart/"
 
+    # LightDM
+    install -dm755 "${pkgdir}/usr/share/lightdm/lightdm.conf.d/"
+    install -m644 "${srcdir}/debian/data/50-ubuntu.conf" \
+        "${pkgdir}/usr/share/lightdm/lightdm.conf.d/"
+
+    # Upstart
     install -Dm644 "${srcdir}/debian/gnome-session-bin.user-session.upstart" \
         "${pkgdir}/usr/share/upstart/sessions/gnome-session.conf"
+
+    install -dm755 "${pkgdir}/usr/share/upstart/systemd-session/upstart/"
+    install -m644 "${srcdir}/debian/data/gnome-session.override" \
+        "${pkgdir}/usr/share/upstart/systemd-session/upstart/"
+
+    # systemd
+    install -dm755 "${pkgdir}/usr/lib/systemd/user/"
+    install -m644 \
+        "${srcdir}/debian/data/gnome-session.service" \
+        "${srcdir}/debian/data/ubuntu-session.target" \
+        "${pkgdir}/usr/lib/systemd/user/"
+
+    install -dm755 "${pkgdir}/usr/lib/gnome-session/"
+    install -m755 "${srcdir}/debian/data/run-systemd-session" \
+        "${pkgdir}/usr/lib/gnome-session/"
+
+    rm -rv "${pkgdir}"/usr/share/upstart
+
 }
