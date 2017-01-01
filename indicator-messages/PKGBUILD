@@ -9,7 +9,7 @@
 
 pkgname=indicator-messages
 _actual_ver=13.10.1
-_extra_ver=+17.04.20161021
+_extra_ver=+17.04.20161201
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="A place on the user's desktop that collects messages that need a response"
@@ -22,7 +22,7 @@ groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-messages_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001-autoconf-fix.patch
         0002-Disable-tests.patch)
-sha512sums=('f054af8084b2313c61dce8e3c6fa677d00e2a607a121ac2ca5fddd57deeed6ed22e55b9761a8f48adaa6c4d78821e4d8dcff22e3b82c789ccc08f17806dd7dc4'
+sha512sums=('7dec0ada666d757ec748e0c1fd58037264f12275753881227660ad365f74767f35c89f806445c5d5f19a984b98b8b95588830537ef77290af80229d6b473a8a0'
             '2774bcdf64bb3723f674a8d9d10186b6c63e2adbf83b8300f44cf9a199da538b3e058a0c1b3f85eba64b18f03d3fc63424e3c23147811d16c1a7a09bef235d1c'
             '00e4aed73c5a95500c450bbdd6217bcd904df38272577eb9c496d3a19f030f4feb8346a073b9331122ff408b56c5d1e9ea99745cf56a54d6710d33aade881e2f')
 
