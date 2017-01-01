@@ -9,33 +9,29 @@
 
 pkgname=indicator-datetime
 _actual_ver=15.10
-_extra_ver=+16.04.20160406
+_extra_ver=+17.04.20161201
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="A very, very simple clock"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-datetime"
 license=(GPL)
-depends=(evolution-data-server gsettings-ubuntu-schemas gstreamer
-         libtimezonemap properties-cpp unity-control-center)
+depends=(evolution-data-server gsettings-ubuntu-schemas gstreamer indicator-messages
+         libaccounts-glib libtimezonemap properties-cpp unity-control-center)
 makedepends=(intltool cmake)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${_actual_ver}${_extra_ver}.orig.tar.gz"
-        0001-Not-a-phone.patch
-        0001-Properly-initialize-timezone-from-timedated.patch)
-sha512sums=('0e8be3ca123d5bdea1049aaed8dd0089af429c43624be706d7e62cf8ed79362497962ba37f15d3f2b7c0d422588325fe2cc31a748c83b6890ca247d2a3722fc4'
-            '903886cc0c60193d289cbdb99cba5fde50ad476b71830387351369e5dd425277efddd8506bdc32a1597ba690630f0687847ef9816c92b841b4ac74f5659c86ba'
-            'd25d24ef61a4e9651654f18fc3b8a1dd407d93d3ad118ac611edd87eccfbc7368e9d94483fbe213fc5f17c02c02c4e14ec0797162f22d430bb6bebc91ff64851')
+        0001-Not-a-phone.patch)
+sha512sums=('1f94bdcebe71cd5b4388c0ff2c50a14285b6c9da28b7439a1ea8ad187a728f7ae9f61d6995a2e3dd1c4cf9e4c15f02c6029a8c5dc74015ec08bace42b4995f99'
+            '1d1d7c6d50222fe972e61437f2c3dbfd2dfde1baf36e063e1514ae8afb3aa5c4e02562c0c13cbe8a8b6ce94abe5a0901b2bbbe64c3d0be042b1dbe6931ddd886')
 
 prepare() {
-    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
+    
     patch -p1 -i 0001-Not-a-phone.patch
-    patch -p1 -i 0001-Properly-initialize-timezone-from-timedated.patch
+    
 }
 
 build() {
-    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
     export CFLAGS+=" -Wno-error"
 
@@ -51,11 +47,13 @@ build() {
 }
 
 package() {
-    #cd "${pkgname}-${_actual_ver}${_extra_ver}/build/"
+
     cd build
 
     make DESTDIR="${pkgdir}/" install
 
     # Use language packs
     rm -r "${pkgdir}/usr/share/locale/"
+
+    rm -rv "${pkgdir}"/usr/share/upstart
 }
