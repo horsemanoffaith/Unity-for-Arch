@@ -3,13 +3,13 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=frame
 _actual_ver=2.5.0
 _extra_ver=daily13.06.05+16.10.20160809
-pkgver=${_actual_ver}.${_extra_ver}
+pkgver=${_actual_ver}.${_extra_ver/\+/.}
 pkgrel=1
 pkgdesc="Touch Frame Library"
 arch=(i686 x86_64)
