@@ -23,10 +23,9 @@ Packages ending with "-ubuntu" contain Ubuntu patches and *REPLACE* Arch Linux v
 
 To compile from source, just build all of the packages in the following order:
 
-10/12/16- *** if glew-2.0 is installed on your system, you MUST either downgrade to glew-1.13 or remove glew-2.0 prior to installing glew1.13. Once glew1.13 is installed, you have to force install glew-2.0 to overwrite a few files so that both glew1.13 and glew-2.0 coexist on your filesystem. ***
-
 | Package                          | Description                                |
 | -------------------------------- | ------------------------------------------ |
+| cmake-extras                     | Extra CMake utility modules                |
 | gtk2-ubuntu                      | GTK toolkit 2.0 with Ubuntu's patches      |
 | gtk3-ubuntu                      | GTK toolkit 3.0 with Ubuntu's patches      |
 | libdbusmenu-ubuntu               | Library for passing menus over DBus        |
