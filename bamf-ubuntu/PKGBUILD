@@ -63,4 +63,6 @@ package() {
     install -m755 ../update-bamf-index.sh "${pkgdir}"/usr/lib/bamf/
     install -dm755 "${pkgdir}"/usr/share/libalpm/hooks/
     install -m644 ../update-bamf-index.hook "${pkgdir}"/usr/share/libalpm/hooks/
+    
+    rm -rv "${pkgdir}"/usr/share/upstart/
 }
