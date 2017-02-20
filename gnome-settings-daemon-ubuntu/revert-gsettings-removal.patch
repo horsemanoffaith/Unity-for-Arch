@@ -1,0 +1,562 @@
+From 4d13c5025c73f0f4cdc6cefb7c81c40313790623 Mon Sep 17 00:00:00 2001
+From: Tim Lunn <tim@feathertop.org>
+Date: Sat, 13 Sep 2014 11:57:02 +1000
+ Revert gsettings key removals, these are still need by unity-settings-daemon
+
+---
+ configure.ac                                                                 |    4 
+ data/Makefile.am                                                             |    4 
+ data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in                 |   18 +
+ data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in           |   22 +
+ data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in               |   10 
+ data/org.gnome.settings-daemon.plugins.datetime.gschema.xml.in.in            |   14 
+ data/org.gnome.settings-daemon.plugins.gschema.xml.in.in                     |  151 ++++++++++
+ data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in        |   10 
+ data/org.gnome.settings-daemon.plugins.keyboard.gschema.xml.in.in            |   14 
+ data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in          |   10 
+ data/org.gnome.settings-daemon.plugins.orientation.gschema.xml.in.in         |   14 
+ data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in               |   77 +++++
+ data/org.gnome.settings-daemon.plugins.print-notifications.gschema.xml.in.in |   14 
+ data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in             |   12 
+ data/org.gnome.settings-daemon.plugins.xrandr.gschema.xml.in.in              |   10 
+ data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in           |   10 
+ 16 files changed, 394 insertions(+)
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -541,7 +541,11 @@ data/org.gnome.settings-daemon.plugins.g
+ data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in
+ data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
+ data/org.gnome.settings-daemon.plugins.color.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.datetime.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.keyboard.gschema.xml.in
+ data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.orientation.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.print-notifications.gschema.xml.in
+ data/org.gnome.settings-daemon.peripherals.gschema.xml.in
+ data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in
+ data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in
+--- a/data/Makefile.am
++++ b/data/Makefile.am
+@@ -11,7 +11,11 @@ gsettings_SCHEMAS =							\
+ 	org.gnome.settings-daemon.plugins.gschema.xml			\
+ 	org.gnome.settings-daemon.plugins.power.gschema.xml		\
+ 	org.gnome.settings-daemon.plugins.color.gschema.xml		\
++	org.gnome.settings-daemon.plugins.datetime.gschema.xml		\
++	org.gnome.settings-daemon.plugins.keyboard.gschema.xml		\
+ 	org.gnome.settings-daemon.plugins.media-keys.gschema.xml	\
++	org.gnome.settings-daemon.plugins.orientation.gschema.xml	\
++	org.gnome.settings-daemon.plugins.print-notifications.gschema.xml	\
+ 	org.gnome.settings-daemon.plugins.sharing.gschema.xml		\
+ 	org.gnome.settings-daemon.plugins.xsettings.gschema.xml		\
+ 	org.gnome.settings-daemon.plugins.housekeeping.gschema.xml	\
+--- a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in
+@@ -1,9 +1,20 @@
+ <schemalist>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals" path="/org/gnome/settings-daemon/peripherals/">
++    <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
+     <child name="smartcard" schema="org.gnome.settings-daemon.peripherals.smartcard"/>
+     <child name="keyboard" schema="org.gnome.settings-daemon.peripherals.keyboard"/>
+     <child name="mouse" schema="org.gnome.settings-daemon.peripherals.mouse"/>
+     <child name="touchscreen" schema="org.gnome.settings-daemon.peripherals.touchscreen"/>
++    <child name="input-devices" schema="org.gnome.settings-daemon.peripherals.input-devices"/>
+   </schema>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.smartcard" path="/org/gnome/settings-daemon/peripherals/smartcard/">
+     <key name="removal-action" enum="org.gnome.settings-daemon.GsdSmartcardRemovalAction">
+@@ -67,6 +78,13 @@
+       <_summary>Whether the tablet’s orientation is locked, or rotated automatically.</_summary>
+     </key>
+   </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.input-devices" path="/org/gnome/settings-daemon/peripherals/input-devices/">
++    <key name="hotplug-command" type="s">
++      <default>''</default>
++      <_summary>Device hotplug custom command</_summary>
++      <_description>Command to be run when a device is added or removed. An exit value of 1 means that the device will not be handled further by gnome-settings-daemon.</_description>
++    </key>
++  </schema>
+ 
+   <!-- Deprecated schemas/keys -->
+   <schema id="org.gnome.settings-daemon.peripherals.mouse.deprecated">
+--- a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in
+@@ -1,4 +1,16 @@
+ <schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.gsdwacom" path="/org/gnome/settings-daemon/plugins/gsdwacom/">
++    <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
+   <schema id="org.gnome.settings-daemon.peripherals.wacom.deprecated">
+     <child name="stylus" schema="org.gnome.settings-daemon.peripherals.wacom.stylus.deprecated"/>
+     <child name="eraser" schema="org.gnome.settings-daemon.peripherals.wacom.eraser.deprecated"/>
+
+@@ -29,6 +41,16 @@
+       <_summary>Wacom touch feature</_summary>
+       <_description>Enable this to move the cursor when the user touches the tablet.</_description>
+     </key>
++    <key name="tablet-pc-button" type="b">
++      <default>false</default>
++      <_summary>Wacom tablet PC feature</_summary>
++      <_description>Enable this to only report stylus events when the tip is pressed.</_description>
++    </key>
++    <key name="display" type="as">
++      <default>["", "", ""]</default>
++      <_summary>Wacom display mapping</_summary>
++      <_description>EDID information of monitor to map tablet to. Must be in the format [vendor, product, serial]. ["","",""] disables mapping.</_description>
++    </key>
+   </schema>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.wacom.stylus">
+     <key name="pressurecurve" type="ai">
+--- a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in
+@@ -1,5 +1,15 @@
+ <schemalist>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.color" path="/org/gnome/settings-daemon/plugins/color/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
+     <key name="recalibrate-display-threshold" type="u">
+       <default>0</default>
+       <_summary>The duration a display profile is valid</_summary>
+--- /dev/null
++++ b/data/org.gnome.settings-daemon.plugins.datetime.gschema.xml.in.in
+@@ -0,0 +1,14 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.datetime" path="/org/gnome/settings-daemon/plugins/datetime/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++</schemalist>
+--- a/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in
+@@ -5,14 +5,165 @@
+       <_summary>List of plugins that are allowed to be loaded</_summary>
+       <_description>
+         A list of strings representing the plugins that are allowed to be loaded (default: “all”).
++        The plugins still need to be marked as active to get loaded by Unity (but not by GNOME).
+         This is only evaluated on startup.
+       </_description>
+     </key>
++    <child name="a11y-keyboard" schema="org.gnome.settings-daemon.plugins.a11y-keyboard"/>
++    <child name="a11y-settings" schema="org.gnome.settings-daemon.plugins.a11y-settings"/>
++    <child name="background" schema="org.gnome.settings-daemon.plugins.background"/>
++    <child name="clipboard" schema="org.gnome.settings-daemon.plugins.clipboard"/>
+     <child name="color" schema="org.gnome.settings-daemon.plugins.color"/>
++    <child name="cursor" schema="org.gnome.settings-daemon.plugins.cursor"/>
++    <child name="datetime" schema="org.gnome.settings-daemon.plugins.datetime"/>
++    <child name="gsdwacom" schema="org.gnome.settings-daemon.plugins.gsdwacom"/>
+     <child name="housekeeping" schema="org.gnome.settings-daemon.plugins.housekeeping"/>
++    <child name="keyboard" schema="org.gnome.settings-daemon.plugins.keyboard"/>
+     <child name="media-keys" schema="org.gnome.settings-daemon.plugins.media-keys"/>
++    <child name="mouse" schema="org.gnome.settings-daemon.plugins.mouse"/>
++    <child name="orientation" schema="org.gnome.settings-daemon.plugins.orientation"/>
+     <child name="power" schema="org.gnome.settings-daemon.plugins.power"/>
++    <child name="print-notifications" schema="org.gnome.settings-daemon.plugins.print-notifications"/>
++    <child name="remote-display" schema="org.gnome.settings-daemon.plugins.remote-display"/>
++    <child name="screensaver-proxy" schema="org.gnome.settings-daemon.plugins.screensaver-proxy"/>
++    <child name="sharing" schema="org.gnome.settings-daemon.plugins.sharing"/>
++    <child name="smartcard" schema="org.gnome.settings-daemon.plugins.smartcard"/>
++    <child name="sound" schema="org.gnome.settings-daemon.plugins.sound"/>
+     <child name="xrandr" schema="org.gnome.settings-daemon.plugins.xrandr"/>
+     <child name="xsettings" schema="org.gnome.settings-daemon.plugins.xsettings"/>
+   </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.a11y-keyboard" path="/org/gnome/settings-daemon/plugins/a11y-keyboard/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.a11y-settings" path="/org/gnome/settings-daemon/plugins/a11y-settings/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.background" path="/org/gnome/settings-daemon/plugins/background/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++   </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.clipboard" path="/org/gnome/settings-daemon/plugins/clipboard/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.cursor" path="/org/gnome/settings-daemon/plugins/cursor/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.mouse" path="/org/gnome/settings-daemon/plugins/mouse/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.remote-display" path="/org/gnome/settings-daemon/plugins/remote-display/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++       <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++     </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.rfkill" path="/org/gnome/settings-daemon/plugins/rfkill/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.screensaver-proxy" path="/org/gnome/settings-daemon/plugins/screensaver-proxy/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.smartcard" path="/org/gnome/settings-daemon/plugins/smartcard/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.sound" path="/org/gnome/settings-daemon/plugins/sound/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
+ </schemalist>
++
++
+--- a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in
+@@ -1,5 +1,15 @@
+ <schemalist>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.housekeeping" path="/org/gnome/settings-daemon/plugins/housekeeping/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
+     <key name="ignore-paths" type="as">
+       <default>[]</default>
+       <_summary>Mount paths to ignore</_summary>
+--- /dev/null
++++ b/data/org.gnome.settings-daemon.plugins.keyboard.gschema.xml.in.in
+@@ -0,0 +1,14 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.keyboard" path="/org/gnome/settings-daemon/plugins/keyboard/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++</schemalist>
+--- a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in
+@@ -1,5 +1,15 @@
+ <schemalist>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.media-keys" path="/org/gnome/settings-daemon/plugins/media-keys/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
+     <key name="custom-keybindings" type="as">
+       <default>[]</default>
+       <_summary>Custom keybindings</_summary>
+--- /dev/null
++++ b/data/org.gnome.settings-daemon.plugins.orientation.gschema.xml.in.in
+@@ -0,0 +1,14 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.orientation" path="/org/gnome/settings-daemon/plugins/orientation/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++</schemalist>
+--- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in
+@@ -1,5 +1,15 @@
+ <schemalist>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.power" path="/org/gnome/settings-daemon/plugins/power/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
+     <key name="idle-brightness" type="i">
+       <default>30</default>
+       <summary>The brightness of the screen when idle</summary>
+@@ -62,5 +72,72 @@
+       <summary>Power button action</summary>
+       <description>The action to take when the system power button is pressed. This action is hard-coded (and the setting ignored) on virtual machines (power off) and tablets (suspend).</description>
+     </key>
++    <!-- Obsolete keys still used by unity-settings-daemon -->
++    <key name="button-suspend" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'suspend'</default>
++      <summary>Suspend button action</summary>
++      <description>The action to take when the system suspend button is pressed.</description>
++    </key>
++    <key name="button-hibernate" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'hibernate'</default>
++      <summary>Hibernate button action</summary>
++      <description>The action to take when the system hibernate button is pressed.</description>
++    </key>
++    <key name="button-sleep" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'hibernate'</default>
++      <summary>Sleep button action</summary>
++      <description>The action to take when the system sleep (non-specific type) button is pressed.</description>
++    </key>
++    <!-- See https://bugzilla.gnome.org/show_bug.cgi?id=652183 for rationale -->
++    <key name="button-power" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'suspend'</default>
++      <summary>Power button action</summary>
++      <description>The action to take when the system power button is pressed.</description>
++    </key>
++    <key name="critical-battery-action" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'hibernate'</default>
++      <summary>Battery critical low action</summary>
++      <description>The action to take when the battery is critically low.</description>
++    </key>
++    <key name="percentage-low" type="i">
++      <default>10</default>
++      <_summary>Percentage considered low</_summary>
++      <_description>The percentage of the battery when it is considered low. Only valid when use-time-for-policy is false.</_description>
++    </key>
++    <key name="percentage-critical" type="i">
++      <default>3</default>
++      <_summary>Percentage considered critical</_summary>
++      <_description>The percentage of the battery when it is considered critical. Only valid when use-time-for-policy is false.</_description>
++    </key>
++    <key name="percentage-action" type="i">
++      <default>2</default>
++      <_summary>Percentage action is taken</_summary>
++      <_description>The percentage of the battery when the critical action is performed. Only valid when use-time-for-policy is false.</_description>
++    </key>
++    <key name="time-low" type="i">
++      <default>1200</default>
++      <_summary>The time remaining when low</_summary>
++      <_description>The time remaining in seconds of the battery when it is considered low. Only valid when use-time-for-policy is true.</_description>
++    </key>
++    <key name="time-critical" type="i">
++      <default>300</default>
++      <_summary>The time remaining when critical</_summary>
++      <_description>The time remaining in seconds of the battery when it is considered critical. Only valid when use-time-for-policy is true.</_description>
++    </key>
++    <key name="time-action" type="i">
++      <default>120</default>
++      <_summary>The time remaining when action is taken</_summary>
++      <_description>The time remaining in seconds of the battery when critical action is taken. Only valid when use-time-for-policy is true.</_description>
++    </key>
++    <key name="use-time-for-policy" type="b">
++      <default>true</default>
++      <_summary>Whether to use time-based notifications</_summary>
++      <_description>If time based notifications should be used. If set to false, then the percentage change is used instead, which may fix a broken ACPI BIOS.</_description>
++    </key>
++    <key name="notify-perhaps-recall" type="b">
++      <default>true</default>
++      <_summary>If we should show the recalled battery warning for a broken battery</_summary>
++      <_description>If we should show the recalled battery warning for a broken battery. Set this to false only if you know your battery is okay.</_description>
++    </key>
+   </schema>
+ </schemalist>
+--- /dev/null
++++ b/data/org.gnome.settings-daemon.plugins.print-notifications.gschema.xml.in.in
+@@ -0,0 +1,14 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.print-notifications" path="/org/gnome/settings-daemon/plugins/print-notifications/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
++</schemalist>
+--- a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in
+@@ -1,4 +1,16 @@
+ <schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.sharing" path="/org/gnome/settings-daemon/plugins/sharing/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
++  </schema>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.sharing.service">
+     <key name="enabled-connections" type="as">
+       <default>[]</default>
+--- a/data/org.gnome.settings-daemon.plugins.xrandr.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.xrandr.gschema.xml.in.in
+@@ -1,5 +1,15 @@
+ <schemalist>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.xrandr" path="/org/gnome/settings-daemon/plugins/xrandr/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
+     <key name="default-configuration-file" type="s">
+       <default>'/etc/gnome-settings-daemon/xrandr/monitors.xml'</default>
+       <_summary>File for default configuration for RandR</_summary>
+--- a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in
+@@ -1,5 +1,15 @@
+ <schemalist>
+   <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.xsettings" path="/org/gnome/settings-daemon/plugins/xsettings/">
++   <key name="priority" type="i">
++      <default>0</default>
++      <_summary>Priority to use for this plugin</_summary>
++      <_description>Priority to use for this plugin in gnome-settings-daemon startup queue</_description>
++    </key>
++    <key name="active" type="b">
++      <default>true</default>
++      <_summary>Activation of this plugin</_summary>
++      <_description>Whether this plugin would be activated by unity-settings-daemon or not</_description>
++    </key>
+     <key name="antialiasing" enum="org.gnome.settings-daemon.GsdFontAntialiasingMode">
+       <default>'grayscale'</default>
+       <_summary>Antialiasing</_summary>
