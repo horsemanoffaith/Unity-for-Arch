@@ -2,8 +2,7 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=geonames, repo=yakkety
-
+# vercheck-ubuntu: name=geonames, repo=zesty
 pkgname=libgeonames
 _actual_ver=0.2
 _extra_ver=+16.04.20160426
