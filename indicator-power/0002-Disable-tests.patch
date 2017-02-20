@@ -1,0 +1,15 @@
+--- a/CMakeLists.txt	2017-02-19 06:19:12.782106934 -0800
++++ b/CMakeLists.txt	2017-02-19 06:19:38.255987362 -0800
+@@ -81,12 +81,3 @@
+ add_subdirectory(data)
+ add_subdirectory(po)
+ 
+-# testing & coverage
+-enable_testing ()
+-add_subdirectory(tests)
+-find_package(CoverageReport)
+-ENABLE_COVERAGE_REPORT(
+-  TARGETS ${SERVICE_LIB} ${SERVICE_EXEC}
+-  TESTS ${COVERAGE_TEST_TARGETS}
+-  FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+-)
