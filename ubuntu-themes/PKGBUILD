@@ -2,11 +2,11 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 
 pkgname=ubuntu-themes
 _actual_ver=16.10
-_extra_ver=+16.10.20161007
+_extra_ver=+17.04.20170126
 _ubuntu_rel=0ubuntu1
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
@@ -22,20 +22,16 @@ provides=(light-themes ubuntu-mono)
 conflicts=(light-themes ubuntu-mono)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${_actual_ver}${_extra_ver}.orig.tar.gz")
 
-sha512sums=('bded13a3bbf7f3dbd247352bb1521f1b9983171a4474a40e58fb8b69ea0c9e17dd271d9b02beb110ec8c197184f96a9d0d8a26a75a0ff94d6bf21b4e421a7d4d')
+sha512sums=('8491efcdf97bc272f1d1bb41b4dd5fab060104327608652b7f738b0585bd704541927796f662c33f9c79042d361fe31eb75b7c7341eac598aef3a5574e9ab44f')
 
 build() {
-  #cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
-  # Python 2 fix
+   # Python 2 fix
   sed -i 's|^\(#!.*python$\)|\12|g' scavenge.py
 
   make
 }
 
 package() {
-  #cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
   # Install themes
   install -dm755   "${pkgdir}/usr/share/themes/"
   cp -av Ambiance/ "${pkgdir}/usr/share/themes/"
