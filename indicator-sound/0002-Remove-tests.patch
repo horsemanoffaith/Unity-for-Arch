@@ -1,17 +1,6 @@
-From 7206e0184b93364966b7f20e9dbb763817908432 Mon Sep 17 00:00:00 2001
-From: Xiao-Long Chen <chenxiaolong@cxl.epac.to>
-Date: Tue, 28 Oct 2014 23:19:51 -0400
-Subject: [PATCH 2/3] Remove tests
-
----
- CMakeLists.txt | 15 ---------------
- 1 file changed, 15 deletions(-)
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b4ffbe3..d921b9a 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -45,12 +45,6 @@ pkg_check_modules(
+--- a/CMakeLists.txt	2017-02-19 06:43:25.202493674 -0800
++++ b/CMakeLists.txt	2017-02-19 06:43:56.896407787 -0800
+@@ -47,12 +47,6 @@ pkg_check_modules(
  )
  include_directories(${SOUNDSERVICE_INCLUDE_DIRS})
  
@@ -24,19 +13,15 @@ index b4ffbe3..d921b9a 100644
  find_package(Vala 0.20)
  
  find_package(GObjectIntrospection 0.9.12)
-@@ -72,12 +66,3 @@ configure_file(
- 
- add_subdirectory(data)
+@@ -75,11 +75,3 @@
  add_subdirectory(src)
--
+ add_subdirectory(po)
+ 
 -enable_testing()
--
--set (GTEST_SOURCE_DIR /usr/src/gtest/src)
--set (GTEST_INCLUDE_DIR ${GTEST_SOURCE_DIR}/..)
--set (GTEST_LIBS -lpthread)
--
 -add_subdirectory(tests)
--
--- 
-2.7.0
-
+-find_package(CoverageReport)
+-ENABLE_COVERAGE_REPORT(
+-  TARGETS ${COVERAGE_TARGETS}
+-  TESTS ${COVERAGE_TEST_TARGETS}
+-  FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+-)
