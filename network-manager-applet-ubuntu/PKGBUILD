@@ -7,15 +7,15 @@
 # Contributor: Will Rea <sillywilly@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgbase%-*}, repo=yakkety
+# vercheck-ubuntu: name=${pkgbase%-*}, repo=zesty
 # vercheck-archlinux: name=${pkgbase%-*}, repo=extra, arch=x86_64
 # vercheck-gnome: name=${pkgbase%-*}, majorver=1.2
 
 pkgbase=network-manager-applet-ubuntu
 pkgname=(nm-connection-editor-ubuntu network-manager-applet-ubuntu)
-_ubuntu_rel=0ubuntu2
-pkgver=1.2.4
-pkgrel=1
+_ubuntu_rel=1ubuntu2
+pkgver=1.4.2
+pkgrel=2
 pkgdesc="Applet for managing network connections"
 arch=(i686 x86_64)
 url="http://www.gnome.org/projects/NetworkManager/"
@@ -25,8 +25,8 @@ depends=(libnm-glib libgudev gtk3-ubuntu mobile-broadband-provider-info iso-code
 makedepends=(libsecret libnotify libmm-glib intltool gobject-introspection)
 source=("http://ftp.gnome.org/pub/GNOME/sources/${pkgbase%-*}/${pkgver%.*}/${pkgbase%-*}-${pkgver}.tar.xz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/${pkgbase%-*}_${_ubuntu_ver:-${pkgver}}-${_ubuntu_rel}.debian.tar.xz")
-sha512sums=('0cf9dd2db3289b29e550f96212c425c807b4a425d6a98cf00981e44d2bd5d1eb41c482072b5b030f32ae744c27f49a7757d762f7eda17cbba90560f0b3af1a30'
-            '6d1cbb49e9a6c09a0739b97b20f757bfa0ab9ad7495a1ae97f423dfdd7f5951d42bf5a1188878c1050878109f10dd3acf7a23979ecf26244ae09dc53cb30a4bc')
+sha512sums=('fedd1b41a1b5d63c1647f6801552ecb9676f93e88833dea7bf3e1dc43950c904d5deabdfefa50c46799b3e18297f9349f4462aa9531066482d78b30781e15b60'
+            'd0e77216ea72075c638b4ee7b372177eb981d846de780eafcd3a8fc8121db4a4fda3eeeacefd36511d7a00d702a84a64a46d5040837f0f9230b0b85e945555eb')
 
 prepare() {
     mkdir -p nma/etc/xdg nma/usr/bin \
@@ -40,7 +40,6 @@ prepare() {
         patch -p1 -i "../debian/patches/${i}"
     done
 
-    sed -i 's/-Werror//g' m4/compiler_warnings.m4
 }
 
 build() {
