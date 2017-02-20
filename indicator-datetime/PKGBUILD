@@ -9,7 +9,7 @@
 
 pkgname=indicator-datetime
 _actual_ver=15.10
-_extra_ver=+17.04.20161201
+_extra_ver=+17.04.20170210
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="A very, very simple clock"
@@ -21,14 +21,17 @@ depends=(evolution-data-server gsettings-ubuntu-schemas gstreamer indicator-mess
 makedepends=(intltool cmake)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgname}_${_actual_ver}${_extra_ver}.orig.tar.gz"
-        0001-Not-a-phone.patch)
-sha512sums=('1f94bdcebe71cd5b4388c0ff2c50a14285b6c9da28b7439a1ea8ad187a728f7ae9f61d6995a2e3dd1c4cf9e4c15f02c6029a8c5dc74015ec08bace42b4995f99'
-            '1d1d7c6d50222fe972e61437f2c3dbfd2dfde1baf36e063e1514ae8afb3aa5c4e02562c0c13cbe8a8b6ce94abe5a0901b2bbbe64c3d0be042b1dbe6931ddd886')
+         0001-Not-a-phone.patch
+         0002-Disable-tests.patch)
+sha512sums=('d475424371ba6e581daf90d9a0b4f2e84d8b3725ef0a0bae7af7e811a90df6c757872de499708ecff88049a495c0c056c12530557bdb9bf45777ed673ed65374'
+            '021232098fb76f7e41468aebd8e950099b58c66a673ab332fa379d108348ac5e7472b3355bebd1e7bd77a6ed31af790f7ad105fd67648f2e418e9ae53ee53940'
+            '7748c8787a3868de8faaa19db7b281aec6e7c2686841473e55fb9b52d0ada78b8a2a3f3e87127fcaaaab1360b13deb917b165d03c332f9f11c2f4c9c650d1572')
 
 prepare() {
     
     patch -p1 -i 0001-Not-a-phone.patch
-    
+    patch -p1 -i 0002-Disable-tests.patch
+        
 }
 
 build() {
