@@ -1,0 +1,28 @@
+--- a/CMakeLists.txt	2017-02-18 21:52:46.246249166 -0800
++++ b/CMakeLists.txt	2017-02-18 21:53:54.104418653 -0800
+@@ -16,11 +16,6 @@
+ 
+ 
+ ##
+-## Always Be Testing
+-##
+-enable_testing()
+-
+-##
+ ##  GNU standard installation directories
+ ##
+ 
+@@ -82,12 +77,5 @@
+ add_subdirectory(src)
+ add_subdirectory(data)
+ add_subdirectory(po)
+-add_subdirectory(tests)
+ 
+-# testing & coverage
+-find_package(CoverageReport)
+-ENABLE_COVERAGE_REPORT(
+-  TARGETS indicatordatetimeservice indicator-datetime-service
+-  TESTS ${COVERAGE_TEST_TARGETS}
+-  FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+-)
++
