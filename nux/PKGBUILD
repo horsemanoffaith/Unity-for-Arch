@@ -4,30 +4,30 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=nux
 _actual_ver=4.0.8
-_extra_ver=+16.10.20160714
+_extra_ver=+17.04.20170213
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
 pkgdesc="Graphical user interface toolkit for applications that mixes OpenGL hardware acceleration with high quality visual rendering"
 arch=(i686 x86_64)
 url="https://launchpad.net/nux"
 license=(LGPL)
-depends=(gdk-pixbuf2 glew-1.13.0 pango mesa libsigc++ libxcomposite libxdamage
-         libxxf86vm geis ibus pciutils)
-makedepends=(boost glproto dri2proto doxygen graphviz)
-
+depends=(gdk-pixbuf2 geis glew-1.13.0 ibus libsigc++ libxcomposite libxdamage libxxf86vm
+	 mesa pango pciutils)
+makedepends=(boost doxygen dri2proto glproto graphviz)
 groups=(unity)
 options=(!emptydirs)
 
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/nux_${_actual_ver}${_extra_ver}.orig.tar.gz"
-        0001_autoconf.patch
-        50_check_unity_support)
-sha512sums=('24b14e8591dcef9ca3271b7440e67e6a8e48035a75f05e36544e7f4d4086ed9c38d47a0d3265ab8b5a860daccc2a9f3865edc26e91fc70a36a7bcb0c1aeacecd'
+	0001_autoconf.patch        
+	50_check_unity_support)
+sha512sums=('b8e932f5a7ec4fd04a15e87f0708bc5b81a88da0cd8e5935dbc6c4102fa4b7ef9375ba35f49ac7a634b92d5ecf9c3044409083419b51a6e9d41a5d840a0d1b35'
             '84d41b3ca21457f141d5203b1483f26190f161858d97176a04d0c2cafe6d01ea32f87fe6dc7cbe9234389e627669e34331ad400386733d5363d0145cbab63bb9'
+            'b77c8ee1af549c02ff8fd0dddb9d5734e61866092121ee32d3a9fe1555aba8396b885280754df11485056e82ec110a6aa4bf608fdc2fa65f5fcada6366874774'
             '1e82b11357f9db45fa6fff002cef11acaf53a8381e2bc28b84e9e0300502c0b1922d9273b44d4cfbbd51d004a9eb1eb2e780db7a39e2d9153c9c4efafb9314a9')
 
 prepare() {
