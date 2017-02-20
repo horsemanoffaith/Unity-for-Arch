@@ -15,6 +15,11 @@ Thanks
 
 Compiling from source
 ---------------------
+
+2/19/2017- I have removed appmenu-qt from the build order because it is failing to build and I have seen no difference in Unity without the package. Once a workaround/fix is applied, I will reintroduce it into the build order.
+
+Libindicate and Libindicate-qt are optional packages. Neither have been updated on Launchpad for quite some time, and based on research, the indicator-messages have taken over their duties. If you find that you need these packages, they are included in the repo for you. 
+
 Please make sure you don't already have modified versions of the dependencies installed. For example, gtk3-ubuntu might fail to compile if there's a modified version of gtk3 already installed.
 
 Packages ending with "-ubuntu" contain Ubuntu patches and *REPLACE* Arch Linux versions of those packages.
@@ -30,8 +35,8 @@ To compile from source, just build all of the packages in the following order:
 | libdbusmenu-ubuntu               | Library for passing menus over DBus        |
 | ido-ubuntu                       | Widgets and objects used for indicators    |
 | libindicator-ubuntu              | Symbols and functions for indicators       |
-| libindicate                      | Libraries to raise 'flags' on DBus         |
-| libindicate-qt                   | Qt 4 bindings for libindicate              |
+| libindicate *OPTIONAL*           | Libraries to raise 'flags' on DBus         |
+| libindicate-qt *OPTIONAL*        | Qt 4 bindings for libindicate              |
 | libappindicator-ubuntu           | Library to export menu bar to Unity        |
 | unity-gtk-module                 | Application menu module for GTK+           |
 | dee-ubuntu                       | Model to synchronize instances over DBus   |
