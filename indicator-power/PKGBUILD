@@ -2,12 +2,12 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-power
 _actual_ver=12.10.6
-_extra_ver=+16.10.20160708
+_extra_ver=+17.04.20170210
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
 pkgdesc="An indicator to show the power status of your devices"
@@ -18,14 +18,16 @@ depends=(dconf libnotify upower unity-control-center)
 makedepends=(cmake intltool python2)
 groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-power_${_actual_ver}${_extra_ver}.orig.tar.gz"
-        0001-Not-a-phone.patch)
-sha512sums=('639e62fdfe1b6712a107be184c789d4ba218086699bb9ffcc414d9a64bee82304455ee8421f5351bb0dcc6c022bbddf8c8183b0696b522a6a65eb00bc1838cb9'
-            '82f7de1adba428bbe640e50cecdfc3d27cf13062df0739b66330e2cdf2063f9d5eef3fb4e826c5ef645356e9e4719ff3a93fe9f7d7ea93567081b47d69874c4a')
+        0001-Not-a-phone.patch
+	0002-Disable-tests.patch)
+sha512sums=('432742b739a546d89902600bd180abb7a3a96b8e6a55b9a144b570ded6800355f449c1b5770e09856a4e60d36ea1a571e7872a90fa505c4251ccd0c0d74f1536'
+            'f7dc02d696025d28a2dcd1773e996b5b8303de63de6f3e4653f75494ca363d2b76ef4cb9debb2cc20f4a9a27a7957d1ff0110a0d5d1e0635f03b5d4a02272cd0'
+            '9ed007f14445debfe426f2ea3f3a36732ac7830385ce8b3c3f837221c57c59b4e46dd427c159cfe887ffcdfcb94dd81b195026764291058a69ece4b93013e498')
             
 prepare() {
     patch -p1 -i 0001-Not-a-phone.patch
+    patch -p1 -i 0002-Disable-tests.patch
 
-    sed -ie '/NotShowIn=/d' data/indicator-power.desktop.in
 }
 
 build() {
@@ -45,4 +47,7 @@ package() {
     make DESTDIR="${pkgdir}/" install
 
     find "${pkgdir}" -type f -name '*.a' -delete
+
+    rm -rv "${pkgdir}"/usr/share/upstart/
+
 }
