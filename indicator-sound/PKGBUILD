@@ -4,12 +4,12 @@
 # Contributor: thn81 <root@scrat>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-sound
 _actual_ver=12.10.2
-_extra_ver=+16.04.20160502.1
+_extra_ver=+17.04.20170208
 pkgver=${_actual_ver}${_extra_ver/\+/.}
 pkgrel=1
 pkgdesc="A unified sound menu"
@@ -23,19 +23,17 @@ groups=(unity)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-sound_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001-Not-running-on-Ubuntu-Touch.patch
         0002-Remove-tests.patch)
-sha512sums=('304b2452c400b533a042b943a3e4ec9712de453aae23a597fa67f9f949d02214062ba2693fdcc335f7ac3f1e821c08af38c9de010a3bb82bd3e3391e7b03f476'
+sha512sums=('c02a7b10c9673522402bb84d25d7fb057a2db32f075dec68a8aa2be31e92cb3688774c0bb1dff5cdc1ab09ec1dee3af6a21f9740e126965555b11b8f68a22c27'
             '3c57829cd55b1aea14b5bc2f66e8b015d28ccdd8a7d56c5d445efb61d149a49159e6be0c267d8eded5884d53361705373837cfe789d39ced9d262a5fa630491f'
-            '3e635f7271b67274f68f291a730893b5c0e73d2c9e18f30b86b6d06601c0eef4f09e587374f09422ce96d8601bd666945a931d32c19cbf514f1a1735003664d3')
+            '90b70a91510d2e815739a337eaeba394b43b9954baf47ccc4efb44403b25002e5a9cf3259b043358679d70999462776c43ee72193963a4ea1e102e62ddec43a4')
 
 prepare() {
-    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
-    patch -p1 -i ../0001-Not-running-on-Ubuntu-Touch.patch
-    patch -p1 -i ../0002-Remove-tests.patch
+    
+    patch -p1 -i 0001-Not-running-on-Ubuntu-Touch.patch
+    patch -p1 -i 0002-Remove-tests.patch
 }
 
 build() {
-    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
     [[ -d build ]] || mkdir build
     pushd build
@@ -45,11 +43,12 @@ build() {
 }
 
 package() {
-    #cd "${pkgname}-${_actual_ver}${_extra_ver}/build/"
     cd build
 
     make DESTDIR="${pkgdir}/" install
 
-    sed -i 's/NotShowIn/OnlyShowIn/g' \
-        "${pkgdir}/etc/xdg/autostart/indicator-sound.desktop"
+    rm -v "${pkgdir}"/usr/var/lib/polkit-1/localauthority/10-vendor.d/50-com.canonical.indicator.sound.AccountsService.pkla
+
+    rm -rv "${pkgdir}"/usr/share/upstart/
+
 }
