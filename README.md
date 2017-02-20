@@ -40,8 +40,6 @@ To compile from source, just build all of the packages in the following order:
 | indicator-messages               | Collects messages that need a response     |
 | bamf-ubuntu                      | Application matching framework             |
 | libtimezonemap                   | GTK+3 timezone map widget                  |
-| libnih-ubuntu                    | Lightweight library of standard C funcs.   |
-| upstart-user                     | Event-based user service mgmt. daemon      |
 | gsettings-desktop-schemas-ubuntu | Shared GSettings schemas for the desktop   |
 | gsettings-ubuntu-schemas         | GSettings desktop-wide schemas for Ubuntu  |
 | gnome-settings-daemon-ubuntu     | Daemon handling the GNOME session settings |
@@ -70,7 +68,7 @@ To compile from source, just build all of the packages in the following order:
 | frame                            | Open Input Framework Frame Library         |
 | grail                            | Gesture recognition and instantiation lib. |
 | geis                             | Implementation of the GEIS interface       |
-| glew1.13                         | OpenGL Extension Wrangler Library- legacy  |
+| glewmx                           | OpenGL Extension Wrangler Library- legacy  |
 | nux                              | An OpenGL toolkit for Unity                |
 | unity-asset-pool                 | Design assets for Unity                    |
 | zeitgeist-ubuntu                 | Service for logging user activities        |
@@ -85,7 +83,6 @@ To compile from source, just build all of the packages in the following order:
 | unity-scopes                     | Unity scopes for searching online sources  |
 | compiz-ubuntu                    | Compositing window manager                 |
 | lightdm-unity-greeter            | LightDM greeter for Unity                  |
-| gmock                            | Library for writing/using C++ mock classes |
 | unity                            | Desktop shell designed for efficiency      |
 | unity-language-packs             | Unity language packs                       |
 | ubuntu-themes                    | Ubuntu-related window and icon themes      |
