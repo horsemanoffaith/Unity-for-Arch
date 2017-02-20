@@ -2,7 +2,7 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-archlinux: name=${pkgname}, repo=community, arch=x86_64
 
 pkgname=gsettings-qt-ubuntu
