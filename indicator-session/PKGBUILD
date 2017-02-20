@@ -9,9 +9,9 @@
 
 pkgname=indicator-session
 _actual_ver=12.10.5
-_extra_ver=+16.04.20160412
+_extra_ver=+17.04.20170210
 pkgver=${_actual_ver}${_extra_ver/\+/.}
-pkgrel=2
+pkgrel=1
 pkgdesc="Indicator showing session management, status and user switching"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-session"
@@ -20,24 +20,28 @@ depends=(gnome-settings-daemon)
 makedepends=(cmake intltool python2)
 optdepends=('lightdm: support for lightdm')
 groups=(unity)
-source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-session_${_actual_ver}${_extra_ver}.orig.tar.gz"
+source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-session_${_actual_ver}${_extra_ver}.orig.tar.gz)
 	0001-There-is-no-help.patch
-        0002-Remove-url_dispatcher.patch)
+	0002-Remove-url_dispatcher.patch
+	0003-Remove-libwhoopsie-dependency.patch
+	0004-Disable-tests.patch)
 
-sha512sums=('0142ab02e5dba9a543c6785ea1409fe1d95ed57b395f8ceea526fbe4c2b726088d37a927c1fac6c8a3a31125478c7aa76bc45b8687bd96b1125892f84d329529'
+sha512sums=('44c91e32800cc0af0c4e655eca358fdd3e9c17ab0f8002c5385fee5b799d1e95fda4c601369267b3672b46888025582875e1cbf668714a2aa33563f78c0eef03'
             'd6fb693580c921ce397124e12222aeff63734b1a2729f9e661a432613178ed8ff8da6107364e151bbd2bd58c3e70e18b71d8b96988025134f0fee8bc03868135'
-            '8ab2047eae79c01d206811f76efab57ac55161a0c3ba4f7f9e1fa37c80cc619d9571a42af0259b6e32f6597cbab6bc27fc5c5fb50965737065baae6cb546c025')
+            '50ac8e37a1ce4a7a6250e85d129b72b1f9b9b52c0589555a7d0568fce0abf61467ca0fe3a8c76884576425c50bd42fd1879306982b1b3f481508e1589a5884d5'
+            'fa069cf23804fbc29e01435c53619d95c755b0d3a674f90e7713d34ec70d92a9ef9e9cc8e2d4e1b2521580cf7f8d9a2961510de07a979ec1ba43bab98211e3b2'
+            '1b250aa4228f8f0b21f2c53f6e1f1bcb0bbc7e1e4371dca90728b1e0650f305e24564f3e62f18bdb776d1b5cbfd685a935164f8e08b5e03139567866bcd817f8')
 
 prepare() {
-    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
-        patch -p1 -i ../0001-There-is-no-help.patch
-    patch -p1 -i ../0002-Remove-url_dispatcher.patch
+    
+    patch -p1 -i 0001-There-is-no-help.patch
+    patch -p1 -i 0002-Remove-url_dispatcher.patch
+    patch -p1 -i 0003-Remove-libwhoopsie-dependency.patch
+    patch -p1 -i 0004-Disable-tests.patch
 }
 
 build() {
-    #cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
+    
     mkdir build && cd build
     cmake .. \
         -DCMAKE_INSTALL_PREFIX=/usr \
@@ -49,7 +53,6 @@ build() {
 }
 
 package() {
-    #cd "${pkgbase}-${_actual_ver}${_extra_ver}/build"
     cd build
 
     make DESTDIR="${pkgdir}/" install
@@ -58,4 +61,8 @@ package() {
 
     # Use language packs
     rm -r "${pkgdir}/usr/share/locale/"
+
+    rm -rv "${pkgdir}"/usr/share/upstart/
+
 }
+
