@@ -2,15 +2,15 @@
 # Maintainer: Michael Healy <horsemanffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=indicator-printers
-_ubuntu_rel=0ubuntu2
+_ubuntu_rel=0ubuntu1
 _actual_ver=0.1.7
-_extra_ver=+15.04.20150220
+_extra_ver=+17.04.20161201
 pkgver=${_actual_ver}${_extra_ver/\+/.}
-pkgrel=3
+pkgrel=1
 pkgdesc="Indicator showing active print jobs"
 arch=(i686 x86_64)
 url="https://launchpad.net/indicator-printers"
@@ -20,30 +20,32 @@ depends=(cups libdbusmenu-glib-ubuntu libdbusmenu-gtk3-ubuntu libindicator-gtk3-
 makedepends=(intltool python2)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/indicator-printers_${_actual_ver}${_extra_ver}.orig.tar.gz"
         "https://launchpad.net/ubuntu/+archive/primary/+files/indicator-printers_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff.gz")
-sha512sums=('c4aff3d515d64c78085175c5ff807b32c3fcc501dc879247a34545cdfc25d45d445fe7c56b661ce03953020246960b3c55110a44d015807abad9cc90b9c2198d'
-            'ce9865bf8b2421926132ecd066af335eb4a42c50887488b3a9045d19fe159407cd6aa5541f5d563adb47027774cf4eec36ad3c97653b1c42e07e521eaa56ce22')
+sha512sums=('1cfe199ab6bf5b322336b8284e966e4191b098545c20a2b23f68fe2f0f6c47d2a627b1ea6e5ef3e517418c3f7f7d52667c36c27434f87469e061a020e5e435db'
+            '10f6973ca46d43e978b32eaef8507aaa0d614524e70a2b6b99ddfe0d9996d2a9e9a81abfed397cd822b6f562dec7f56d0a84b3453f9310ec93050e3a0e7053d3')
 
 prepare() {
-    cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
+    
     # Apply Ubuntu's patches
-    patch -p1 -i ../indicator-printers_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff
+    patch -p1 -i indicator-printers_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff
 
     sed -i '/SERVICE_LIBS/ i SERVICE_LIBS+=" "' configure.ac
+
+    NOCONFIGURE=1 ./autogen.sh
 }
 
 build() {
-    cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
-    ./autogen.sh --prefix=/usr --libexecdir=/usr/lib --disable-static
+    
+    ./configure --prefix=/usr --libexecdir=/usr/lib --disable-static
     make
 }
 
 package() {
-    cd "${pkgname}-${_actual_ver}${_extra_ver}"
-
+    
     make DESTDIR="${pkgdir}/" install
 
     install -dm755 "${pkgdir}"/usr/share/icons/
     cp -r debian/local/* "${pkgdir}"/usr/share/icons/
+
+    rm -rv "${pkgdir}"/usr/share/upstart/
+
 }
