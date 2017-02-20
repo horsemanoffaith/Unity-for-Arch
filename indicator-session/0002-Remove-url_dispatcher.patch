@@ -12,14 +12,16 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 72d9a5a..3ed483b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -29,8 +29,7 @@ find_package (PkgConfig REQUIRED)
+@@ -29,9 +29,8 @@ find_package (PkgConfig REQUIRED)
  include (FindPkgConfig)
  pkg_check_modules (SERVICE REQUIRED
                     glib-2.0>=2.36
 -                   gio-unix-2.0>=2.36
--                   url-dispatcher-1>=1)
-+                   gio-unix-2.0>=2.36)
- include_directories (${SERVICE_INCLUDE_DIRS})
+-                   url-dispatcher-1>=1
+-                   libwhoopsie)
++                   gio-unix-2.0>=2.36
++                   libwhoopsie)
+ include_directories(SYSTEM ${SERVICE_INCLUDE_DIRS})
  
  set (CC_WARNING_ARGS " -Wall -pedantic -Wextra -Wno-missing-field-initializers")
 diff --git a/src/backend-dbus/actions.c b/src/backend-dbus/actions.c
@@ -78,4 +80,3 @@ index 06dd2bd..0c54e12 100644
      run_outside_app ("gnome-control-center info");
 -- 
 2.8.2
-
