@@ -2,12 +2,12 @@
 # Maintainer: Michael Healy <horsemanoffaith@gmail.com>
 
 # vercheck-pkgbuild: auto
-# vercheck-ubuntu: name=${pkgname}, repo=yakkety
+# vercheck-ubuntu: name=${pkgname}, repo=zesty
 # vercheck-launchpad: name=${pkgname}
 
 pkgname=unity
-_actual_ver=7.4.0
-_extra_ver=+16.04.20160906
+_actual_ver=7.5.0
+_extra_ver=+17.04.20170125
 _ubuntu_rel=0ubuntu1
 pkgver=${_actual_ver}${_extra_ver/+/.}
 pkgrel=1
@@ -15,12 +15,12 @@ pkgdesc="A desktop experience designed for efficiency of space and interaction"
 arch=(i686 x86_64)
 url="https://launchpad.net/unity"
 license=(GPL)
-depends=(appstream-glib bamf-ubuntu boost cairo compiz-ubuntu clutter-gtk gjs
-         gnome-desktop gnome-screensaver-ubuntu gnome-session-ubuntu
+depends=(appstream-glib bamf-ubuntu boost cairo compiz-ubuntu clutter-gtk 
+	 dbus-activation-env gjs gnome-desktop gnome-screensaver gnome-session-ubuntu
          gsettings-ubuntu-schemas hud ido-ubuntu libgnomeui libindicator-gtk2-ubuntu
          libindicator-gtk3-ubuntu libnotify libunique libunity libunity-misc libxfixes
-         nux unity-asset-pool unity-scope-home libxi zeitgeist-ubuntu
-         lightdm-unity-greeter upstart-user)
+         libxi lightdm-unity-greeter nux unity-asset-pool unity-scope-home 
+	 zeitgeist-ubuntu)
 makedepends=(chrpath cmake doxygen intltool patchutils pkg-config
              python2-distribute)
 groups=(unity)
@@ -29,31 +29,36 @@ source=("https://launchpad.net/ubuntu/+archive/primary/+files/unity_${_actual_ve
         "https://launchpad.net/ubuntu/+archive/primary/+files/unity_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff.gz"
         0001-Revert-r3134-Remove-Systray-Whitelist.patch
         0002-Disable-Werror.patch
-        0006-Remove-xpathselect-dependency.patch
+        0003-Fix-launchers.patch
+        0004-Remove-social.scope.patch
+        0005-Remove-xpathselect-dependency.patch
+        0006-Remove-upstart-user-session-support.patch
         launcher_bfb.png
         unity-debug
         run_this_if_unity_is_on_fire.py
-        unity.pam
-        ubuntu.gnome-session
-        ubuntu.xsession)
-sha512sums=('2c4b0bffe35f5c926ee5b9f95dbfe64dd41f3fb535f43f9028aef0301fcdb47d872518bf8d4dda6d7be41906641deefb32c74e363443a49e05e99a202f069647'
-            'be997322cbc4cc179e2e572c47bf808a32dac03ad8fb49612cf155d3042c340f7018892c8479825c65c163e69401a7c8118203e01b23ac30ad989dfeea68a69a'
-            '89089ae0b1f8f7c61cd4077d9652902b45c56843800ac9d4e0b67a7486df2844b0996e9586cf1eea745c359c03e1886addecc8454d25f8acf9845e20feb7f79a'
-            'ec0d228b4a117883e5dfbca0404614bd107d27d709554cde5a4cbe946a500381ff729a7a5942fbbfc9c449d0d404bde343ff5e536e390c8146df5bca243b781e'
-            '8ae32bb07dad5bcb264e3de621b29b1bd535fa80c205098990896f1c16f99cfa889234d55b4ce505b5ab5141c64269d9c5775a9666a45f65c699aa4f0382e94d'
+        unity.pam)
+sha512sums=('1ff6b25bc35ba1adc5d99f31c13136224cc5196cbafe714b3d291f8b490724cffd6cb6d2dba2d4599ed78f92120681e7b9375357ae313a209ccd1656d88150f6'
+            '4ca7bea4cbea2e6d2f9187c902aef229af6083f1e423891259e8f17e19bbdff80c3acb8b9de04097bf03ff0df48fa8422ad84153e2c353b465c1e5e65839abfa'
+            '6f9c6ebc6c771873a1f0b94359b38ed059c2923a34b03164718fc082b864e807bf5c9b599741088ca90c0d77e6a748d4cd5a5ce3af0ec2d57e666a8d116bfed2'
+            '69ce282478aa4709e50b2ba4106857cd5599db51b22fe519eb6e8ede8e6668061c2573b85217a1dc68ab8ce27ff9998d070d480cc44ef1f47a90e1d2ac9f940f'
+            '801daa46cbe945bfcd4a9e31467d941f787b4bd0fcb87e0f54b367555dfbc11f980f885fdc9b58f06e30c777f1bb1eaa2395b933f3949bc5a37ffe000aa28958'
+            'b7df75d9b0ecdaf49c15899608de56b0bb3efebdbd596efad4aa718219a3db6cd39c47b817f913d09f6b5ccb6f10cd41f9bf3159e8722d36caf6a3743e6fc304'
+            '9f4a9b0a84a9c0993e42966dfc4e37cc5073825398776e74088e764ecbd8421e1a86753a0a7e33b436f824d7d33f979c0217268762e5b3c06f64c6c25720aae3'
+            '151eeff04ddbc6f5e459ba1f4adcb31d09c4df0dbab92beff8a24eaf011237056bd0448d3c4b9538eeec66f92fc26c1c3e99cae5db15c9393e1408fd10e94144'
             'ec9ea91d79129b23aae6c4b9584fb396ecc572a0bafcac6229cc413ee441f610cb51ffce9383544c9fc62e747d5718be9be050850943eac4820095f190dc0ed0'
             'b217490bf5eb5b0e83dbc9737b80b2ab9d7288362f370625f3c99d5a862c0e1947376b9fab4fdc9c2ddd4e8bd6e8d2ff5763a3a4391732f0781abbc60b159db5'
             'f76ce70ee8ad4a83c94a5919fcabadf7f82e90cf3c70079344e8ab4069dd41f9055f86e01ee5d96ff52819ed9979bdbe85c59e0d50aa4c511e5a20e19a9ea06d'
-            '08d43702e1e356725096e4dbf9f6b3833b21b5ff88cca4db35097743acba157b37478baad19e66bcc61e01c8d3bfdbe44a4958808860b22d54fb38309bf9f011'
-            '975fa1c67092dc9b9dff639a05891f1a15131e3756d88cfe6534649644a7a09f78ec1151c70d56957906c51c73b29faaf83a33e26eca720867b6742f6bdc588f'
-            '4cfba3ad561cc73b60ae3622b4ee968f283288249c17a541afbb856c24cfad1326ed591dea5fc93e3d2ae93fb59b80db691838905651bd7e4741959461f19978')
+            '08d43702e1e356725096e4dbf9f6b3833b21b5ff88cca4db35097743acba157b37478baad19e66bcc61e01c8d3bfdbe44a4958808860b22d54fb38309bf9f011')
 
 prepare() {
     #cd "${pkgname}-${_actual_ver}${_extra_ver}"
 
     patch -p1 -i 0001-Revert-r3134-Remove-Systray-Whitelist.patch
     patch -p1 -i 0002-Disable-Werror.patch
-    patch -p1 -i 0006-Remove-xpathselect-dependency.patch
+    patch -p1 -i 0003-Fix-launchers.patch
+    patch -p1 -i 0004-Remove-social.scope.patch
+    patch -p1 -i 0005-Remove-xpathselect-dependency.patch
+    patch -p1 -i 0006-Remove-upstart-user-session-support.patch
 
     # Apply Ubuntu patches
     patch -p1 -i "unity_${_actual_ver}${_extra_ver}-${_ubuntu_rel}.diff"
@@ -138,15 +143,30 @@ package() {
     rm "${pkgdir}"/etc/pam.d/unity
     install -m644 "${srcdir}"/unity.pam "${pkgdir}"/etc/pam.d/unity
 
-    # Install session files
-    install -dm755 "${pkgdir}"/usr/share/gnome-session/sessions/
-    install -m644 "${srcdir}"/ubuntu.gnome-session \
-        "${pkgdir}"/usr/share/gnome-session/sessions/ubuntu.session
-    install -dm755 "${pkgdir}"/usr/share/xsessions/
-    install -m644 "${srcdir}"/ubuntu.xsession \
-        "${pkgdir}"/usr/share/xsessions/ubuntu.desktop
+    # systemd service symlinks
+    install -dm755 "${pkgdir}"/usr/lib/systemd/user/ubuntu-session.target.requires/
+    ln -s /usr/lib/systemd/user/unity7.service \
+        "${pkgdir}"/usr/lib/systemd/user/ubuntu-session.target.requires/unity7.service
 
-    # Install upstart service
-    install -dm755 "${pkgdir}"/usr/share/upstart/sessions/
-    
+    install -dm755 "${pkgdir}"/usr/lib/systemd/user/unity-panel-service.service.wants/
+    install -dm755 "${pkgdir}"/usr/lib/systemd/user/unity-panel-service-lockscreen.service.wants/
+    for file in indicator-application.service \
+                indicator-bluetooth.service \
+                indicator-datetime.service \
+                indicator-keyboard.service \
+                indicator-message.service \
+                indicator-power.service \
+                indicator-session.service \
+                indicator-sound.service; do
+        ln -s /usr/lib/systemd/user/"${file}" \
+            "${pkgdir}"/usr/lib/systemd/user/unity-panel-service.service.wants/"${file}"
+    done
+    for file in indicator-datetime.service \
+                indicator-keyboard.service \
+                indicator-power.service \
+                indicator-session.service \
+                indicator-sound.service; do
+        ln -s /usr/lib/systemd/user/"${file}" \
+            "${pkgdir}"/usr/lib/systemd/user/unity-panel-service-lockscreen.service.wants/"${file}"
+    done
 }
