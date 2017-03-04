@@ -19,6 +19,8 @@ license=(LGPL)
 depends=(gtk3-ubuntu)
 makedepends=(gobject-introspection gtk-doc vala xorg-util-macros)
 groups=(unity)
+provides=(ido)
+conflicts=(ido)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/ido_${_actual_ver}${_extra_ver}.orig.tar.gz"
         0001-Temporarily-disable-previous-button-drop-shadow-draw.patch)
 sha512sums=('867157c9e316eb5ed69ebdf1017ed86990aabf7a885ba26acab36782f0f27e10b4621a7db15ac90335e808022490a98560d5ff443e6f697c578eed5868385ebd'
