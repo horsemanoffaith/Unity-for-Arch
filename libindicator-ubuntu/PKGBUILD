@@ -12,13 +12,15 @@ pkgname=(libindicator-gtk2-ubuntu libindicator-gtk3-ubuntu)
 _actual_ver=16.10.0
 _extra_ver=+16.10.20160913
 pkgver=${_actual_ver}${_extra_ver/+/.}
-pkgrel=1
+pkgrel=2
 pkgdesc="A set of symbols and convience functions that all indicators would like to use"
 arch=(i686 x86_64)
 url="https://launchpad.net/libindicator"
 license=(GPL)
 makedepends=(ido-ubuntu glib2 gtk2-ubuntu gtk3-ubuntu)
 groups=(unity)
+provides=(libindicator-gtk2 libindicator-gtk3)
+conflicts=(libindicator-gtk2 libindicator-gtk3)
 source=("https://launchpad.net/ubuntu/+archive/primary/+files/${pkgbase/\-*/}_${_actual_ver}${_extra_ver}.orig.tar.gz")
 sha512sums=('d5a82fa3ee9db1b85680c348041aee88fe83d3f221d6f5b5abd2d4ac0394ece8fdfc146db88ad3a945496c4c3654ce121c60907c26b307015334537ccb73ba48')
 
